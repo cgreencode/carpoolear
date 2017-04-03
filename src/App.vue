@@ -1,27 +1,24 @@
 <template>
   <div class="container"> 
-      <headerApp></headerApp>
-      <main id="main">
-        <router-view></router-view>
-      </main>
-      <footerApp></footerApp>
+      <router-view></router-view>
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import footerApp from './Components/Footer.vue'
-import headerApp from './Components/Header.vue'
 
 export default {
   name: 'app',
   methods: {
+    gato () {
+      console.log('hola')
+      this.texto = 'Perro'
+    }
   },
-  computed: {
-    ...mapGetters({
+  computed: mapGetters({
       deviceReady: 'cordova/deviceReady'
     })
-  },
+  ,
   watch: {
     deviceReady: () => {
       console.log("Device ready from components")
@@ -31,10 +28,6 @@ export default {
     return {
       texto: 'hola'
     }
-  },
-  components: { 
-    headerApp,
-    footerApp 
   }
 }
 </script>
