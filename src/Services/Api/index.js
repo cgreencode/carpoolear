@@ -1,7 +1,7 @@
 import Auth from './auth.js'
+import Trips from './Trips.js'
 
-let Api = {
-  $auth: Auth
+export {
+  Auth,
+  Trips 
 }
-
-export default Api
