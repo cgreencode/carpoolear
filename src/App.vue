@@ -17,10 +17,11 @@ export default {
   name: 'app',
   methods: {
   },
-  computed: mapGetters({
+  computed: {
+    ...mapGetters({
       deviceReady: 'cordova/deviceReady'
     })
-  ,
+  },
   watch: {
     deviceReady: () => {
       console.log("Device ready from components")

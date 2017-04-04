@@ -15,28 +15,31 @@
     <template v-else>
         Cargando viajes ...
     </template>
-    <pre>
-            {{this.$store.state}}
-    </pre>
     </div>    
 </template>
 <script> 
 import Trip from "./Trip.vue"
-import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'trips',
-  methods: {
-    ...mapActions({
-      getTrips: 'trips/search', 
-    })
+  data () {
+    return {
+      trips: null
+    }
   },
   mounted() {
+        
         console.log("ready function on trips", this.$root.$http);
-        this.getTrips();
-    },
-    computed: {
-        ...mapGetters({trips: 'trips/trips'})
+        // GET request
+        this.$root.$http.get('http://carpoolear.138.197.64.208.nip.io/api/trips').then((response) => {
+                var trips = [];
+                if(response.body.trips) {
+                    tripps = response.body.trips;
+                }
+                this.trips = trips;
+            }, (response) => {
+                // error callback
+            });
     },
     components: {Trip}
 
