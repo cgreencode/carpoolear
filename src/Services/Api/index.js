@@ -1,5 +1,5 @@
 import Auth from './auth.js'
-import Trips from './Trips.js'
+import Trips from './trips.js'
 
 export {
   Auth,
