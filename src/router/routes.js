@@ -4,24 +4,24 @@ import m from './middleware.js';
 export default [
   {
     path: '/about',
-    component: require('../components/About')
+    component: require('../Components/About')
   },
   {
     path: '/admin',
-    component: require('../components/About'),
+    component: require('../Components/About'),
     beforeEnter: m.auth
   },
   {
     path: '/login',
-    component: require('../components/Login')
+    component: require('../Components/Login')
   },
   {
     path: '/trips',
-    component: require('../components/Trips'),
+    component: require('../Components/Trips')
   },
   {
     path: '/trips/:id',
-    component: require('../components/Trip'),
+    component: require('../Components/Trip')
   },
   {
     path: '/*',
