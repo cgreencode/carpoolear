@@ -1,5 +1,5 @@
-/*jshint esversion: 6 */
-import cordovaSocialShare from '../cordova/socialShare.js';
+
+import cordovaSocialShare from '../cordova/socialShare.js'
 
 export default {
   share (opts) { 
@@ -9,17 +9,14 @@ export default {
         files: [], // an array of filenames either locally or remotely
         url: 'https://carpoolear.com.ar',
         chooserTitle: 'Compartir con ...' // Android only, you can override the default share sheet title
-    };
-    if(!opts) {
-        opts = {};
     }
+
     options = Object.assign(options, opts);
 
     if(window && window.plugins && window.plugins.socialsharing && window.plugins.socialsharing.shareWithOptions) {
-        cordovaSocialShare.share(options);
+        cordovaSocialShare.share();
     } else {
         //Not implemented yet
-        console.warn("Warning: Social share without cordova not implemented yet.");
     }
   }
-};
+}

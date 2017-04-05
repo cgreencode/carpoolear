@@ -11,19 +11,13 @@ module.exports = function (ctx) {
   var deferral = ctx.requireCordovaModule('q').defer()
   
   cd('..')
-
-  
-  if (ctx.opts.options.release) {
-    exec('npm run build')  
-  } else {
-    exec('npm run cordova-build')
-  }
-  
+  exec('npm run build')
   cd('cordova')
 
   var rootdir = ctx.opts.projectRoot
   var wwwDir = rootdir + '/www'
-  var distDir = rootdir + '/../dist' 
+  var distDir = rootdir + '/../dist'
+  console.log('Deleting www folder: ' + wwwDir)
   rm('-rf', wwwDir)
 
   console.log('Copy' + distDir + " to " + wwwDir)

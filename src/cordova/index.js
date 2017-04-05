@@ -1,5 +1,3 @@
-/*jshint esversion: 6 */
-
 import store from '../store'
 import * as types from '../store/mutation-types'
 import push from './push.js'
