@@ -50,9 +50,10 @@ export default {
       let email = this.email;
       let password = this.password;
       let passwordConfirmation = this.passwordConfirmation;
-      let name = this.name + this.sureName;
+      let name = this.name;
+      let sureName = this.sureName;
       let termsAndConditions = this.termsAndConditions;
-      this.doRegister({email, password, passwordConfirmation, name, termsAndConditions});
+      this.doRegister({email, password, passwordConfirmation, name, sureName, termsAndConditions});
     }
   }
 }
