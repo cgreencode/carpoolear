@@ -1,7 +1,6 @@
 import network from '../../services/network'
 import * as types from '../mutation-types'
 import { Auth } from '../../services/api'
-import router from '../../router';
 
 let authApi = new Auth;
 
@@ -21,15 +20,18 @@ const getters = {
 
 // actions
 const actions = {
-
-  login({ commit, state, rootState, rootGetters }, { email, password }) {
+  login({ commit, state, rootState }, { email, password }) {
     let creds = {}
-    Object.assign(creds, rootGetters['cordova/deviceData']);
-    creds.email = email;
-    creds.password = password;
-    creds.password_confirmation = password;
-
-    return authApi.login(creds).then((token) => {
+    if (rootState.cordova && rootState.cordova.deviceId && rootState.cordova.device && rootState.cordova.device.platform) {
+      console.log('here');
+      creds['device_id'] = rootState.cordova.deviceId;
+      creds['device_type'] = rootState.cordova.device.platform;
+    }
+    creds['app_version'] = rootState.appVersion;
+    creds['email'] = email;
+    creds['password'] = password;
+    creds['password_confirmation'] = password;
+    authApi.login(creds).then((token) => {
       commit(types.AUTH_SET_TOKEN);
     }).catch((err) => {
       if (err.response && err.response.data.error === 'invalid_credentials') {
@@ -40,29 +42,17 @@ const actions = {
       }
     });
   },
+  register({ commit, state, rootState }, { email, password, passwordConfirmation, name, termsAndConditions }) {
+    let data = {}
+    data['app_version'] = rootState.appVersion;
+    data['email'] = email;
+    data['password'] = password;
+    data['password_confirmation'] = passwordConfirmation;
+    data['name'] = name;
+    data['password'] = password;
+    data['terms_and_conditions'] = termsAndConditions;
 
-  activate({ commit, state, rootState, rootGetters }, activationToken) {
-    let creds = {}
-    Object.assign(creds, rootGetters['cordova/deviceData']);
-
-    return authApi.activate(activationToken, creds).then((token) => {
-      commit(types.AUTH_SET_TOKEN);
-      router.push({ name: 'trips' });
-    }).catch((err) => { 
-
-    });
-  },
-
-  register({ commit, state, rootState, rootGetters }, { email, password, passwordConfirmation, name, termsAndConditions }) {
-    let data = {}; 
-    data.email = email;
-    data.password = password;
-    data.password_confirmation = passwordConfirmation;
-    data.name = name;
-    data.password = password;
-    data.terms_and_conditions = termsAndConditions; 
-
-    return authApi.register(data).then((data) => {
+    authApi.register(data).then((data) => {
       console.log(data);
     }).catch((err) => {
       if (err.response) {
@@ -71,9 +61,39 @@ const actions = {
         console.log(err.response.headers);
       } else {
         console.log(err.message);
-      } 
+      }
     });
-  } 
+  },
+  logout() {
+    authApi.logout(data).then((data) => {
+      console.log(data);
+    }).catch((err) => {
+      if (err.response) {
+        console.log(err.response.data);
+        console.log(err.response.status);
+        console.log(err.response.headers);
+      } else {
+        console.log(err.message);
+      }
+    });
+  },
+  resetPassword({ commit, state, rootState }, email) {
+    data['email'] = email;
+    authApi.resetPassword(data).then((data) => {
+      console.log(data);
+    }).catch((err) => {
+      if (err.response) {
+        console.log(err.response.data);
+        console.log(err.response.status);
+        console.log(err.response.headers);
+      } else {
+        console.log(err.message);
+      }
+    });
+  },   
+    /*checkout ({ commit, state }) {
+      commit(types.DUMMY_MUTATION)
+    },*/
 }
 
 // mutations

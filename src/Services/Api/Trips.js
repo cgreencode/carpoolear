@@ -3,7 +3,7 @@ import ApiWithTags from './ApiWithTags'
 
 class Trips extends ApiWithTags { 
 
-  search(data) {
+  getTrips(data) {
     return this.get('/api/trips', data)
   }
 

@@ -13,48 +13,50 @@ export default {
       this.pendingRequest.add(tags)
   },
 
-  getHeader (headers) {
-    let authHeader = store.getters['auth/authHeader'];
+  get(url, params, headers = {}) {
+    let authHeader = store.getters['auth/authHeader']
     Object.assign(headers, authHeader)
-    return headers;
-  },
-
-  get(url, params, headers = {}) {  
     return axios.get(
         API_URL + url,
         {
           params: params,
-          headers: this.getHeader(headers)
+          headers: headers
         }
       )
   },
 
-  post (url, body, headers = {}) { 
+  post (url, body, headers = {}) {
+    let authHeader = store.getters['auth/authHeader']
+    Object.assign(headers, authHeader)
     return axios.post(
         API_URL + url,
         body,
         {
-          headers: this.getHeader(headers)
+          headers: headers
         }
       )
   },
 
-  delete(url, params, headers = {}) { 
+  delete(url, params, headers = {}) {
+    let authHeader = store.getters['auth/authHeader']
+    Object.assign(headers, authHeader)
     return axios.delete(
       API_URL + url,
       {
         params: params,
-        headers: this.getHeader(headers)
+        headers: headers
       }
     )
   },
 
-  put(url, body, headers = {}) { 
+  put(url, body, headers = {}) {
+    let authHeader = store.getters['auth/authHeader']
+    Object.assign(headers, authHeader)
     return axios.put(
       API_URL + url,
       body,
       {
-        headers: this.getHeader(headers)
+        headers: headers
       }
     )
   }
