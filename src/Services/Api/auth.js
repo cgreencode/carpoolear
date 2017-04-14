@@ -1,7 +1,7 @@
 import network from '../network.js'
-import ApiWithTags from './ApiWithTags'
+import TaggedApi from '../../classes/TaggedApi'
 
-class Auth extends ApiWithTags {
+class AuthApi extends TaggedApi {
 
   /** AUTH API **/
   
@@ -75,69 +75,6 @@ class Auth extends ApiWithTags {
   changePassword(token, data) {
     return this.post('/api/change-password/' + token, data)
   }
-
-  /** USERS API  */
-
-  /**
-   * Register an user.
-   * @param {Object} data {
-   *    @param {String} name
-   *    @param {String} email
-   *    @param {String} password
-   *    @param {String} password_confirmation
-   *    @param {Boolean} terms_and_conditions
-   *    @param {Date} birthday (Optional)
-   *    @param {String} nro_doc (Optional)
-   *    @param {String} gender (Masculino / Femenino) (Optional)
-   *    @param {String} description (Optional)
-   *    @param {String} mobile_phone (Optional)
-   *  }
-   * @return {} 
-  */
-  register(data) {
-    return this.post('/api/users', data)
-  }
-
-  /**
-   * Update an user.
-   * @param {Object} data {
-   *    @param {String} name
-   *    @param {String} email
-   *    @param {String} password
-   *    @param {String} password_confirmation
-   *    @param {Date} birthday (Optional)
-   *    @param {String} nro_doc (Optional)
-   *    @param {String} gender (Masculino / Femenino) (Optional)
-   *    @param {String} description (Optional)
-   *    @param {String} mobile_phone (Optional)
-   *  }
-   * @return {} 
-  */
-    update(data) {
-      return this.put('/api/users', data)
-  }
-  
-  /**
-   * Update user photo.
-   * @param {Object} data {
-   *    @param {File} profile (Image)
-   *  }
-   * @return {} 
-  */
-    updatePhoto(data) {
-      return this.put('/api/users/photo', data)
-    }
-  
-  /**
-   * Update user photo.
-   * @param {Object} data {
-   *    @param {File} profile (Image)
-   *  }
-   * @return {} 
-  */
-    updatePhoto(userId) {
-      return this.get('/api/users/' + userId)
-    }
 }
 
-export { Auth as default }
+export { AuthApi as default }
