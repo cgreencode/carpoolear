@@ -1,94 +1,62 @@
-/* jshint esversion: 6 */
-import store from '../store';
-import TaggedList from '../classes/TaggedList';
-import axios from 'axios';
+import store from '../store'
+import Vue from 'vue'
+import * as types from '../store/mutation-types'
+import TaggedList from '../classes/TaggedList'
+import axios from 'axios'
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.API_URL
 
 export default {
-    pendingRequest: new TaggedList(),
+  pendingRequest: new TaggedList,
 
-    addRequest (xhr, tags) {
-        this.pendingRequest.add(tags);
-    },
+  addRequest(xhr, tags) {
+      this.pendingRequest.add(tags)
+  },
 
-    getHeader (headers) {
-        let authHeader = store.getters['auth/authHeader'];
-        Object.assign(headers, authHeader);
-        return headers;
-    },
+  getHeader (headers) {
+    let authHeader = store.getters['auth/authHeader'];
+    Object.assign(headers, authHeader)
+    return headers;
+  },
 
-    newCancelToken () {
-        let CancelToken = axios.CancelToken;
-        return CancelToken.source();
-    },
-
-    processResponse (response, source) {
-        let promise = new Promise((resolve, reject) => {
-            response.then((response) => {
-                resolve(response.data);
-            }).catch((resp) => {
-        // Revisar el tipo de error!
-                let data = resp.response.data;
-                let status = resp.response.status;
-                reject({data, status});
-            });
-        });
-
-        promise.abort = () => {
-            source.cancel('abort by the system');
-        };
-
-        return promise;
-    },
-
-    get (url, params, headers = {}) {
-        let source = this.newCancelToken();
-        return this.processResponse(axios.get(
+  get(url, params, headers = {}) {  
+    return axios.get(
         API_URL + url,
-            {
-                params: params,
-                headers: this.getHeader(headers),
-                cancelToken: source.token
-            }
-      ), source);
-    },
+        {
+          params: params,
+          headers: this.getHeader(headers)
+        }
+      )
+  },
 
-    post (url, body, headers = {}) {
-        let source = this.newCancelToken();
-        return this.processResponse(axios.post(
+  post (url, body, headers = {}) { 
+    return axios.post(
         API_URL + url,
         body,
-            {
-                headers: this.getHeader(headers),
-                cancelToken: source.token
-            }
+        {
+          headers: this.getHeader(headers)
+        }
       )
-    , source);
-    },
+  },
 
-    delete (url, params, headers = {}) {
-        let source = this.newCancelToken();
-        return this.processResponse(axios.delete(
+  delete(url, params, headers = {}) { 
+    return axios.delete(
       API_URL + url,
-            {
-                params: params,
-                headers: this.getHeader(headers),
-                cancelToken: source.token
-            }
-    ), source);
-    },
+      {
+        params: params,
+        headers: this.getHeader(headers)
+      }
+    )
+  },
 
-    put (url, body, headers = {}) {
-        let source = this.newCancelToken();
-        return this.processResponse(axios.put(
+  put(url, body, headers = {}) { 
+    return axios.put(
       API_URL + url,
       body,
-            {
-                headers: this.getHeader(headers),
-                cancelToken: source.token
-            }
-    ), source);
-    }
+      {
+        headers: this.getHeader(headers)
+      }
+    )
+  }
 
-};
+}

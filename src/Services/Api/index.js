@@ -1,17 +1,7 @@
-import AuthApi from './Auth.js';
-import TripApi from './Trips.js';
-import UserApi from './User.js';
-import DeviceApi from './Device.js';
-import RateApi from './Rating.js';
-import PassengerApi from './PassengerApi';
-import ConversationApi from './ConversationApi';
-
+import Auth from './auth.js'
+import Trips from './Trips.js'
+ 
 export {
-  AuthApi,
-  TripApi,
-  UserApi,
-  DeviceApi,
-  RateApi,
-  PassengerApi,
-  ConversationApi
-};
+  Auth,
+  Trips 
+}

@@ -1,60 +1,52 @@
-import {TripApi} from '../../services/api';
-import * as types from '../mutation-types';
-import globalStore from '../index';
-
-import * as pagination from '../pagination';
-
-let tripsApi = new TripApi();
+import {Trips} from '../../services/api'
+import * as types from '../mutation-types'
 
 // initial state
+// shape: [{ id, quantity }]
+let tripsApi = new Trips;
+
 const state = {
-    ...pagination.makeState('trips')
-};
+  trips: null,
+  myTrips: null,  
+}
 
 // getters
 const getters = {
-    ...pagination.makeGetters('trips')
-};
+  trips: state => state.trips,
+  myTrips: state => state.myTrips,
+}
 
 // actions
 const actions = {
-    ...pagination.makeActions('trips', (data) => {
-        return tripsApi.tag(['trips']).search(data);
-    }),
-
-    create (store, data) {
-        return tripsApi.create(data).then(response => {
-            globalStore.commit('myTrips/' + types.MYTRIPS_ADD_TRIPS, response.data);
-            store.dispatch('tripsSearch', store.state.tripsSearchParams.data);
-        });
-    },
-
-    update (store, data) {
-        return tripsApi.update(data).then(response => {
-            globalStore.commit('myTrips/' + types.MYTRIPS_UPDATE_TRIPS, response.data);
-            store.dispatch('tripsSearch', store.state.tripsSearchParams.data);
-            // globalStore.commit(types.TRIPS_UPDATE_TRIPS, response.data);
-        });
-    }
-};
+  search({ commit, state }, data) {
+    return tripsApi.tag(['trips']).search().then(trips => {
+      commit(types.TRIPS_SET_TRIPS, trips.data);
+    }).catch(err => {
+      console.log(err)
+    })
+  },
+}
 
 // mutations
 const mutations = {
-    ...pagination.makeMutations('trips'),
-
-    [types.TRIPS_UPDATE_TRIPS] (state, trip) {
-        for (let i = 0; i < state.trips.length; i++) {
-            if (state.trips[i].id === trip.id) {
-                state.trips[i] = trip;
-            }
-        }
-    }
-};
+  [types.TRIPS_SET_TRIPS](state, trips) {
+    state.trips = trips;
+  },
+  [types.TRIPS_ADD_TRIPS](state, trips) {
+    state.trips = [...state.trips, ...trips];
+  },
+  [types.TRIPS_SET_MY_TRIPS](state, trips) {
+    state.trips = trips;
+  },
+  [types.TRIPS_ADD_MY_TRIPS](state, trips) {
+    state.trips = [...state.trips, ...trips];
+  },
+}
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-};
+  namespaced: true,
+  state,
+  getters,
+  actions,
+  mutations
+}

@@ -1,9 +1,10 @@
-import TaggedApi from '../../classes/TaggedApi';
+import network from '../network.js'
+import ApiWithTags from './ApiWithTags'
 
-class AuthApi extends TaggedApi {
+class Auth extends ApiWithTags {
 
   /** AUTH API **/
-
+  
   /**
    * User login
    * @param {Object} creds {
@@ -15,17 +16,17 @@ class AuthApi extends TaggedApi {
    *  }
    * @return {} token
   */
-    login (creds) {
-        return this.post('/api/login', creds);
-    }
+  login (creds) {
+    return this.post('/api/login', creds)
+  }
 
   /**
    * User logout.
    * @return {}
   */
-    logout () {
-        return this.post('/api//logout');
-    }
+  logout() {
+    return this.post('/api//logout')
+  }
 
   /**
    * Retoken.
@@ -34,9 +35,9 @@ class AuthApi extends TaggedApi {
    *  }
    * @return {} token
   */
-    retoken (data) {
-        return this.post('/api/retoken', data);
-    }
+  retoken(data) {
+    return this.post('/api/retoken', data)
+  }
 
   /**
    * Activate.
@@ -48,9 +49,9 @@ class AuthApi extends TaggedApi {
    * @param {String} activationToken
    * @return {} token
   */
-    activate (activationToken, data) {
-        return this.post('/api/activate/' + activationToken, data);
-    }
+  activate(activationToken, data) {
+    return this.post('/api/activate/' + activationToken, data)
+  }
 
   /**
    * Reset password by email.
@@ -59,9 +60,9 @@ class AuthApi extends TaggedApi {
    *  }
    * @return {}
   */
-    resetPassword (data) {
-        return this.post('/api/reset-password', data);
-    }
+  resetPassword(data) {
+    return this.post('/api/reset-password', data)
+  }
 
   /**
    * Change password by email.
@@ -71,9 +72,72 @@ class AuthApi extends TaggedApi {
    *  }
    * @return {}
   */
-    changePassword (token, data) {
-        return this.post('/api/change-password/' + token, data);
+  changePassword(token, data) {
+    return this.post('/api/change-password/' + token, data)
+  }
+
+  /** USERS API  */
+
+  /**
+   * Register an user.
+   * @param {Object} data {
+   *    @param {String} name
+   *    @param {String} email
+   *    @param {String} password
+   *    @param {String} password_confirmation
+   *    @param {Boolean} terms_and_conditions
+   *    @param {Date} birthday (Optional)
+   *    @param {String} nro_doc (Optional)
+   *    @param {String} gender (Masculino / Femenino) (Optional)
+   *    @param {String} description (Optional)
+   *    @param {String} mobile_phone (Optional)
+   *  }
+   * @return {} 
+  */
+  register(data) {
+    return this.post('/api/users', data)
+  }
+
+  /**
+   * Update an user.
+   * @param {Object} data {
+   *    @param {String} name
+   *    @param {String} email
+   *    @param {String} password
+   *    @param {String} password_confirmation
+   *    @param {Date} birthday (Optional)
+   *    @param {String} nro_doc (Optional)
+   *    @param {String} gender (Masculino / Femenino) (Optional)
+   *    @param {String} description (Optional)
+   *    @param {String} mobile_phone (Optional)
+   *  }
+   * @return {} 
+  */
+    update(data) {
+      return this.put('/api/users', data)
+  }
+  
+  /**
+   * Update user photo.
+   * @param {Object} data {
+   *    @param {File} profile (Image)
+   *  }
+   * @return {} 
+  */
+    updatePhoto(data) {
+      return this.put('/api/users/photo', data)
+    }
+  
+  /**
+   * Update user photo.
+   * @param {Object} data {
+   *    @param {File} profile (Image)
+   *  }
+   * @return {} 
+  */
+    updatePhoto(userId) {
+      return this.get('/api/users/' + userId)
     }
 }
 
-export { AuthApi as default };
+export { Auth as default }

@@ -1,31 +1,12 @@
-import TaggedApi from '../../classes/TaggedApi';
+import network from '../network.js'
+import ApiWithTags from './ApiWithTags'
 
-class TripApi extends TaggedApi {
+class Trips extends ApiWithTags { 
 
-    search (data) {
-        return this.get('/api/trips', data);
-    }
-
-    create (data) {
-        return this.post('/api/trips', data);
-    }
-
-    update (data) {
-        return this.put('/api/trips/' + data.id, data);
-    }
-
-    delete (data) {
-        return this.delete('/api/trips/' + data.id);
-    }
-
-    show (id) {
-        return this.get('/api/trips/' + id);
-    }
-
-    myTrips (asDriver) {
-        return this.get('/api/users/my-trips', { 'as_driver': asDriver });
-    }
+  search(data) {
+    return this.get('/api/trips', data)
+  }
 
 }
 
-export { TripApi as default };
+export { Trips as default }
