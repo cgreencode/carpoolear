@@ -1,12 +1,12 @@
 <template>
+  
   <div class="login" >
     <div class='form'>
       <label for="txt_user">Usuario</label>
       <input type="text" id="txt_user" v-model='email'/>
       <label for="txt_password">Password</label>
       <input  type="password" id="txt_password" v-model='password' />
-      <button @click="login"> Login </button> <router-link :to="{name:'reset-password'}"> ¿Olvidó su contraseña? </router-link>
-      <span v-if="loading"> Loading... </span>
+      <button @click="login"> Login </button>
     </div>
   </div>
 </template>
@@ -18,9 +18,7 @@ export default {
     data () {
         return {
             email: '',
-            password: '',
-            loading: false,
-            error: ''
+            password: ''
         };
     },
     computed: {
@@ -34,17 +32,11 @@ export default {
             facebookLogin: 'cordova/facebookLogin'
         }),
         login () {
-            this.loading = true;
             let email = this.email;
             let password = this.password;
-            this.doLogin({email, password}).then(data => {
-                this.loading = false;
-            }, error => {
-                if (error) {
-                    this.error = error.error;
-                }
-                this.loading = false;
-            });
+            var a = this.doLogin({email, password});
+
+            console.log(a.abort);
         }
     }
 };

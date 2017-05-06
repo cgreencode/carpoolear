@@ -1,9 +1,5 @@
 import * as types from './mutation-types';
 import cache, {keys} from '../services/cache';
-import bus from '../services/bus-event';
-import {TripApi} from '../services/api';
-
-let tripsApi = new TripApi();
 
 export const init = (store) => {
     console.log('starting application');
@@ -37,57 +33,18 @@ export const init = (store) => {
     });
 
     return Promise.all(promises).then(() => {
-        console.log('State loaded from cache');
+        console.log('State loaded from cache', store);
         if (store.state.auth.token) {
             store.dispatch('auth/retoken').then(() => startApp(store));
         } else {
             startApp(store);
-            console.log();
         }
     });
 };
 
 export const startApp = (store) => {
-    store.dispatch('trips/tripsSearch');
+    store.dispatch('trips/search');
     if (store.state.auth.auth) {
         store.dispatch('auth/fetchUser');
-        store.dispatch('myTrips/tripAsDriver');
-        store.dispatch('myTrips/tripAsPassenger');
-        store.dispatch('myTrips/pendingRates');
-        store.dispatch('cars/index');
     }
-    bus.emit('system-ready');
-};
-
-export const getTrip = (store, id) => {
-    let trips = store.getters['trips/trips'];
-    if (trips) {
-        for (let i = 0; i < trips.length; i++) {
-            if (trips[i].id === id) {
-                return Promise.resolve(trips[i]);
-            }
-        }
-    }
-
-    let myTrips = store.state.myTrips.driver_trip;
-    if (myTrips) {
-        for (let i = 0; i < myTrips.length; i++) {
-            if (myTrips[i].id === id) {
-                return Promise.resolve(myTrips[i]);
-            }
-        }
-    }
-
-    myTrips = store.state.myTrips.passenger_trip;
-    if (myTrips) {
-        for (let i = 0; i < myTrips.length; i++) {
-            if (myTrips[i].id === id) {
-                return Promise.resolve(myTrips[i]);
-            }
-        }
-    }
-
-    return tripsApi.show(id).then(response => {
-        return Promise.resolve(response.data);
-    });
 };
