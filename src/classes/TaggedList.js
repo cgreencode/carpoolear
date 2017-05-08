@@ -34,11 +34,11 @@ class TaggedList {
         }
     }
 
-    deleteValue (value) {
+    deleteValue = function (value) {
         this.delete(this.keys, value);
     }
 
-    get (tag) {
+    get = function (tag) {
         return this.map[tag];
     }
 
