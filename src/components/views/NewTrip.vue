@@ -208,8 +208,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            user: 'auth/user',
-            cars: 'cars/cars'
+            user: 'auth/user'
         }),
         distanceString () {
             return Math.floor(this.trip.distance / 1000) + ' Kms';
@@ -274,7 +273,6 @@ export default {
         },
 
         save () {
-            /* eslint-disable no-unreachable */
             this.trip.points = [];
             this.points.forEach(p => {
                 let point = {};
@@ -288,9 +286,7 @@ export default {
             this.trip.to_town = this.points[this.points.length - 1].name;
             this.trip.trip_date = this.date + ' ' + this.time;
             this.trip.estimated_time = this.estimatedTimeString;
-            if (this.cars && this.cars.length) {
-                this.trip.car_id = this.cars[0].id;
-            }
+            console.log(this.trip);
             if (!this.updatingTrip) {
                 this.createTrip(this.trip);
             } else {

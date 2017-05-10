@@ -16,25 +16,11 @@ export default {
             this.$refs.input.click();
         },
 
-        onFileChange (e) {
-            let files = e.target.files || e.dataTransfer.files;
-            if (!files.length) {
-                return;
-            }
-            this.createImage(files[0]);
-        },
-
-        createImage (file) {
+        onFileChange () {
             /* eslint-disable no-undef */
-            let reader = new FileReader();
-            let vm = this;
-            reader.onload = (e) => {
-                let image = e.target.result;
-                let data = {};
-                data[vm.name] = image;
-                vm.$emit('change', data);
-            };
-            reader.readAsDataURL(file);
+            var data = new FormData();
+            data.append(this.name, this.$refs.input.files[0]);
+            this.$emit('change', data);
         }
     },
     props: ['name']

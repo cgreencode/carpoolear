@@ -6,7 +6,6 @@ import RateApi from './Rating';
 import PassengerApi from './PassengerApi';
 import ConversationApi from './ConversationApi';
 import CarApi from './Car';
-import FriendsApi from './FriendApi';
 
 export {
   AuthApi,
@@ -16,6 +15,5 @@ export {
   RateApi,
   PassengerApi,
   ConversationApi,
-  CarApi,
-  FriendsApi
+  CarApi
 };

@@ -19,7 +19,7 @@ const getters = {
 const actions = {
     index (store, data = {}) {
         return carApi.index(data).then(response => {
-            store.commit(types.CARS_SET, response.cars);
+            store.commit(types.CARS_SET, response);
         }).catch(err => {
             console.log(err);
         });
@@ -86,3 +86,4 @@ export default {
     actions,
     mutations
 };
+

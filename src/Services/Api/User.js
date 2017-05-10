@@ -65,10 +65,6 @@ class UserApi extends TaggedApi {
         }
         return this.get('/api/users/' + id, {});
     }
-
-    list (data) {
-        return this.get('/api/users/list', data);
-    }
 }
 
 export { UserApi as default };
