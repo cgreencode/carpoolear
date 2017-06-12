@@ -16,6 +16,7 @@
     "axios": "^0.16.0",
     "babel-runtime": "^6.22.0",
     "es6-promise": "^4.1.0",
+    "lodash": "^4.17.4",
     "gulp": "^3.9.1",
     "gulp-if": "^2.0.2",
     "gulp-prompt": "^0.2.0",

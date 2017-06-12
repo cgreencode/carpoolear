@@ -5,11 +5,43 @@ import axios from 'axios';
 
 const API_URL = process.env.API_URL;
 
+class MyPromise extends Promise {
+    constructor (executor) {
+        super((resolve, reject) => {
+            // before
+            return executor(resolve, reject);
+        });
+        // after
+    }
+
+    then (onFulfilled, onRejected) {
+        console.log('je');
+        // before
+        const returnValue = super.then(onFulfilled, onRejected);
+        console.log('hola');
+        console.log(this);
+        returnValue.abort = this.abort;
+        // after
+        return returnValue;
+    }
+
+    catch (onRejected) {
+        console.log('je');
+        // before
+        const returnValue = super.catch(onRejected);
+        console.log('je');
+        console.log(this);
+        returnValue.abort = this.abort;
+        // after
+        return returnValue;
+    }
+}
+
 export default {
     pendingRequest: new TaggedList(),
 
     addRequest (xhr, tags) {
-        this.pendingRequest.add(tags);
+        this.pendingRequest.add(tags, xhr);
     },
 
     getHeader (headers) {
@@ -24,7 +56,7 @@ export default {
     },
 
     processResponse (response, source) {
-        let promise = new Promise((resolve, reject) => {
+        let promise = new MyPromise((resolve, reject) => {
             response.then((response) => {
                 resolve(response.data);
             }).catch((resp) => {
@@ -36,9 +68,9 @@ export default {
         });
 
         promise.abort = () => {
-            source.cancel('abort by the system');
+            source.cancel('Abort by the system');
         };
-
+        console.log(promise);
         return promise;
     },
 

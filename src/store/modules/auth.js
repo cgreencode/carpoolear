@@ -44,7 +44,7 @@ function login (store, { email, password }) {
     creds.email = email;
     creds.password = password;
 
-    return authApi.login(creds).then((response) => {
+    authApi.login(creds).then((response) => {
         onLoggin(store, response.token);
     }, ({data, status}) => {
         return Promise.reject(data);
@@ -95,16 +95,19 @@ function register (store, { email, password, passwordConfirmation, name, termsAn
     return userApi.register(data).then((data) => {
         console.log(data);
     }).catch((err) => {
-        if (err.response) {
-            console.log(err.response.data);
-            console.log(err.response.status);
-            console.log(err.response.headers);
-        } else {
-            console.log(err.message);
+      if (err.response) {
+        console.log(err.response.data);
+        console.log(err.response.status);
+        console.log(err.response.headers);
+      } else {
+        console.log(err.message);
+        if (err.message === 'Could not create new user.') {
+
         }
+      }
     });
 }
-
+  
 function fetchUser (store) {
     return userApi.show().then((response) => {
         store.commit(types.AUTH_SET_USER, response.data);

@@ -14,7 +14,6 @@ import passenger from './modules/passenger';
 import notifications from './modules/notifications';
 import rates from './modules/rates';
 import actionbars from './modules/actionbars';
-import profile from './modules/profile';
 
 Vue.use(Vuex);
 
@@ -36,7 +35,6 @@ export default new Vuex.Store({
         passenger,
         notifications,
         rates,
-        actionbars,
-        profile
+        actionbars
     }
 });

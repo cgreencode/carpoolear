@@ -40,7 +40,7 @@ const state = {
         {
             id: 'profile',
             icon: 'fa-user',
-            url: 'profile',
+            url: 'my-trips',
             active: false
         },
         {
@@ -86,6 +86,7 @@ const actions = {
     },
 
     showFooter (store, show) {
+        console.log(show);
         store.commit(types.FOOTER_SET_VISIBILITY, show);
     },
 
@@ -94,11 +95,7 @@ const actions = {
     },
 
     footerButtonClick (store, item) {
-        let params = {};
-        if (item.url === 'profile') {
-            params.id = 'me';
-        }
-        router.push({name: item.url, params});
+        router.push({name: item.url});
     }
 
 };
