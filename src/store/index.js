@@ -14,6 +14,7 @@ import passenger from './modules/passenger';
 import notifications from './modules/notifications';
 import rates from './modules/rates';
 import actionbars from './modules/actionbars';
+import profile from './modules/profile';
 
 Vue.use(Vuex);
 
@@ -21,7 +22,7 @@ export default new Vuex.Store({
     actions,
     getters,
     state: {
-        appVersion: 1
+        appVersion: 3
     },
     modules: {
         auth,
@@ -35,6 +36,7 @@ export default new Vuex.Store({
         passenger,
         notifications,
         rates,
-        actionbars
+        actionbars,
+        profile
     }
 });
