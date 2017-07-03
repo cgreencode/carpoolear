@@ -96,7 +96,7 @@ export default {
 </script>
 
 <style scoped>
-    h2 {
+    h1, h2 {
         font-weight: normal;
     }
     h3 {
@@ -117,6 +117,7 @@ export default {
         display: block;
         margin-top: .3em;
         margin-bottom: .6em;
+        font-weight: bold;
     }
     input {
         display:block;

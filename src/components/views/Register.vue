@@ -67,8 +67,12 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
   }
-  h2 {
+  h1, h2 {
     font-weight: normal;
+  }
+  label {
+    margin-top: .3em;
+    font-weight: bold;
   }
   .form {
     margin-top:20px;
