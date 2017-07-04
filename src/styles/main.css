@@ -31,7 +31,7 @@ p {
     line-height: 1.5;
 }
 main {
-    min-height: calc(100vh - 234px);
+    min-height: calc(100vh - 337px);
 }
 
 h1 {
@@ -358,8 +358,15 @@ textarea {
 }
 
 .nav-tabs {
+    position: fixed;
     background-color: #016587;
     padding-top: 0.4em;
+    z-index: 3;
+    width: 100%;
+}
+
+.tab-content {
+    margin-top: 2.8rem;
 }
 
 .nav-tabs>li {
@@ -377,6 +384,9 @@ textarea {
     border: none;
     color: white;
 }
+.nav>li>a {
+    padding: 10px 0;
+}
 .nav>li>a:hover,
 .nav>li>a:focus {
     text-decoration: none;
@@ -391,7 +401,7 @@ textarea {
 }
 .nav>li>a.active::after {
     left: 50%;
-    top: 36px;
+    top: 35px;
     border: solid transparent;
     content: " ";
     height: 0;
@@ -692,6 +702,7 @@ textarea {
     text-align: left;
     display: inline-block;
     width: 80%;
+    padding-right: 2.2em;
 }
 
 .italic {
@@ -874,7 +885,6 @@ textarea {
 .footer-component {
     color: white;
     background-color: #33363A;
-    margin-top: 1em;
 }
 
 .view-container {
@@ -921,6 +931,28 @@ textarea {
     top: 8px;
 }
 
+@media only screen and (max-width: 400px) {
+    .nav-tabs>li>a {
+        font-size: 10px;
+    }
+    .nav>li>a.active::after {
+        top: 30px;
+    }
+    .profile-info-component .list-group-item img {
+        width: 80%;
+    }
+    .profile .list-group-item {
+        padding: 10px 0;
+    }
+    .profile-info-component .edit-action button {
+        margin: .4em 0;
+        width: 80%;
+    }
+    .profile-info-component .edit-action button:first-child {
+        margin: .4em 0;
+    }
+}
+
 @media only screen and (max-width: 768px) {
     .settings-component {
         background-color: white;
@@ -962,6 +994,14 @@ textarea {
 }
 
 @media only screen and (min-width: 768px) {
+    main {
+        min-height: calc(100vh - 265px);
+    }
+    .footer-component {
+        color: white;
+        background-color: #33363A;
+        margin-top: 1em;
+    }
     .btn-container {
         text-align: left;
     }
@@ -998,6 +1038,9 @@ textarea {
     }
 }
 @media only screen and (min-width: 992px) {
+    main {
+        min-height: calc(100vh - 234px);
+    }
     .form-control-date {
         background-position: center left;
     }

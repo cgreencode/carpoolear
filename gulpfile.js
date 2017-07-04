@@ -29,13 +29,7 @@ var path = require('path');
 
 gulp.task('deploy', function () {
   // Dirs and Files to sync
-    rsyncPaths = [
-        'cordova/platforms/browser/www/*.*',
-        'cordova/platforms/browser/www/cordova-js-src',
-        'cordova/platforms/browser/www/static',
-        'cordova/platforms/browser/www/plugins',
-        'cordova/platforms/browser/www/fonts'
-    ];
+    rsyncPaths = [ 'cordova/platforms/browser/www/' ];
 
   // Default options for rsync
     rsyncConf = {
