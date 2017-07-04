@@ -63,7 +63,6 @@ export default {
     mounted () {
         if (this.id === 'me' || this.id === this.user.id) {
             this.setTitle('Mi Perfil');
-            console.log(this.user);
             this.setProfile(this.user);
             this.currentView = 'my-trips';
         } else {
