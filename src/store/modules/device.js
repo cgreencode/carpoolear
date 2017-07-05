@@ -42,16 +42,14 @@ const actions = {
     },
 
     update (store, data = {}) {
-        if (state.current) {
-            Object.assign(data, store.rootGetters['cordova/deviceData']);
-            data.app_version = store.rootState.appVersion;
-            data.notifications = state.current.notifications;
-            return deviceApi.update(store.state.current.id, data).then((response) => {
-                store.commit(types.DEVICE_SET_CURRENT_DEVICE, response.data);
-            }).catch((err) => {
-                console.log(err);
-            });
-        }
+        Object.assign(data, store.rootGetters['cordova/deviceData']);
+        data.app_version = store.rootState.appVersion;
+        data.notifications = state.current.notifications;
+        return deviceApi.update(store.state.current.id, data).then((response) => {
+            store.commit(types.DEVICE_SET_CURRENT_DEVICE, response.data);
+        }).catch((err) => {
+            console.log(err);
+        });
     },
 
     delete (store, id) {
