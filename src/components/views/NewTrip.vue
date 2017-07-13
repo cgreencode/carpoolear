@@ -38,7 +38,7 @@
                                 <div>{{estimatedTimeString}}  </div>
                             </li>
                             <li class="list_item">
-                                <div class="label-soft">CO2</div>
+                                <div class="label-soft">Huella de carbono (<abbr title="kilogramos dióxido de carbono equivalente">kg CO<sub>2eq</sub></abbr>)</div>
                                 <div>{{CO2String}}</div>
                             </li>
                         </ul>
@@ -91,11 +91,11 @@
                     <ul class="no-bullet">
                         <li>
                             <input type="radio" id="privacity-public" value="2" v-model="trip.friendship_type_id">
-                            <label for="privacity-public" class="label-soft">Publicos</label>
+                            <label for="privacity-public" class="label-soft">Público</label>
                         </li>
                         <li>
                             <input type="radio" id="privacity-friend" value="0" v-model="trip.friendship_type_id">
-                            <label for="privacity-friend" class="label-soft">Amigos</label>
+                            <label for="privacity-friend" class="label-soft">Solo amigos</label>
                         </li>
                         <li>
                             <input type="radio" id="privacity-friendofriend" value="1" v-model="trip.friendship_type_id">
@@ -218,7 +218,7 @@ export default {
             cars: 'cars/cars'
         }),
         distanceString () {
-            return Math.floor(this.trip.distance / 1000) + ' Kms';
+            return Math.floor(this.trip.distance / 1000) + ' Km';
         },
         estimatedTimeString () {
             let totalMinutes = Math.floor(this.duration / 60);
@@ -227,7 +227,7 @@ export default {
             return (hour < 10 ? '0' : '') + hour + ':' + (minutes < 10 ? '0' : '') + minutes;
         },
         CO2String () {
-            return this.trip.co2 + ' Kg';
+            return Math.floor(this.trip.distance / 1000) * 1.5 + ' Kg';
         }
     },
     methods: {
