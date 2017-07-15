@@ -2,7 +2,6 @@ import * as types from '../mutation-types';
 import facebook from '../../cordova/facebook.js';
 import {AuthApi} from '../../services/api';
 import globalStore from '../index';
-import router from '../..//router';
 
 let authApi = new AuthApi();
 // initial state
@@ -69,7 +68,7 @@ const actions = {
     },
 
     onBackButton (store) {
-        router.go(-1);
+        // do staff
     }
 };
 

@@ -80,14 +80,7 @@ const actions = {
         state.resolution.width = x;
         state.resolution.height = y;
         bus.emit('resize', state.resolution);
-    },
-    scrolling () {
-        let realScroll = document.body.scrollHeight - state.resolution.height;
-        if (document.body.scrollTop + 400 > realScroll) {
-            bus.emit('scroll-bottom', state.resolution);
-        }
     }
-
 };
 
 // mutations
@@ -129,4 +122,3 @@ export default {
 };
 
 window.addEventListener('resize', actions.resize, false);
-window.addEventListener('scroll', actions.scrolling, false);
