@@ -13,6 +13,9 @@
   --secondary-font-color: #F6F6F6;
 
   --form-background: #FFFFFF;
+
+  --button-facebook-blue-left: #354f88;
+  --button-facebook-blue-right: #3b5997;
 }
 html {
     font-size: 100%;
@@ -24,7 +27,11 @@ body {
     font-family: 'Roboto', 'Montserrat', sans-serif !important;
     font-weight: 400;
 }
-
+.app-container {
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
 p {
     margin: 1.5rem 0;
     font-size: .9rem;
@@ -46,7 +53,6 @@ h1 {
 textarea {
     resize: none;
     width: 100%;
-    border: 1px solid #666666;
 }
 .no-bullet {
     list-style: none;
@@ -105,6 +111,11 @@ input[type=radio] + label {
     border-color: #ccc;
     color: #ccc;
     background: rgba(215,37,33, 0.8);
+}
+input[type="checkbox"] {
+    vertical-align: -2px;
+    transform: scale(1.4);
+    margin-left: 8px;
 }
 .btn-full-width {
   width: 100%;
@@ -165,6 +176,66 @@ input[type=radio] + label {
     background: rgb(1, 83, 111);
 }
 
+.btn-with-icon {
+    display: block;
+    height: 54px;
+    position: relative;
+    background-color: var(--button-facebook-blue-right);
+    outline: none;
+    box-shadow: none;
+    border: none;
+    width: 100%;
+}
+.btn-with-icon:hover .btn-with-icon--icon {
+    background-color: #2c406d;
+}
+.btn-with-icon:hover {
+    background-color: rgb(48, 75, 130);
+}
+.btn-with-icon:focus,
+.btn-with-icon:active,
+.btn-sarch:active:hover, 
+.btn-with-icon.active:hover, 
+.open > .dropdown-toggle.btn-with-icon:hover, 
+.btn-with-icon:active:focus, 
+.btn-with-icon.active:focus, 
+.open > .dropdown-toggle.btn-with-icon:focus, 
+.btn-with-icon.focus:active, 
+.btn-with-icon.active.focus, 
+.open > .dropdown-toggle.btn-with-icon.focus {
+    background-color: rgb(48, 75, 130);
+}
+.btn-with-icon:focus .btn-with-icon--icon,
+.btn-with-icon:active .btn-with-icon--icon,
+.btn-sarch:active:hover .btn-with-icon--icon,
+.btn-with-icon.active:hover .btn-with-icon--icon,
+.open > .dropdown-toggle.btn-with-icon:hover .btn-with-icon--icon, 
+.btn-with-icon:active:focus .btn-with-icon--icon, 
+.btn-with-icon.active:focus .btn-with-icon--icon, 
+.open > .dropdown-toggle.btn-with-icon:focus .btn-with-icon--icon, 
+.btn-with-icon.focus:active .btn-with-icon--icon, 
+.btn-with-icon.active.focus .btn-with-icon--icon, 
+.open > .dropdown-toggle.btn-with-icon.focus .btn-with-icon--icon {
+    background-color: #2c406d;
+}
+
+.btn-with-icon--icon {
+    background-color: var(--button-facebook-blue-left);
+    top: 1px;
+    position: absolute;
+    height: calc(100% - 1px);
+    left: 0;
+    width: 40px;
+    line-height: 54px;
+  }
+  .btn-with-icon--icon > i {
+    font-size: 20px;
+    line-height: 46px;
+  }
+  .btn-with-icon--label {
+    margin-left: 40px;
+  }
+
 .btn-option {
     border-radius: 0;
     padding: 1em;
@@ -206,12 +277,6 @@ input[type=radio] + label {
 
     border-color: var(--soft-font-color);
 
-}
-.form-inline-with-margin {
-    margin-bottom: 1.5em;
-}
-.form-inline-with-margin .form-control {
-    margin-bottom: 0;
 }
 /* -------------------- */
 .form-control-with-icon {
@@ -409,7 +474,7 @@ textarea {
     border: none;
     color: white;
 }
-.nav > li > a {
+.nav>li>a {
     padding: 10px 0;
 }
 .nav>li>a:hover,
@@ -439,9 +504,7 @@ textarea {
     margin-left: -12px;
     z-index: 1;
 }
-.nav-pills > li > a {
-    padding: 10px 15px;
-}
+
 .card-trip {
     box-shadow: 0 0 4px 1px #CCC;
     border-radius: .4em;
@@ -549,7 +612,7 @@ textarea {
     float: right;
     width: 1px;
     margin-right: 13px;
-    height: 28px;
+    height: 50px;
     content: '\A0';
     border: 0;
     border-left: solid 1px #777;
@@ -643,33 +706,26 @@ textarea {
     border-radius: .4rem;
     color: var(--secondary-font-color);
 
-    padding: 1em;
+    padding: 1.5em;
     margin-bottom: 1.5em;
+    margin-right: 1.5em;
 }
-@media (min-width: 768px) {
-
-    .trip-type-selection {
-        padding: 1.5em;
-        margin-right: 1.5em;
-    }
-    .trip-type-selection:after { /* CSS Arrow only for no mobiles */
-        left: 100%;
-        top: 30%;
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-        border-color: rgba(136, 183, 213, 0);
-        border-left-color: var(--secondary-background);
-        border-width: 9px;
-        margin-top: -9px;
-    }
+.trip-type-selection:after { /* CSS Arrow */
+	left: 100%;
+	top: 30%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-left-color: var(--secondary-background);
+	border-width: 9px;
+	margin-top: -9px;
 }
-
 .trip-type-selection .control-label {
-    color: #FFFFFF;
+  color: #FFFFFF;
 }
 .trip_points,
 .trip_information {
@@ -830,9 +886,7 @@ textarea {
     left: -8px;
     text-shadow: 1px 1px 1px #333;
 }
-.form-trip .map {
-    margin-top: 1.5em;
-}
+
 .xcv {
     border-bottom: 1px solid #CCC;
     margin-bottom: 1rem;
@@ -874,40 +928,13 @@ textarea {
     border-top-right-radius: 0;
     border-top-left-radius: 0;
 }
-.conversation_image {
+.conversation_list .conversation_image {
     margin-right: 10px;
     vertical-align: middle;
     width: 56px;
     height: 56px;
 }
-.message-wrapper {
-    text-align: left;
-    margin-bottom: 1em;
-}
-.message-wrapper-me {
-    text-align: right;
-}
-.message-wrapper .message {
-    display: inline-block;
-    padding: .5em 1em;
-    border-radius: 5px;
-    width: auto;
-    background: var(--secondary-background);
-    color: var(--secondary-font-color);
-}
-.conversation_chat--chats  .media-body,
-.message-wrapper .message .media-body {
-    width: auto;
-}
-.message-wrapper-me .message {
-    background: var(--trip-almost-fill-color);
-    color: var(--secondary-font-color);
-}
-.message_meta {
-    text-align: right;
-    font-size: 0.8em;
-    color: var(--soft-font-color);
-}
+
 .update-profile-component .form {
     padding: 2.2em;
 }
@@ -1135,9 +1162,7 @@ textarea {
 .container {
     padding-top: 1.5em;
 }
-.conversation-component {
-    padding-bottom: 3em;
-}
+
 .footer-component .container {
     padding: 2.4em 0;
 }
@@ -1188,45 +1213,45 @@ textarea {
 }
 
 .user-form {
-    padding-left: 10px;
-    padding-right: 10px;
+    text-align: center;
     position: relative;
     max-width: 800px;
-    margin: 2.8rem auto 4.8rem auto;
     min-height: calc(100vh - 196px);
 }
+.user-form h1 {
+    margin-top: .4em;
+    font-size: 28px;
+}
+
+.user-form .form {
+    box-shadow: none;
+    padding: 10px 1em;
+    background: transparent;
+}
+
+.user-form .form > div:last-child{
+    color: white;
+    margin-top: 2rem;
+}
+
 .user-form label {
+    color: white;
     text-transform: uppercase;
     font-weight: 400;
 }
 .user-form h2 {
     font-weight: normal;
 }
-.user-form h1 {
-    font-size: 32px;
-    margin-bottom: .6em;
-    display: inline-block;
-    vertical-align: bottom;
-    margin-left: 110px;
-}
-.user-form img {
-    left: 20px;
-    width: 84px;
-    top: -25px;
-    position: absolute;
-}
+
 .user-form input[type='text'],
 .user-form input[type='password'] {
-    font-size: 20px;
+    font-size: 14px;
     display: block;
     padding: .4em .5em;
     margin-bottom: 0.5em;
     width: 100%;
     border: 1px solid #ccc;
-}
-.user-form .form {
-    padding: 5.2em 6em 3em 2em;
-    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+    line-height: 28px;
 }
 .user-form li {
     display: inline-block;
@@ -1238,8 +1263,18 @@ textarea {
 .user-form .btn-primary {
     margin-top: 1em;
     padding: 1em;
+    width: 100%;
+}
+.user-form a {
+    color: #ddd;
+    font-weight: bold;
+    text-decoration: underline;
+}
+.user-form a:hover {
+    color: #fff;
 }
 ul {
+    color: #fff;
     list-style-type: none;
     padding: 0;
 }
@@ -1295,11 +1330,52 @@ ul {
     padding-left: 0;
 }
 
-@media only screen and (max-width: 768px) {
-    .trip-create {
-        width: 100%;
-        margin: 1em 0;
+
+@media only screen and (max-width: 400px) {
+    .nav-tabs>li>a {
+        font-size: 10px;
     }
+    .nav>li>a.active::after {
+        top: 36px;
+    }
+    .profile-info-component .list-group-item img {
+        width: 80%;
+    }
+    .profile .list-group-item {
+        padding: 10px 0;
+    }
+    .profile-info-component .edit-action button {
+        margin: .4em 0;
+        width: 80%;
+    }
+    .profile-info-component .edit-action button:first-child {
+        margin: .4em 0;
+    }
+    .profile_image .circle-box {
+        max-height: 140px;
+        max-width: 140px;
+    }
+    .update-profile-component .form {
+        margin-top: 1em;
+    }
+    .btn,
+    .btn-primary,
+    body {
+        font-size: 12px;
+    }
+    .user-form .btn-primary.btn-facebook {
+        width: 100%;
+        padding-left: 0;
+        padding: 0;
+    }
+    .btn-with-icon--label {
+        display: inline-block;
+        margin-left: 50px;
+        text-align: left;
+    }
+}
+
+@media only screen and (max-width: 768px) {
     .profile_image .circle-box {
         max-height: 220px;
         max-width: 220px;
@@ -1343,42 +1419,60 @@ ul {
     .update-profile-component .form {
         margin-top: 7em;
     }
-
-    .form-trip {
-        padding: 12px 15px;
-    }
-}
-
-@media only screen and (max-width: 400px) {
-    .nav-tabs>li>a {
-        font-size: 10px;
-    }
-    .nav>li>a.active::after {
-        top: 36px;
-    }
-    .profile-info-component .list-group-item img {
-        width: 80%;
-    }
-    .profile .list-group-item {
-        padding: 10px 0;
-    }
-    .profile-info-component .edit-action button {
-        margin: .4em 0;
-        width: 80%;
-    }
-    .profile-info-component .edit-action button:first-child {
-        margin: .4em 0;
-    }
-    .profile_image .circle-box {
-        max-height: 140px;
-        max-width: 140px;
-    }
-    .update-profile-component .form {
-        margin-top: 1em;
-    }
 }
 
 @media only screen and (min-width: 768px) {
+    .app-container .view-container {
+        padding-top: 7rem;
+    }
+    .user-form .btn-primary {
+        width: initial;
+        padding: 1em 2em;
+    }
+    .user-form a {
+        color: #009bde;
+    }
+    .user-form a:hover {
+        color: #337ab7;
+    }
+    .btn-with-icon {
+        width: initial;
+    }
+    .user-form label {
+        color: rgb(1, 101, 135);
+    }
+    .user-form .form {
+        padding: 2em;
+    }
+    .user-form {
+        padding-left: 10px;
+        padding-right: 10px;
+        margin: 2.8rem auto 4.8rem auto;
+        text-align: left;
+    }
+    .user-form h1 {
+        font-size: 32px;
+        margin-bottom: .6em;
+        display: inline-block;
+        vertical-align: bottom;
+        margin-left: 110px;
+    }
+    .user-form img {
+        left: 20px;
+        width: 84px;
+        top: -25px;
+        position: absolute;
+    }
+    .user-form .form > div:last-child{
+        color: inherit;
+        margin-top: inherit;
+    }    
+    .user-form .form {
+        padding: 5.2em 2em 3em 2em;
+        box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+        background: #fff;
+        box-shadow: 0 0 10px 5px rgba(0, 0, 0, .1);
+    }
     .update-profile-component .profile_image-edit {
         right: -6px;
         bottom: -6px;

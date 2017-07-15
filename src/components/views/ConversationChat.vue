@@ -3,16 +3,14 @@
         <div class="list-group">
             <div class="list-group-item">
                 <h2> {{conversation.title}} </h2>
-                <p class="chat_last_connection">
-                    <strong>Última conexión: </strong>
-                    <span class="">{{lastConnection | moment("calendar")}}</span>
-                </p>
+                <span class="chat_last_connection"> {{lastConnection | moment("calendar")}}  </span>
             </div>
-            <div class="list-group-item clearfix">
+            <div class="list-group-item">
                 <div>
                     <button @click="searchMore" v-if="!lastPageConversation" class="btn text-center btn-full-width" v-jump:click.blur="'btn_login'"> Ver más mensajes </button>
                 </div>
-                <MessageView v-for="m in messages" :message="m" :user="user" :users="conversation.users"></MessageView>
+                <MessageView v-for="m in messages" :message="m" :user="user" :users="conversation.users">
+                </MessageView>
             </div>
             <div class="list-group-item">
                 <div class="input-group">
@@ -36,6 +34,7 @@
 import {mapGetters, mapActions} from 'vuex';
 import {Thread} from '../../classes/Threads.js';
 import MessageView from '../MessageView';
+import router from '../../router';
 
 export default {
     name: 'conversation-chat',
@@ -50,7 +49,8 @@ export default {
             'user': 'auth/user',
             'messages': 'conversations/messagesList',
             'lastPageConversation': 'conversations/lastPageConversation',
-            'timestampConversation': 'conversations/timestampConversation'
+            'timestampConversation': 'conversations/timestampConversation',
+            'isMobile': 'device/isMobile'
         }),
         lastConnection () {
             let users = this.conversation.users.filter(item => item.id !== this.user.id);
@@ -96,6 +96,11 @@ export default {
     watch: {
         'id': function () {
             this.select(parseInt(this.id));
+        },
+        isMobile: function () {
+            if (!this.id && this.isMobile) {
+                router.push({ name: 'conversations-list' });
+            }
         }
     },
     props: [
