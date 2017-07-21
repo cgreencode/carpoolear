@@ -62,6 +62,10 @@
                         </li>
                         <li role="separator" class="divider"></li>
                         <li>
+                            <router-link :to="{name: 'acerca_de'}">Acerca</router-link>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
                             <router-link :to="{name: 'profile_update'}">Configuración</router-link>
                         </li>
                         <li><a @click="logout" v-if="!isFacebokApp">Cerrar sesión</a></li>
@@ -94,10 +98,6 @@ export default {
             background_desktop: process.env.ROUTE_BASE + 'static/img/background_desktop.png',
             carpoolear_logo: process.env.ROUTE_BASE + 'static/img/carpoolear_logo.png'
         };
-    },
-
-    mounted () {
-        console.log(this.carpoolear_logo);
     },
 
     computed: {

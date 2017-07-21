@@ -1,7 +1,7 @@
 <template>
-
+  
   <div class="user-form container" >
-    <img :src="carpoolear_logo" />
+    <img src="/static/img/carpoolear_logo.png" />
     <h1> Registrar nuevo usuario </h1>
     <div class='form'>
       <label for="txt_name">Nombre</label>
@@ -17,7 +17,7 @@
       <div class="terms">
         <input  type="checkbox" id="cbx_terms" v-model='termsAndConditions' />
         <label for="cbx_terms">He leído y acepto términos y condiciones</label>
-        <button @click="register" class="btn-primary" :disabled="progress"> Registrarme </button>
+        <button @click="register" class="btn-primary"> Registrarme </button>
       </div>
     </div>
   </div>
@@ -25,7 +25,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import dialogs from '../../services/dialogs.js';
 
 export default {
     name: 'register',
@@ -36,9 +35,7 @@ export default {
             passwordConfirmation: '',
             name: '',
             sureName: '',
-            termsAndConditions: false,
-            carpoolear_logo: process.env.ROUTE_BASE + 'static/img/carpoolear_logo.png',
-            progress: false
+            termsAndConditions: false
         };
     },
     computed: {
@@ -56,12 +53,10 @@ export default {
             let passwordConfirmation = this.passwordConfirmation;
             let name = this.name + ' ' + this.sureName;
             let termsAndConditions = this.termsAndConditions;
-            this.progress = true;
             this.doRegister({email, password, passwordConfirmation, name, termsAndConditions}).then(() => {
-                this.progress = false;
+
             }).catch(() => {
-                dialogs.message('La cuenta de email esta en uso', {estado: 'error'});
-                this.progress = false;
+
             });
         }
     }
