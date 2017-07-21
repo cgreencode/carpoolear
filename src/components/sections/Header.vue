@@ -62,13 +62,9 @@
                         </li>
                         <li role="separator" class="divider"></li>
                         <li>
-                            <router-link :to="{name: 'acerca_de'}">Acerca</router-link>
-                        </li>
-                        <li role="separator" class="divider"></li>
-                        <li>
                             <router-link :to="{name: 'profile_update'}">Configuración</router-link>
                         </li>
-                        <li><a @click="logout" v-if="!isFacebokApp">Cerrar sesión</a></li>
+                        <li><a @click="logout">Cerrar sesión</a></li>
                     </dropdown>
                 </div>
 
@@ -100,10 +96,6 @@ export default {
         };
     },
 
-    mounted () {
-        console.log(this.carpoolear_logo);
-    },
-
     computed: {
         ...mapGetters({
             logged: 'auth/checkLogin',
@@ -113,8 +105,7 @@ export default {
             leftHeaderButton: 'actionbars/leftHeaderButton',
             rightHeaderButton: 'actionbars/rightHeaderButton',
             logoHeaderVisibility: 'actionbars/headerLogoVisibility',
-            isNotLargeDesktop: 'device/isNotLargeDesktop',
-            isFacebokApp: 'device/isFacebokApp'
+            isNotLargeDesktop: 'device/isNotLargeDesktop'
         }),
 
         showLogo () {

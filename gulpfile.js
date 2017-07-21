@@ -30,7 +30,6 @@ var exec = require('child_process').exec;
 
 gulp.task('build-cordova', function (cb) {
     exec('cd cordova && cordova build browser && cd ..', function (err, stdout, stderr) {
-        console.log(stdout);
         cb(err);
     });
 });

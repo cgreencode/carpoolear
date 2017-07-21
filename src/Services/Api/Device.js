@@ -10,7 +10,7 @@ class DeviceApi extends TaggedApi {
         return this.put('/api/devices/' + id, data);
     }
 
-    remove (id) {
+    delete (id) {
         return this.delete('/api/devices/' + id);
     }
 
