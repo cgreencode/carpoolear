@@ -1591,7 +1591,7 @@ ul {
     .nav-tabs {
         border-bottom: 1px solid #aaa;
     }
-    .nav>li>a:hover, 
+    .nav>li>a:hover,
     .nav>li>a:focus {
         color: #777;
     }
@@ -1773,6 +1773,9 @@ ul {
     }
     .gmap-autocomplete .date-picker--cross {
         right: 20px;
+        top: 15px;
+    }
+    .search-section  .gmap-autocomplete .date-picker--cross {
         top: 23px;
     }
     .origin.gmap-autocomplete .date-picker--cross  {
@@ -1881,4 +1884,39 @@ ul {
   -webkit-transform: translateY(12px);
   -moz-transform:    translateY(12px);
   transform:         translateY(12px);
+}
+.social-share {
+    text-align: center;
+}
+.lnk-social-network {
+    font-size: 2em;
+    background: lightgray;
+    color: white;
+    border-radius: 5px;
+    min-width: 3em;
+    padding: 0;
+    display: inline-block;
+    text-align: center;
+    margin: .5em;
+}
+.lnk-social-network:focus,
+.lnk-social-network:hover {
+    color: white;
+    background: gray;
+}
+.lnk-facebook {
+    background: #3B5998;
+}
+.lnk-twitter {
+    background: #1DA1F2;
+}
+.lnk-google-plus {
+    background: #DB4437;
+}
+
+.lnk-whatsapp {
+    background: #09D261;
+}
+.ajs-error {
+    color: white;
 }
