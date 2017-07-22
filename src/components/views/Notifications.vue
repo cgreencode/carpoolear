@@ -69,9 +69,3 @@ export default {
 
 };
 </script>
-
-<style scoped>
-    .container {
-        padding: 3em 2em;
-    }
-</style>
