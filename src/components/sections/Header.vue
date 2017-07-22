@@ -32,7 +32,23 @@
                 </div>
             </router-link>
             <div class="header_panel-right">
-
+                <modal :name="'modal'" v-if="showModal" @close="showModal = false" :title="'Test'" :body="'Body'">
+                    <h3 slot="header">Invitar a amigos</h3>
+                    <div slot="body" class="social-share">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fcarpoolear.com%2F" target="_blank" aria-label="Compartir en Facebook" class="lnk lnk-social-network lnk-facebook">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://plus.google.com/share?url=https%3A%2F%2carpoolear.com%2F" target="_blank" aria-label="Compartir en Google+"  class="lnk lnk-social-network lnk-google-plus">
+                            <i class="fa fa-google-plus" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://twitter.com/intent/tweet/?text=Carpoolear%3A%20plataforma%20para%20compartir%20viajes%20en%20autos&url=https%3A%2F%2Fcarpoolear.com&via=carpoolear&hashtags=carpooling" target="_blank" aria-label="Compartir en Twitter"   class="lnk lnk-social-network lnk-twitter">
+                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="whatsapp://send?text=Carpoolear%3A%20plataforma%20para%20compartir%20viajes%20en%20autos%20https%3A%2F%2carpoolear.com%2F" target="_blank" aria-label="Compartir en Whats App"   class="lnk lnk-social-network lnk-whatsapp"  v-if="isMobile">
+                            <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </modal>
                 <button @click="share" type="button" class="btn btn-link">Invitar amigos</button>
                 <router-link class="btn btn-link" v-if="!logged" :to="{name: 'trips'}">Viajes</router-link>
                 <router-link class="btn btn-link" v-if="!logged" :to="{name: 'trips'}">Información</router-link>
@@ -62,9 +78,13 @@
                         </li>
                         <li role="separator" class="divider"></li>
                         <li>
+                            <router-link :to="{name: 'acerca_de'}">Acerca</router-link>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
                             <router-link :to="{name: 'profile_update'}">Configuración</router-link>
                         </li>
-                        <li><a @click="logout">Cerrar sesión</a></li>
+                        <li><a @click="logout" v-if="!isFacebokApp">Cerrar sesión</a></li>
                     </dropdown>
                 </div>
 
@@ -84,6 +104,7 @@ import {mapGetters} from 'vuex';
 import {dropdown} from 'vue-strap';
 import router from '../../router';
 import bus from '../../services/bus-event.js';
+import modal from '../Modal';
 
 export default {
     name: 'header',
@@ -92,8 +113,13 @@ export default {
         return {
             background_desktop_mini: process.env.ROUTE_BASE + 'static/img/background_desktop_mini.png',
             background_desktop: process.env.ROUTE_BASE + 'static/img/background_desktop.png',
-            carpoolear_logo: process.env.ROUTE_BASE + 'static/img/carpoolear_logo.png'
+            carpoolear_logo: process.env.ROUTE_BASE + 'static/img/carpoolear_logo.png',
+            showModal: false
         };
+    },
+
+    mounted () {
+        console.log(this.carpoolear_logo);
     },
 
     computed: {
@@ -105,7 +131,8 @@ export default {
             leftHeaderButton: 'actionbars/leftHeaderButton',
             rightHeaderButton: 'actionbars/rightHeaderButton',
             logoHeaderVisibility: 'actionbars/headerLogoVisibility',
-            isNotLargeDesktop: 'device/isNotLargeDesktop'
+            isNotLargeDesktop: 'device/isNotLargeDesktop',
+            isFacebokApp: 'device/isFacebokApp'
         }),
 
         showLogo () {
@@ -120,8 +147,12 @@ export default {
 
     methods: {
         share () {
-            dialogs.message('Message example');
-            socialShare.share();
+            // dialogs.message('Message example');
+            if (window && window.plugins && window.plugins.socialsharing && window.plugins.socialsharing.shareWithOptions) {
+                socialShare.share();
+            } else {
+                this.showModal = true;
+            }
         },
 
         logout () {
@@ -138,7 +169,8 @@ export default {
     },
 
     components: {
-        dropdown
+        dropdown,
+        modal
     }
 };
 </script>
