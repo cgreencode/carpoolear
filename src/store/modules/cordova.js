@@ -3,7 +3,6 @@ import facebook from '../../cordova/facebook.js';
 import {AuthApi} from '../../services/api';
 import globalStore from '../index';
 import router from '../..//router';
-import bus from '../../services/bus-event.js';
 
 let authApi = new AuthApi();
 // initial state
@@ -70,15 +69,7 @@ const actions = {
     },
 
     onBackButton (store) {
-        let result = bus.emit('backbutton');
-        if (!result) {
-            if (router.stack.length > 0) {
-                router.go(-1);
-            } else {
-                console.log('Must close apps');
-                navigator.Backbutton.goHome();
-            }
-        }
+        router.go(-1);
     }
 };
 

@@ -59,17 +59,15 @@ export default {
         onSearchButton () {
             this.lookSearch = true;
             this.setActionButton(['clear']);
-            bus.on('backbutton', this.onBackBottom);
         },
 
         onClearButton () {
-            bus.off('backbutton', this.onBackBottom);
             this.setActionButton(['search']);
             this.filtered = false;
             this.lookSearch = false;
             this.search({});
         },
-        onScrollBottom () {
+        onScrolBottom () {
             if (this.morePages) {
                 if (!this.runningSearch) {
                     this.runningSearch = true;
@@ -77,23 +75,18 @@ export default {
                     this.search({next: true}).then(done, done);
                 }
             }
-        },
-        onBackBottom () {
-            bus.off('backbutton', this.onBackBottom);
-            this.onClearButton();
         }
     },
     mounted () {
         // this.search();
         bus.on('search-click', this.onSearchButton);
         bus.on('clear-click', this.onClearButton);
-        bus.on('scroll-bottom', this.onScrollBottom);
+        bus.on('scroll-bottom', this.onScrolBottom);
     },
     beforeDestroy () {
         bus.off('search-click', this.onSearchButton);
         bus.off('clear-click', this.onClearButton);
-        bus.off('scroll-bottom', this.onScrollBottom);
-        bus.off('backbutton', this.onBackBottom);
+        bus.off('scroll-bottom', this.onScrolBottom);
     },
     computed: {
         ...mapGetters({
