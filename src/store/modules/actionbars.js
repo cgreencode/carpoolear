@@ -3,7 +3,6 @@ import router from '../../router';
 
 const state = {
     title: 'Carpoolear',
-    subTitle: '',
     header_buttons: [
         {
             id: 'back',
@@ -68,7 +67,6 @@ const state = {
 
 const getters = {
     title: state => state.title,
-    subTitle: state => state.subTitle,
     leftHeaderButton: state => state.header_buttons.filter(item => item.position === 'left'),
     rightHeaderButton: state => state.header_buttons.filter(item => item.position === 'right'),
     headerLogoVisibility: state => state.header_logo_visibility,
@@ -83,10 +81,6 @@ const actions = {
         if (document) {
             document.title = title + (title !== 'Carpoolear' ? ' - Carpoolear' : '');
         }
-    },
-
-    setSubTitle (store, newSubTitle = '') {
-        store.commit(types.HEADER_SET_SUB_TITLE, newSubTitle);
     },
 
     setHeaderButtons (store, items) {
@@ -118,10 +112,6 @@ const actions = {
 const mutations = {
     [types.HEADER_SET_TITLE] (state, title) {
         state.title = title;
-    },
-
-    [types.HEADER_SET_SUB_TITLE] (state, newSubTitle) {
-        state.subTitle = newSubTitle;
     },
 
     [types.FOOTER_SET_VISIBILITY] (state, show) {
