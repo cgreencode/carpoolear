@@ -4,7 +4,8 @@
     "displayName": "Carpoolear",
     "cordova": {
         "platforms": [
-            "android"
+            "android",
+            "browser"
         ],
         "plugins": {
             "cordova-plugin-device": {},
@@ -24,6 +25,8 @@
     },
     "dependencies": {
         "cordova-android": "^6.2.3",
+        "cordova-browser": "^4.1.0",
+        "cordova-ios": "^4.4.0",
         "cordova-plugin-backbutton": "^0.3.0",
         "cordova-plugin-device": "~1.1.4",
         "cordova-plugin-facebook4": "~1.7.4",
