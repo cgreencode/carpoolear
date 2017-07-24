@@ -33,7 +33,6 @@ router.beforeEach((to, from, next) => {
     }
 
     if (actionbar.header) {
-        store.dispatch('actionbars/setSubTitle', '');
         if (actionbar.header.title) {
             store.dispatch('actionbars/setTitle', actionbar.header.title);
         } else {
@@ -57,7 +56,7 @@ router.beforeEach((to, from, next) => {
     if (background.style) {
         store.dispatch('background/setBackgroundStyle', background.style);
     } else {
-        store.dispatch('background/setBackgroundStyle', 'gray');
+        store.dispatch('background/setBackgroundStyle', 'white');
     }
     window.scrollTo(0, 0);
     next();
@@ -69,20 +68,21 @@ router._replace = router.replace;
 router._go = router.go;
 
 router.push = function (data) {
-    console.log(router.stack);
+    console.log('push', JSON.stringify(router.stack), JSON.stringify(data));
     router.stack.push(data);
     router._push(data);
 };
 
 router.replace = function (data) {
+    console.log('replace', JSON.stringify(router.stack), JSON.stringify(data));
     router.stack.pop();
     router.stack.push(data);
     router._push(data);
 };
 
 router.go = function (number) {
-    console.log(router.stack);
-    router.stack.slice(0, number);
+    console.log('go', JSON.stringify(router.stack), number);
+    router.stack.splice(-1, -number);
     router._go(number);
 };
 

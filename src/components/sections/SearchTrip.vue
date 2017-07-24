@@ -177,7 +177,7 @@ export default {
 
 <style scoped>
     .search-section {
-        width: 100%;
+        width: calc(100%);
     }
     .search-section .btn-option {
         width: 100%;
@@ -205,8 +205,8 @@ export default {
     }
     @media only screen and (min-width: 300px) {
         .swap {
-            left: -30px;
-            top: 122px;
+            left: 10px;
+            top: 198px;
             border-radius: 0;
             position: absolute;
             z-index: 1;
@@ -229,7 +229,7 @@ export default {
             height: initial;
         }
         .swap {
-            top: 108px;
+            top: 178px;
         }
         .btn-option img {
             width: initial;

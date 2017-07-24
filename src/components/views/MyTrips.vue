@@ -101,9 +101,3 @@ export default {
     }
 };
 </script>
-
-<style scoped>
-    h2 {
-        font-weight: 300;
-    }
-</style>
