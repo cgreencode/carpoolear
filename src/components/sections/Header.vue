@@ -100,6 +100,7 @@
 
 <script>
 import socialShare from '../../services/socialShare.js';
+import dialogs from '../../services/dialogs.js';
 import {mapGetters} from 'vuex';
 import {dropdown} from 'vue-strap';
 import router from '../../router';
