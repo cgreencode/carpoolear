@@ -60,8 +60,7 @@ export default {
             let password = this.password;
             this.doLogin({email, password}).then(data => {
                 this.loading = false;
-                // router.push({ name: 'trips' });
-                // router.rememberBack();
+                router.push({ name: 'trips' });
             }, error => {
                 dialogs.message('Email o password incorrecto', { duration: 10, estado: 'error' });
                 if (error) {

@@ -52,7 +52,7 @@ gulp.task('deploy', ['build-cordova'], function () {
         relative: false,
         emptyDirectories: true,
         recursive: true,
-        clean: true,
+        clean: false,
         exclude: [],
         dryrun: argv.testing
     };

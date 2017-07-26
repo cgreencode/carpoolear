@@ -4,10 +4,10 @@
             <img :src="carpoolear_logo" />
         </router-link>
         <h1> Recuperar contraseña </h1>
-        <div class="form row" v-if="send">
+        <div v-if="send">
             <h3> Se ha enviado un email a su casilla de correo con las indicaciones para restablecer su contraseña. </h3>
         </div>
-        <div class="form row" v-else-if="!token">
+        <div class='form row' v-else-if="!token">
             <label for="txt_email">E-mail</label>
             <input type="text" id="txt_email" v-model='email'/>
 
@@ -15,7 +15,8 @@
             <span v-if="loading" class='loading'> Espere... </span>
             <span v-if="error"> {{error}} </span>
         </div>
-        <div class='form row' v-else-if="token">
+        <div class='form' v-else-if="token">
+            <div class='form'>
             <label for="txt_password">Password</label>
             <input  type="password" id="txt_password" v-model='password' />
 
@@ -25,6 +26,7 @@
             <button class="btn btn-primary" @click="change"> Cambiar contraseña </button>
             <span v-if="loading" class='loading'> Espere... </span>
             <span v-if="error"> {{error}} </span>
+            </div>
         </div>
     </div>
 </template>
@@ -33,8 +35,6 @@
 import { mapActions, mapGetters } from 'vuex';
 import bus from '../../services/bus-event';
 import router from '../../router';
-
-let emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
 export default {
     name: 'reset-password',
@@ -69,19 +69,15 @@ export default {
         }),
 
         reset () {
+            this.loading = true;
             this.error = null;
-            if (emailRegex.test(this.email)) {
-                this.loading = true;
-                this.resetPassword(this.email).then(() => {
-                    this.loading = false;
-                    this.send = true;
-                }, () => {
-                    this.loading = false;
-                    this.error = 'No se encuentra el e-mail en nuestra base de datos.';
-                });
-            } else {
-                this.error = 'Ingrese un email valido.';
-            }
+            this.resetPassword(this.email).then(() => {
+                this.loading = false;
+                this.send = true;
+            }, () => {
+                this.loading = false;
+                this.error = 'No se encuentra el e-mail en nuestra base de datos';
+            });
         },
 
         change () {
@@ -93,7 +89,7 @@ export default {
                 data.password_confirmation = this.password_confirmation;
                 let token = this.token;
                 this.changePassword({token, data}).then(() => {
-                    this.$router.replace({name: 'login'});
+                    // nothing
                 }, () => {
                     this.loading = false;
                     this.error = 'Token invalido';

@@ -1,11 +1,12 @@
 <template>
+
   <div class="user-form container" >
     <router-link v-if="!isMobile"  :to="{name: 'trips'}">
         <img :src="carpoolear_logo" />
     </router-link>
     <img v-if="isMobile" :src="carpoolear_logo" />
     <h1> Registrar nuevo usuario </h1>
-    <div class='form row' v-if="!success">
+    <div class='form row'>
       <label for="txt_name">Nombre</label>
       <input  type="text" id="txt_name" v-model='name' />
       <label for="txt_surename">Apellido</label>
@@ -19,12 +20,8 @@
       <div class="terms">
         <input  type="checkbox" id="cbx_terms" v-model='termsAndConditions' />
         <label for="cbx_terms">He leído y acepto términos y condiciones</label>
-        <button @click="register" class="btn-primary" :disabled="progress || !termsAndConditions"> Registrarme </button>
+        <button @click="register" class="btn-primary" :disabled="progress"> Registrarme </button>
       </div>
-    </div>
-    <div class='form row' v-else>
-        <h2> Registro Exitoso! </h2>
-        <p>Te hemos enviado un código de verificación a tu e-mail para que puedas activar tu cuenta. </p>
     </div>
   </div>
 </template>
@@ -46,8 +43,7 @@ export default {
             sureName: '',
             termsAndConditions: false,
             carpoolear_logo: process.env.ROUTE_BASE + 'static/img/carpoolear_logo.png',
-            progress: false,
-            success: false
+            progress: false
         };
     },
     computed: {
@@ -69,9 +65,8 @@ export default {
             this.progress = true;
             this.doRegister({email, password, passwordConfirmation, name, termsAndConditions}).then(() => {
                 this.progress = false;
-                this.success = true;
             }).catch(() => {
-                dialogs.message('La cuenta de email ingresada se encuentra en uso.', {estado: 'error'});
+                dialogs.message('La cuenta de email esta en uso', {estado: 'error'});
                 this.progress = false;
             });
         },

@@ -40,15 +40,15 @@
                                 <div class="trip_information">
                                         <ul class="no-bullet">
                                             <li class="list_item">
-                                                <div class="label-soft">Distancia a recorrer</div>
+                                                <div class="label-soft">Distancia</div>
                                                 <div>{{distanceString}}</div>
                                             </li>
                                             <li class="list_item">
-                                                <div class="label-soft">Tiempo estimado de viaje</div>
+                                                <div class="label-soft">Tiempo estimado</div>
                                                 <div>{{estimatedTimeString}}  </div>
                                             </li>
                                             <li class="list_item">
-                                                <div class="label-soft">Huella de carbono (<abbr title="Kilogramos dióxido de carbono equivalente">kg CO<sub>2eq</sub></abbr>)</div>
+                                                <div class="label-soft">Huella de carbono (<abbr title="kilogramos dióxido de carbono equivalente">kg CO<sub>2eq</sub></abbr>)</div>
                                                 <div>{{CO2String}}</div>
                                             </li>
                                         </ul>
@@ -187,7 +187,7 @@ export default {
             ],
             date: '',
             time: '',
-            duration: 0,
+            duration: '',
             trip: {
                 'is_passenger': 0,
                 'from_town': '',
@@ -235,7 +235,6 @@ export default {
             cars: 'cars/cars'
         }),
         distanceString () {
-            console.log('distance');
             return Math.floor(this.trip.distance / 1000) + ' Km';
         },
         estimatedTimeString () {
@@ -370,15 +369,14 @@ export default {
 
         calcRoute () {
             for (let i = 0; i < this.points.length; i++) {
-                console.log(this.points);
                 if (!this.points[i].name) {
                     return;
                 }
             }
 
             this.directionsService.route({
-                origin: this.points[0].location,
-                destination: this.points[this.points.length - 1].location,
+                origin: this.points[0].name,
+                destination: this.points[this.points.length - 1].name,
                 travelMode: 'DRIVING'
             }, (response, status) => {
                 if (status === 'OK') {
@@ -398,9 +396,8 @@ export default {
                     }
                     this.trip.distance = totalDistance;
                     this.duration = totalDuration;
-                    this.trip.co2 = totalDistance * 0.15; /* distancia por 0.15 kilos co2 en promedio por KM recorrido  */
+                    this.co2 = totalDistance * 0.15; /* distancia por 0.15 kilos co2 en promedio por KM recorrido  */
                 } else {
-                    console.log(this.points[0].name, this.points[this.points.length - 1].name, 'DRIVING');
                     console.log('Directions request failed due to ' + status);
                 }
             });
