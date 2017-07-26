@@ -1213,10 +1213,6 @@ textarea {
     overflow: auto;
     margin-bottom: 3rem;
 }
-#trips-list > div {
-    padding-left: 0;
-    padding-right: 0;
-}
 .conversation_chat .input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
     height: 45px;
 }
@@ -1308,6 +1304,8 @@ textarea {
     padding-top: 1.5em;
 }
 .trips.container {
+    padding-left: 0;
+    padding-right: 0;
     padding-top: 2em;
 }
 .conversation-component {
@@ -1584,10 +1582,6 @@ ul {
 }
 
 @media only screen and (min-width: 768px) {
-    #trips-list > div {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
     .tab-content {
         min-height: initial;
     }

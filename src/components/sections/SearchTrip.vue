@@ -31,7 +31,7 @@
         <div class="col-xs-24 col-md-4">
               <Calendar :class="'calendar-date form-control form-control-with-icon form-control-date'" :value="date" @change="(date) => this.date = date" :limitFilter="datePickerLimitFilter"></Calendar>
         </div>
-        <div class="col-xs-24 col-md-3 col-lg-4">
+        <div class="col-xs-24 col-md-3">
             <button class="btn btn-primary btn-search" @click="emit">Buscar</button> 
         </div>
         
@@ -177,8 +177,7 @@ export default {
 
 <style scoped>
     .search-section {
-        padding-left: 0;
-        padding-right: 0;
+        width: 100%;
     }
     .search-section .btn-option {
         width: 100%;
@@ -222,10 +221,10 @@ export default {
         }
         .search-section {
             margin-left: 30px;
-            padding-right: 15px;
+            width: calc(100% - 30px);
         }
     }
-    @media only screen and (min-width: 429px) {
+    @media only screen and (min-width: 414px) {
         .btn-option {
             height: initial;
         }
@@ -244,11 +243,6 @@ export default {
         }
     }
     @media only screen and (min-width: 768px) {
-        .search-section {
-            padding-left: 0;
-            padding-right: 0;
-            width: calc(100% - 30px);
-        }
         .swap {
             left: initial;
             top: initial;
@@ -268,7 +262,6 @@ export default {
         .search-section {
              width: 100%;
              margin-left: 0;
-             padding-left: 0;
         }
     }
     @media only screen and (min-width: 992px) {
