@@ -6,7 +6,7 @@
         <tab header="Perfil">
             <ProfileInfo></ProfileInfo>
         </tab>
-        <tab header="Calificaciones">
+        <tab header="Valoraciones">
             <ProfileRates></ProfileRates>
         </tab>
     </tabset>

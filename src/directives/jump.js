@@ -1,6 +1,6 @@
 let jumpers = {};
-let keyHandler = function (event) {
-    if ((event.type.toUpperCase() === 'KEYUP' && event.key.toUpperCase() === 'ENTER') || event.type.toUpperCase() === 'CLICK') {
+let keyHandler = function (key) {
+    if (key.key === 'Enter') {
         let target = jumpers[this.id].target;
         if (jumpers[this.id].modifiers.blur) {
             jumpers[this.id].el.blur();
@@ -18,9 +18,6 @@ export default {
         jumpers[el.id].el = el;
         jumpers[el.id].modifiers = binding.modifiers;
         el.addEventListener('keyup', keyHandler, false);
-        if (el.tagName.toUpperCase() === 'BUTTON') {
-            el.addEventListener('click', keyHandler, false);
-        }
     },
     inserted: function (el, binding, node) {
         jumpers[el.id].target = node.context.$refs[jumpers[el.id].value];
@@ -30,9 +27,6 @@ export default {
     },
     unbind: function (el, binding, node) {
         el.removeEventListener('keyup', keyHandler, false);
-        if (el.tagName === 'button') {
-            el.removeEventListener('click', keyHandler, false);
-        }
         jumpers[el.id] = undefined;
     }
 };
