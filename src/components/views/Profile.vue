@@ -66,6 +66,7 @@ export default {
                 this.setTitle('Mi Perfil');
                 this.setProfile(this.user);
                 this.currentView = 'my-trips';
+                console.log(this.id);
             } else {
                 if (this.userProfile) {
                     this.setTitle(this.userProfile.name);
@@ -73,6 +74,7 @@ export default {
                 this.setProfileByID({id: this.id, userProfile: this.userProfile}).then(() => true).catch(() => {
                     this.$router.replace({name: 'trips'});
                 });
+                console.log(this.id);
                 this.setUserByID(this.id);
                 this.currentView = 'profile-trip';
             }

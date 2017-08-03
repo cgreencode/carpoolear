@@ -214,6 +214,7 @@ export default {
                 var self = this;
                 setTimeout(() => { self.renderMap(); }, 500);
             }).catch(error => {
+                console.log('error');
                 if (error) {
                     router.replace({name: 'trips'});
                     // Ver que hacer
@@ -270,6 +271,7 @@ export default {
 
         renderMap () {
             this.$refs.map.$mapCreated.then(() => {
+                console.log('Map was created');
                 /* eslint-disable no-undef */
                 this.directionsService = new google.maps.DirectionsService();
                 this.directionsDisplay = new google.maps.DirectionsRenderer();
@@ -361,6 +363,7 @@ export default {
             trip: 'trips/currentTrip'
         }),
         expired () {
+            console.log(moment(this.trip.trip_date).format(), moment().format());
             return moment(this.trip.trip_date).format() < moment().format();
         },
         owner () {
