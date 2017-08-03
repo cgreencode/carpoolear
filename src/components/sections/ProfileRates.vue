@@ -14,10 +14,7 @@
             -->
 
             <p slot="no-data" class="alert alert-warning"  role="alert">No hay calificaciones</p>
-            <p slot="loading" class="alert alert-info" role="alert">
-                <img src="/static/img/loader.gif" alt="" class="ajax-loader" />
-                Cargando calificaciones ...
-            </p>
+            <p slot="loading" class="alert alert-info" role="alert">Cargando calificaciones ...</p>
         </Loading>
 
 

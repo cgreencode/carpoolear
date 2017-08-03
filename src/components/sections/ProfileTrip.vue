@@ -7,10 +7,7 @@
                     <Trip v-for="trip in driverTrip" :trip="trip" :user="user" ></Trip>
                 </div>
                 <p slot="no-data" class="alert alert-warning"  role="alert">No hay viajes</p>
-                <p slot="loading" class="alert alert-info" role="alert">
-                    img src="/static/img/loader.gif" alt="" class="ajax-loader" />
-                    Cargando viajes ...
-                </p>
+                <p slot="loading" class="alert alert-info" role="alert">Cargando viajes ...</p>
             </Loading>
         </div>
     </div>
