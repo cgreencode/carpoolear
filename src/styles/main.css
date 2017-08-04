@@ -151,7 +151,6 @@ input[type="checkbox"] {
 .btn-shadowed-black {
     box-shadow: 0 0 6px 5px rgba(0, 0, 0, .1);
 }
-
 .btn-primary:active:hover,
 .btn-primary.active:hover,
 .open > .dropdown-toggle.btn-primary:hover,
@@ -165,34 +164,6 @@ input[type="checkbox"] {
     color: #ccc;
     background: rgba(215,37,33, 0.8);
 }
-
-.dropdown-right {
-    display: inline-block;
-}
-
-.dropdown-right .dropdown-menu {
-    right: 0;
-    left: unset;
-}
-
-.btn-icon {
-    background-color: transparent;
-    font-size: 26px;
-}
-
-.btn-icon:active,
-.btn-icon:hover {
-    color: white;
-}
-
-.btn.icon .btn-group.open .dropdown-toggle {
-    box-shadow: none;
-}
-
-.btn-icon .caret {
-    display: none;
-}
-
 .login_usuario {
     text-align: center;
     font-size: 22px;
@@ -1351,7 +1322,7 @@ textarea {
     padding: 4px 10px;
     background-color: var(--secondary-background);
     white-space: nowrap;
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 .actionbar-bottom .actionbar_item {
@@ -1391,7 +1362,7 @@ textarea {
 
 .actionbar_icon {
     font-size: 26px;
-    /* width: 30px; */
+    width: 30px;
 }
 
 .actionbar_title {
@@ -2160,6 +2131,14 @@ ul {
     text-align: center;
     margin: .5em;
 }
+.trip_share .lnk-social-network {
+    font-size: 1.25em;
+    padding: .3em 0;
+    margin: .2em;
+}
+.trip_share .lnk-social-network:first-child {
+    margin-left: 0;
+}
 .lnk-social-network:focus,
 .lnk-social-network:hover {
     color: white;
@@ -2180,4 +2159,7 @@ ul {
 }
 .ajs-error {
     color: white;
+}
+.ajax-loader {
+    vertical-align: -3px;
 }

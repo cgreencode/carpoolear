@@ -4,7 +4,6 @@ import router from '../../router';
 const state = {
     title: 'Carpoolear',
     subTitle: '',
-    showMenu: false,
     header_buttons: [
         {
             id: 'back',
@@ -70,7 +69,6 @@ const state = {
 const getters = {
     title: state => state.title,
     subTitle: state => state.subTitle,
-    showMenu: state => state.showMenu,
     leftHeaderButton: state => state.header_buttons.filter(item => item.position === 'left'),
     rightHeaderButton: state => state.header_buttons.filter(item => item.position === 'right'),
     headerLogoVisibility: state => state.header_logo_visibility,
@@ -139,11 +137,6 @@ const mutations = {
                 item.show = true;
             }
         });
-        if (items.includes('menu')) {
-            state.showMenu = true;
-        } else {
-            state.showMenu = false;
-        }
     },
 
     [types.HEADER_LOGO_SET_VISIBILITY] (state, show) {
