@@ -1,16 +1,13 @@
 <template>
   <div class="profile-trip-component container">
         <div class="col-xs-24">
-            <h2>Viajes Creados</h2>
+            <h2>Viajes <strong>Creados</strong></h2>
             <Loading :data="driverTrip">
-                <div id="trips-list">
+                <div class="trips-list">
                     <Trip v-for="trip in driverTrip" :trip="trip" :user="user" ></Trip>
                 </div>
                 <p slot="no-data" class="alert alert-warning"  role="alert">No hay viajes</p>
-                <p slot="loading" class="alert alert-info" role="alert">
-                    img src="https://carpoolear.com.ar/static/img/loader.gif" alt="" class="ajax-loader" />
-                    Cargando viajes ...
-                </p>
+                <p slot="loading" class="alert alert-info" role="alert">Cargando viajes ...</p>
             </Loading>
         </div>
     </div>
