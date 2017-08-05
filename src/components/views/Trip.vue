@@ -14,7 +14,7 @@
                                             </div>
                                             <div class="col-xs-20">
                                             <span class="trip_location_from_city">{{ trip.points[0].json_address.ciudad }}</span>
-                                            <span class="trip_location_from_state-country">{{ trip.points[0].json_address.provincia | googleInfoClean }}</span>
+                                            <span class="trip_location_from_state-country">{{ trip.points[0].json_address.provincia }} {{ trip.points[0].json_address.pais }}</span>
                                             </div>
                                         </div>
                                         <div class="row trip_location_to">
@@ -23,7 +23,7 @@
                                             </div>
                                             <div class="col-xs-20">
                                                 <span class="trip_location_from_city">{{ trip.points[trip.points.length - 1].json_address.ciudad }}</span>
-                                                <span class="trip_location_from_state-country">{{ trip.points[trip.points.length - 1].json_address.provincia | googleInfoClean }} </span>
+                                                <span class="trip_location_from_state-country">{{ trip.points[trip.points.length - 1].json_address.provincia }} {{ trip.points[trip.points.length - 1].json_address.pais }}</span>
                                             </div>
                                         </div>
                                         <div class="col-xs-4 trip_location-dot-line">
@@ -105,7 +105,8 @@
                                     </div>
                                     <div>
                                         <span>Huella de carbono (<abbr title="aproximada">aprox</abbr>)</span><br>
-                                        <span>{{ trip.distance * 1.5 }} <abbr title="kilogramos dióxido de carbono equivalente">kg CO<sub>2eq</sub></abbr></span>
+
+                                        <span>{{ trip.distance / 1000 * 1.5 }} <abbr title="kilogramos dióxido de carbono equivalente">kg CO<sub>2eq</sub></abbr></span>
                                     </div>
                                 </div>
                                 <div class="trip_share row">
@@ -402,7 +403,8 @@ export default {
     computed: {
         ...mapGetters({
             user: 'auth/user',
-            trip: 'trips/currentTrip'
+            trip: 'trips/currentTrip',
+            isMobile: 'device/isMobile'
         }),
         expired () {
             return moment(this.trip.trip_date).format() < moment().format();

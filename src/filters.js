@@ -8,7 +8,3 @@ Vue.filter('profile-image', function (value) {
 Vue.filter('conversation-image', function (value) {
     return getRoute(value);
 });
-
-Vue.filter('googleInfoClean', function (value) {
-    return value.replace('Province', '');
-});
