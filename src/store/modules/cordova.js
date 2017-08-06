@@ -49,7 +49,6 @@ const actions = {
             authApi.loginWithProvider('facebook', {access_token: accessToken}).then((response) => {
                 let token = response.token;
                 globalStore.dispatch('auth/onLoggin', token);
-                authApi.matchFriendsWithProvider('facebook', {access_token: accessToken});
             });
         });
     },
