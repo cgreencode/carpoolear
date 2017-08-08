@@ -44,11 +44,13 @@ const actions = {
         console.log(notification);
     },
     facebookLogin (context) {
+        console.log(context);
         facebook.login().then((response) => {
             let accessToken = response.authResponse.accessToken;
             authApi.loginWithProvider('facebook', {access_token: accessToken}).then((response) => {
                 let token = response.token;
                 globalStore.dispatch('auth/onLoggin', token);
+                authApi.matchFriendsWithProvider('facebook', {access_token: accessToken});
             });
         });
     },
