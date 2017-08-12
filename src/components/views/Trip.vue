@@ -126,11 +126,10 @@
                             </div>
                             <div class="buttons-container">
                                 <router-link class="btn btn-primary" v-if="owner" :to="{name: 'update-trip', params: { id: trip.id}}"> Editar  </router-link>
-                                <button class="btn btn-primary" v-if="owner" @click="deleteTrip" > Borrar  </button>
-                                <template v-if="!owner && !expired">
+                                <template v-if="!owner && !expired && trip.seats_available > 0">
                                     <button class="btn btn-primary" @click="toMessages" v-if="!owner"> Coordinar viaje  </button>
                                 </template>
-                                <template v-if="!owner && !trip.is_passenger && !expired">
+                                <template v-if="!owner && !trip.is_passenger && !expired && trip.seats_available > 0">
                                     <template v-if="!isPassenger">
                                         <button class="btn btn-primary" @click="makeRequest" v-if="canRequest"> Solicitar asiento </button>
                                         <button class="btn" v-if="!canRequest" @click="cancelRequest"> Solicitud enviada </button>
@@ -142,6 +141,9 @@
                                 </template>
                                 <template v-if="expired">
                                     <button class="btn btn-primary" disabled> Finalizado  </button>
+                                </template>
+                                <template v-if="trip.seats_available === 0 && !trip.is_passenger">
+                                    <div class="carpooled-trip"> Viaje Carpooleado </div>
                                 </template>
                             </div>
                         </div>
@@ -240,8 +242,7 @@ export default {
             getTrip: 'getTrip',
             lookConversation: 'conversations/createConversation',
             make: 'passenger/makeRequest',
-            cancel: 'passenger/cancel',
-            remove: 'trips/remove'
+            cancel: 'passenger/cancel'
         }),
         profileComplete () {
             if (!this.user.image || this.user.image.length === 0 || !this.user.description || this.user.description.length === 0) {
@@ -249,11 +250,6 @@ export default {
             } else {
                 return true;
             }
-        },
-        deleteTrip () {
-            this.remove(this.trip.id).then(() => {
-                this.$router.replace({name: 'trips'});
-            })
         },
         loadTrip () {
             this.getTrip(this.id).then(trip => {

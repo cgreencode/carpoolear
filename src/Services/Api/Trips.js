@@ -14,8 +14,8 @@ class TripApi extends TaggedApi {
         return this.put('/api/trips/' + data.id, data);
     }
 
-    remove (id) {
-        return this.delete('/api/trips/' + id);
+    delete (data) {
+        return this.delete('/api/trips/' + data.id);
     }
 
     show (id) {
