@@ -86,7 +86,7 @@ export default {
         name: function () { this.nombreError.state = false; },
         sureName: function () { this.apellidoError.state = false; },
         password: function () { this.passwordError.state = false; },
-        birthdayAnswer: function () { this.birthdayError.state = false; }
+        birthday: function () { this.birthdayError.state = false; }
     },
     components: {
         DatePicker
@@ -137,13 +137,13 @@ export default {
                 globalError = true;
             }
 
-            console.log(this.birthdayAnswer);
-            if (!this.birthdayAnswer || this.birthdayAnswer.length < 1) {
+            console.log(this.birthday);
+            if (!this.birthday || this.birthday.length < 1) {
                 this.birthdayError.state = true;
                 this.birthdayError.message = 'Olvido ingresar su fecha de nacimiento.';
                 globalError = true;
             } else {
-                let birthday = moment(this.birthdayAnswer);
+                let birthday = moment(this.birthday);
                 if (moment().diff(birthday, 'years') < 18) {
                     this.birthdayError.state = true;
                     this.birthdayError.message = 'Lo sentimos, debes ser mayor de edad para usar el servicio. Para más información te recomendamos leer los términos y condiciones.';
@@ -151,10 +151,6 @@ export default {
                 }
             }
             return globalError;
-        },
-
-        dateChange (value) {
-            this.birthdayAnswer = value;
         },
 
         register (event) {
@@ -167,7 +163,7 @@ export default {
             let passwordConfirmation = this.passwordConfirmation;
             let name = this.name + ' ' + this.sureName;
             let termsAndConditions = this.termsAndConditions;
-            let birthday = this.birthdayAnswer;
+            let birthday = moment(this.birthday, 'DD/MM/YYYY').format('YYYY-MM-DD');
             this.progress = true;
             this.doRegister({email, password, passwordConfirmation, name, birthday, termsAndConditions}).then(() => {
                 this.progress = false;
@@ -185,12 +181,13 @@ export default {
     },
     mounted () {
         bus.on('back-click', this.onBackClick);
-        bus.on('date-change', this.dateChange);
+        bus.on('date-change', (value) => {
+            this.birthday = value;
+        });
     },
 
     beforeDestroy () {
         bus.off('back-click', this.onBackClick);
-        bus.off('date-change', this.dateChange);
     }
 };
 </script>

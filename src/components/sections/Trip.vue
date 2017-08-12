@@ -22,12 +22,12 @@
                 </span>
               </div>
               <template v-if="user">
-                <div class="trip_driver_img_container"  v-on:click='goToProfile'>
+                <div class="trip_driver_img_container">
                   <div class="trip_driver_img circle-box" v-imgSrc:profile="getUserImage"></div>
                   <!-- {{ trip.user.has_pin }} -->
                 </div>
                 <div class="trip_driver_details">
-                  <div class="trip_driver_name"  v-on:click='goToProfile'>
+                  <div class="trip_driver_name" >
                     {{ trip.user.name }}
                   </div>
                   <div class="trip_driver_ratings">
@@ -86,7 +86,7 @@
                 <time class="trip_datetime col-xs-offset-4 col-xs-20" :datetime="trip.trip_date">
                   <span class="trip_datetime_date">{{ [ trip.trip_date ] | moment("DD MMMM YYYY") }}</span>
                   -
-                  <span class="trip_datetime_time">{{ [ trip.trip_date ] | moment("HH:mm") }}</span>
+                  <span class="trip_datetime_time">{{ [ trip.trip_date ] | moment("h:mm a") }}</span>
                 </time>
             </div>
             <div v-if="trip.seats_available !== 0" class="row">
@@ -120,10 +120,6 @@ export default {
     methods: {
         goToDetail: function (event) {
             this.$router.push({ name: 'detail_trip', params: { id: this.trip.id } });
-        },
-        goToProfile: function (event) {
-            event.stopPropagation();
-            this.$router.push({ name: 'profile', params: { id: this.trip.user.id, userProfile: this.trip.user } });
         }
     },
     data () {

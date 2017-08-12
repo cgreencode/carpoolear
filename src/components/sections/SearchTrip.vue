@@ -29,7 +29,7 @@
                 <i v-on:click="resetInput('to_town')" class="fa fa-times" aria-hidden="true"></i>
             </div>
         </div>
-        <div class="col-xs-24 col-md-4 no-padding">
+        <div class="col-xs-24 col-md-4">
             <DatePicker :value="date" :minDate="minDate" :class="{'has-error': dateError.state}"></DatePicker>
         </div>
         <div class="col-xs-24 col-md-3 col-lg-4">
@@ -62,7 +62,6 @@ export default {
                 radio: 0
             },
             date: '',
-            dateAnswer: '',
             dateError: {
                 message: '',
                 state: ''
@@ -76,7 +75,9 @@ export default {
         };
     },
     mounted () {
-        bus.on('date-change', this.dateChange);
+        bus.on('date-change', (value) => {
+            this.date = value;
+        });
         if (this.params) {
             if (this.params.origin_name) {
                 this.from_town.name = this.params.origin_name;
@@ -108,13 +109,8 @@ export default {
     beforeDestroy () {
         this.$refs['from_town'].$el.removeEventListener('input', this.checkInput);
         this.$refs['to_town'].$el.removeEventListener('input', this.checkInput);
-        bus.off('date-change', this.dateChange);
     },
     methods: {
-        dateChange (value) {
-            this.dateAnswer = value;
-            console.log('!!!', this.dateAnswer);
-        },
         checkInput (event) {
             let value = event.target.value;
             let name = event.target.name;
@@ -156,8 +152,8 @@ export default {
                 params.destination_radio = this.to_town.radio;
                 params.destination_name = this.to_town.name;
             }
-            if (this.dateAnswer) {
-                params.date = this.dateAnswer;
+            if (this.date) {
+                params.date = moment(this.date, 'DD/MM/YYYY').format('YYYY-MM-DD');
             }
             params.is_passenger = this.isPassenger;
             this.$emit('trip-search', params);
