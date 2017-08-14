@@ -245,10 +245,6 @@ export default {
                 this.user.birthday = this.birthdayAnswer;
                 if ((this.user.image && this.user.image.length > 0) && (this.user.description && this.user.description.length > 0)) {
                     this.$router.rememberBack();
-                } else {
-                    if (!(this.user.image && this.user.image.length > 0)) {
-                        dialogs.message('Debes cargar una imagen de perfil.', { duration: 10, estado: 'error' });
-                    }
                 }
             }).catch(response => {
                 this.loading = false;
