@@ -1,7 +1,7 @@
 <template>
     <div class="conversation_chat" v-if="conversation">
         <div class="list-group">
-            <div class="list-group-item desktop">
+            <div class="list-group-item">
                 <router-link v-if="conversation.users.length === 2" :to="{ name: 'profile', params: userProfile() }">
                     <h2> {{conversation.title}} </h2>
                 </router-link>
@@ -131,10 +131,6 @@ export default {
         });
         bus.on('back-click', this.onBackClick);
         // this.thread.run(5000);
-        if (this.conversation) {
-            this.setTitle(this.conversation.title);
-            this.setSubTitle('Última conexión: ' + moment().calendar(this.lastConnection));
-        }
     },
     updated () {
         if (this.mustJump) {
