@@ -1,9 +1,4 @@
 /* jshint esversion: 6 */
-
-let cordovaTag = document.createElement('script');
-cordovaTag.setAttribute('src', process.env.ROUTE_BASE + 'cordova.js');
-document.head.appendChild(cordovaTag);
-
 import 'babel-polyfill';
 
 import Vue from 'vue';
