@@ -11,14 +11,7 @@
 
         <Loading :data="trips" v-if="showingTrips">
             <div class="trips-list">
-                <template v-for="(trip, index) in trips">
-                    <template v-if="isComplementary(trip, searchParams, index)">
-                        <div class="trip-complementary">
-                            <h2>Resultados cercanos</h2>
-                        </div>
-                    </template>
-                    <Trip :trip="trip" :user="user"></Trip>
-                </template>
+                <Trip v-for="trip in trips" :trip="trip" :user="user" ></Trip>
             </div>
             <!--
             <div v-if="morePages">
@@ -43,7 +36,6 @@ import SearchBox from '../sections/SearchTrip.vue';
 import Loading from '../Loading.vue';
 import bus from '../../services/bus-event.js';
 import { mapGetters, mapActions } from 'vuex';
-import moment from 'moment';
 
 export default {
     name: 'trips',
@@ -68,22 +60,6 @@ export default {
         },
         nextPage () {
             this.search({next: true});
-        },
-        isComplementary (trip, searchParams, index) {
-            let isComplementary = false;
-            if (searchParams.data && searchParams.data.date) {
-                var searchDate = moment(searchParams.data.date).toDate();
-                var tripDate = moment(trip.trip_date).toDate();
-                tripDate.setHours(0);
-                tripDate.setMinutes(0);
-                tripDate.setSeconds(0);
-                if (searchDate.getTime() === tripDate.getTime()) {
-                    isComplementary = false;
-                } else {
-                    isComplementary = true;
-                }
-            }
-            return isComplementary;
         },
 
         onSearchButton () {
