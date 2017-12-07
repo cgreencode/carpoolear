@@ -45,7 +45,7 @@ const getters = {
 // actions
 const actions = {
     ...pagination.makeActions('list', ({data}) => {
-        return conversationApi.list(data);
+        return conversationApi.list();
     }, (store, p) => {
         p.then((list) => {
             list.data.forEach(item => {
