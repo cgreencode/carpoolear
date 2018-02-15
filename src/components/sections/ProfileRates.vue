@@ -132,8 +132,3 @@ export default {
     ]
 };
 </script>
-<style scoped>
-    .profile-rates-component {
-        padding-bottom: 6em;
-    }
-</style>

@@ -24,7 +24,7 @@
                 <div class="input-group">
                     <input ref="ipt-text" id="ipt-text" v-model="message" type="text" class="form-control" placeholder="Escribir mensaje..." v-jump:click="'btn-send'" maxlength="255">
                     <span class="input-group-btn">
-                        <button ref="btn-send" id="btn-send" class="btn btn-default" :class="message.length > 0 ? 'active' : ''" type="button" @click="sendMessage" v-jump:focus="'ipt-text'" :disabled="sending">
+                        <button ref="btn-send" id="btn-send" class="btn btn-default" :class="message.length > 0 ? 'active' : ''" type="button" @click="sendMessage" v-jump:focus="'ipt-text'">
                             <i class="fa fa-play" aria-hidden="true"></i>
                         </button>
                     </span>
@@ -40,6 +40,7 @@
 </template>
 <script>
 import {mapGetters, mapActions} from 'vuex';
+import {Thread} from '../../classes/Threads.js';
 import MessageView from '../MessageView';
 import router from '../../router';
 import moment from 'moment';
@@ -50,8 +51,7 @@ export default {
     data () {
         return {
             message: '',
-            mustJump: false,
-            sending: false
+            mustJump: false
         };
     },
     computed: {
@@ -91,21 +91,18 @@ export default {
             };
             return {
                 id: this.conversation.users[id].id,
-                userProfile: this.conversation.users[id],
-                activeTab: 1
+                userProfile: this.conversation.users[id]
             };
         },
 
         sendMessage () {
-            if (this.message.length) {
-                this.sending = true;
-                this.send(this.message).then(data => {
-                    this.sending = false;
-                }).catch(() => {
-                    this.sending = false;
-                });
-                this.message = '';
-            }
+            this.sending = true;
+            this.send(this.message).then(data => {
+                this.sending = false;
+            }).catch(() => {
+                this.sending = false;
+            });
+            this.message = '';
         },
 
         onBackClick () {
