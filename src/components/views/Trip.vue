@@ -146,7 +146,7 @@
                                 </a>
                                 <template v-if="!owner && !expired">
                                     <button class="btn btn-primary" @click="toMessages" v-if="!owner">
-                                        Enviar mensaje
+                                        Coordinar viaje
                                     </button>
                                 </template>
                                 <template v-if="!owner && !trip.is_passenger && !expired">
