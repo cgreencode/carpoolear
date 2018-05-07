@@ -92,6 +92,7 @@ export default {
         research (params) {
             this.lookSearch = false;
             this.filtered = true;
+            this.readySub = false;
             this.search(params);
             // this.setActionButton(['clear']);
         },
