@@ -1,6 +1,7 @@
 <template>
   <div class="trips container">
         <div class="col-xs-24">
+
             <Loading :data="pendingRequest" :hideOnEmpty="true">
                 <h2 slot="title"> Pendientes <strong>de contestar</strong> </h2>
                 <div class="request-list">
@@ -56,23 +57,6 @@
             </Loading>
         </div>
 
-        <div class="col-xs-24" v-if="subscriptions && subscriptions.length">
-            <Loading :data="subscriptions" :hideOnEmpty="true">
-                <h2 slot="title" > Suscripciones a viajes</h2>
-                <div class="trips-list row">
-                    <div class="col-xs-24 col-md-12" v-for="subs in subscriptions" :key="subs.id">
-                        <subscriptionItem :subscription="subs" :user="user"></subscriptionItem>
-                    </div>
-
-                </div>
-                <p slot="no-data" class="alert alert-warning"  role="alert">No tienes ninguna suscripción.</p>
-                <p slot="loading" class="alert alert-info" role="alert">
-                    <img src="https://carpoolear.com.ar/static/img/loader.gif" alt="" class="ajax-loader" />
-                    Cargando suscripciones ...
-                </p>
-            </Loading>
-        </div>
-
 
         <div class="col-xs-24" v-if="oldTrips">
             <h2>Mis viajes pasados</h2>
@@ -106,7 +90,6 @@
 </template>
 
 <script>
-import subscriptionItem from '../sections/SubscriptionItem.vue';
 import Trip from '../sections/Trip.vue';
 import Loading from '../Loading.vue';
 import PendingRequest from '../PendingRequest';
@@ -127,7 +110,6 @@ export default {
             this.oldTripsAsDriver();
             this.oldTripsAsPassenger();
         });
-        this.findSubscriptions();
     },
 
     computed: {
@@ -138,8 +120,7 @@ export default {
             pendingRequest: 'passenger/pendingRequest',
             user: 'auth/user',
             oldTrips: 'myTrips/myOldTrips',
-            oldPassengerTrips: 'myTrips/passengerOldTrips',
-            subscriptions: 'subscriptions/subscriptions'
+            oldPassengerTrips: 'myTrips/passengerOldTrips'
         })
     },
 
@@ -155,8 +136,7 @@ export default {
             pendingRate: 'rates/pendingRates',
             getPendingRequest: 'passenger/getPendingRequest',
             oldTripsAsDriver: 'myTrips/oldTripsAsDriver',
-            oldTripsAsPassenger: 'myTrips/oldTripsAsPassenger',
-            findSubscriptions: 'subscriptions/index'
+            oldTripsAsPassenger: 'myTrips/oldTripsAsPassenger'
         })
     },
 
@@ -166,8 +146,7 @@ export default {
         PendingRequest,
         RatePending,
         Tab,
-        Tabset,
-        subscriptionItem
+        Tabset
     }
 };
 </script>

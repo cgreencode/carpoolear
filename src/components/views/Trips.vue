@@ -31,13 +31,7 @@
                 <img src="https://carpoolear.com.ar/static/img/loader.gif" alt="" class="ajax-loader" />
                 Cargando más resultados
             </div>
-            <p slot="no-data" class="alert alert-warning"  role="alert"  :class="isMobile ? 'mobile-alert' : ''">
-                <span class="sentence">¡Ups! No hay viajes con los criterios indicados en la búsqueda.</span>
-                <span class="sentence" v-if="!alreadySubscribe">
-                    <strong :class="isMobile ? 'sentence' : ''">Pero no te preocupes, ahora podés suscribirte para que te avisemos cuando haya un viaje que concuerde con lo que estas buscando.</strong>
-                    <button class="btn btn-primary" v-if="user && !searchParams.data.is_passenger" @click="subscribeSearch" >Suscribirme</button>
-                </span>
-            </p>
+            <p slot="no-data" class="alert alert-warning"  role="alert">¡Ups! No hay viajes con los criterios indicados en la búsqueda, intenta en otra fecha o ¡crea uno!</p>
             <p slot="loading" class="alert alert-info" role="alert">
                 <img src="https://carpoolear.com.ar/static/img/loader.gif" alt="" class="ajax-loader" />
                 Cargando viajes ...
@@ -45,19 +39,6 @@
         </Loading>
     </div>
 </template>
-<style scoped>
-.sentence {
-    display: block;
-    margin-bottom: .5em;
-}
-.mobile-alert .sentence {
-    margin-bottom: 1em;
-}
-.mobile-alert .btn {
-    margin: 0 auto;
-    display: block;
-}
-</style>
 <script>
 import Trip from '../sections/Trip.vue';
 import SearchBox from '../sections/SearchTrip.vue';
@@ -66,33 +47,28 @@ import bus from '../../services/bus-event.js';
 import { mapGetters, mapActions } from 'vuex';
 import moment from 'moment';
 import router from '../../router';
-import dialogs from '../../services/dialogs.js';
-
 export default {
     name: 'trips',
     data () {
         return {
             lookSearch: false,
             filtered: false,
-            runningSearch: false,
-            alreadySubscribe: false
+            runningSearch: false
         };
     },
     props: [
-        'clearSearch', 'keepSearch'
+        'clearSearch'
     ],
     methods: {
         ...mapActions({
             search: 'trips/tripsSearch',
-            refreshTrips: 'trips/refreshList',
-            subscribeToSearch: 'subscriptions/create'
+            refreshTrips: 'trips/refreshList' // ,
             // morePagesActions: 'trips/tripMorePage',
             // setActionButton: 'actionbars/setHeaderButtons'
         }),
         research (params) {
             this.lookSearch = false;
             this.filtered = true;
-            this.readySub = false;
             this.search(params);
             // this.setActionButton(['clear']);
         },
@@ -135,7 +111,7 @@ export default {
             }
         },
         onScrollBottom () {
-            if (this.morePages && !this.lookSearch) { // Hay páginas y no estoy en búsquedas;
+            if (this.morePages && !this.lookSearch) { // Hay páginas y no estoy en búsquedas
                 if (!this.runningSearch) {
                     this.runningSearch = true;
                     let done = () => {
@@ -148,31 +124,6 @@ export default {
         onBackBottom () {
             bus.off('backbutton', this.onBackBottom);
             this.lookSearch = false;
-        },
-        subscribeSearch () {
-            let params = this.searchParams.data;
-            let data = {};
-            if (params.date) {
-                data.trip_date = params.date;
-            }
-            if (params.origin_name) {
-                data.from_address = params.origin_name;
-                data.from_lat = params.origin_lat;
-                data.from_lng = params.origin_lng;
-                data.from_radio = params.origin_radio;
-                data.from_json_address = [];
-            }
-            if (params.destination_name) {
-                data.to_address = params.destination_name;
-                data.to_lat = params.destination_lat;
-                data.to_lng = params.destination_lng;
-                data.to_radio = params.destination_radio;
-                data.to_json_address = [];
-            }
-            this.subscribeToSearch(data).then(() => {
-                this.alreadySubscribe = true;
-                dialogs.message('Te subscribiste correctamente. Te avisaremos cuando hayan viajes similares', { duration: 10, estado: 'success' });
-            });
         }
     },
     mounted () {
@@ -185,9 +136,7 @@ export default {
                 this.$refs.searchBox.loadParams(this.searchParams.data);
             }
         }
-        if (!this.keepSearch) {
-            this.$refs.searchBox.clear();
-        }
+        this.$refs.searchBox.clear();
 
         // bus.event
         bus.off('search-click', this.onSearchButton);

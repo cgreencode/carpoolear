@@ -136,24 +136,6 @@
                                     </div>
                                     <div v-else style="height: 2em;"></div>
                                 </div>
-                                <div class="row passengers" v-if="matchingUsers && matchingUsers.length > 0">
-                                    <div class="col-xs-24" v-if="owner">
-                                        <h4 class="title-margined" @click="sendAll()">
-                                            <strong>Candidatos a viajar</strong>
-                                        </h4>
-                                        <div v-for="p in matchingUsers" class="list-item">
-                                            <span @click="toUserProfile(p)" class="trip_driver_img circle-box passenger trip_passenger_image" v-imgSrc:profile="p.image"></span>
-                                            <a href="#" @click="toUserProfile(p)" class="trip_passenger_name">
-                                                {{ p.name }}
-                                            </a>
-                                            <a href="#" @click="toUserMessages(p)" aria-label="Ir a mensajes" class="trip_passenger-chat">
-                                                 <i class="fa fa-comments" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                
                             </div>
                             <div class="buttons-container"  v-if="!isPasssengersView">
                                 <router-link class="btn btn-primary" v-if="owner && !expired" :to="{name: 'update-trip', params: { id: trip.id}}">
@@ -209,7 +191,7 @@
                                     </div>
                                 </div>
                             </div>
-                             <div class="row">
+                            <div class="row">
                                 <div class="col-md-24">
                                     <router-link class="btn-primary btn-search btn-shadowed-black" :to="{name: 'profile', params: {id: getUserProfile, userProfile: trip.user}}"> Ver Perfil </router-link>
                                 </div>
@@ -221,7 +203,7 @@
                         </div>
                     </div>
                     <div class="col-xs-24 structure-div"  v-if="!isPasssengersView">
-                 ;       <gmap-map
+                        <gmap-map
                             :center="center"
                             :zoom="zoom"
                             style="height: 400px"
@@ -284,8 +266,7 @@ export default {
                     location: null
                 }
             ],
-            currentUrl: encodeURIComponent('https://carpoolear.com.ar/app' + this.$route.fullPath),
-            matchingUsers: []
+            currentUrl: encodeURIComponent('https://carpoolear.com.ar/app' + this.$route.fullPath)
         };
     },
 
@@ -315,8 +296,7 @@ export default {
             selectConversation: 'conversations/select',
             make: 'passenger/makeRequest',
             cancel: 'passenger/cancel',
-            remove: 'trips/remove',
-            searchMatchers: 'trips/searchMatchers'
+            remove: 'trips/remove'
         }),
         profileComplete () {
             if (!this.user.image || this.user.image.length === 0 || !this.user.description || this.user.description.length === 0) {
@@ -341,11 +321,6 @@ export default {
                 this.points = trip.points;
                 var self = this;
                 setTimeout(() => { self.renderMap(); }, 500);
-                if (this.owner) {
-                    this.searchMatchers({ trip: this.trip }).then(users => {
-                        this.matchingUsers = users;
-                    });
-                }
             }).catch(error => {
                 if (error) {
                     router.replace({name: 'trips'});
@@ -527,9 +502,6 @@ export default {
                     console.log('Directions request failed due to ' + status);
                 }
             });
-        },
-        sendAll () {
-            this.$store.dispatch('conversations/sendToAll', {message: 'Hola', users: this.matchingUsers});
         }
     },
 
@@ -558,7 +530,7 @@ export default {
             return moment(this.trip.trip_date).format() < moment().format();
         },
         owner () {
-            return this.trip && this.user && this.user.id === this.trip.user.id;
+            return this.user.id === this.trip.user.id;
         },
         canRequest () {
             return !this.owner && !this.trip.request;

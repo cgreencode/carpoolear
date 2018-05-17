@@ -201,11 +201,6 @@ const actions = {
         }).catch(error => {
             return Promise.reject(error);
         });
-    },
-
-    sendToAll (store, { message, users }) {
-        users = users.map(item => item.id);
-        return conversationApi.sendToAll({message, users});
     }
 
 };
