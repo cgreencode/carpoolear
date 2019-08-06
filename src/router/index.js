@@ -9,7 +9,7 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
     routes: routes,
-  // esto hay que atarlo a si estoy en cordova o no
+    // esto hay que atarlo a si estoy en cordova o no
     mode: process.env.HISTORY_MODE,
     base: process.env.ROUTE_BASE
 
@@ -36,7 +36,6 @@ router.beforeEach((to, from, next) => {
 
     if (actionbar.header) {
         store.dispatch('actionbars/setSubTitle', '');
-        store.dispatch('actionbars/setImgTitle', '');
         if (actionbar.header.title) {
             store.dispatch('actionbars/setTitle', actionbar.header.title);
         } else {
@@ -76,7 +75,7 @@ router.rememberBack = function () {
         router.push(router.rememberRoute);
         router.rememberRoute = null;
     } else {
-        router.replace({name: 'trips'});
+        router.replace({ name: 'trips' });
     }
 };
 

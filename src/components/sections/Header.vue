@@ -14,7 +14,6 @@
                 </template>
             </div>
             <div class="actionbar_section actionbar_title" :class="subTitle !== '' ? 'header--with-subtitle' : ''">
-                <div class="header--image circle-box" v-imgSrc="imgTitle" v-show="imgTitle" ></div>
                 <span class='header--title'>{{title}}</span>
                 <span class='header--subtitle'>{{subTitle}}</span>
             </div>
@@ -29,9 +28,8 @@
                         <template slot="button">
                             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                         </template>
-                        <li><router-link tag="a" :to="{name: 'acerca_de'}"  >Acerca de</router-link></li>
-                        <li><router-link :to="{name: 'terms'}" tag="a">Términos y Condiciones</router-link></li>
-                        <li><a @click="logout" v-if="!isFacebokApp">Cerrar sesión</a></li>
+                        <li><router-link tag="a" :to="{name: 'acerca_de'}"  >ACERCA DE</router-link></li>
+                        <li><a @click="logout" v-if="!isFacebokApp">CERRAR SESSION</a></li>
                     </dropdown>
                 </div>
             </div>
@@ -66,7 +64,7 @@
                 <button @click="share" type="button" class="btn btn-link">Invitar amigos</button>
                 <router-link class="btn btn-link trips-link" :to="{name: 'trips', params: { clearSearch: true }}">Viajes</router-link>
                 <!--<router-link class="btn btn-link" v-if="!logged" :to="{name: 'trips'}">Información</router-link>-->
-                <!--<router-link class="btn btn-link" v-if="!logged" :to="{name: 'register'}">Registrarme</router-link>-->
+                <router-link class="btn btn-link" v-if="!logged" :to="{name: 'register'}">Registrarme</router-link>
                 <router-link class="btn btn-primary" btn-lg v-if="!logged" :to="{name: 'login'}">Inicio</router-link>
 
 
@@ -115,8 +113,8 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
-import {dropdown} from 'vue-strap';
+import { mapGetters } from 'vuex';
+import { dropdown } from 'vue-strap';
 import router from '../../router';
 import bus from '../../services/bus-event.js';
 import modal from '../Modal';
@@ -134,7 +132,7 @@ export default {
     },
 
     mounted () {
-        bus.on('header-title-change', this.onHeaderChange);
+
     },
 
     computed: {
@@ -144,7 +142,6 @@ export default {
             notificationsCount: 'notifications/count',
             title: 'actionbars/title',
             subTitle: 'actionbars/subTitle',
-            imgTitle: 'actionbars/imgTitle',
             showMenu: 'actionbars/showMenu',
             leftHeaderButton: 'actionbars/leftHeaderButton',
             rightHeaderButton: 'actionbars/rightHeaderButton',
@@ -181,7 +178,7 @@ export default {
         },
 
         toNotifications () {
-            router.push({name: 'notifications'});
+            router.push({ name: 'notifications' });
         },
 
         onClick (item) {
@@ -191,10 +188,6 @@ export default {
         tripsClick () {
             this.$store.dispatch('trips/refreshList', true);
             this.$store.dispatch('trips/tripsSearch', { is_passenger: false });
-        },
-
-        onHeaderChange () {
-            console.log('header-change', this.title);
         }
 
     },
@@ -214,14 +207,5 @@ export default {
         margin-bottom: 2px;
         width: 26px;
         margin-left: .3em;
-    }
-    .header_panel-right {
-        min-width: 50%;
-        text-align: right;
-    }
-    @media (max-width: 1050px) {
-        .header_panel-right {
-            min-width: 70%;
-        }
     }
 </style>

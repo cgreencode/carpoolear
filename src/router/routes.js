@@ -1,5 +1,5 @@
 /* jshint esversion: 6 */
-import {auth, guest, profileComplete} from './middleware.js';
+import { auth, guest, profileComplete } from './middleware.js';
 
 export default [
     {
@@ -181,25 +181,6 @@ export default [
     {
         path: '/trips/:id',
         name: 'detail_trip',
-        component: require('../components/views/Trip'),
-        beforeEnter: auth,
-        props: true,
-        meta: {
-            actionbar: {
-                footer: {
-                    show: true,
-                    active_id: 'home'
-                },
-                header: {
-                    title: 'Viaje',
-                    buttons: ['back']
-                }
-            }
-        }
-    },
-    {
-        path: '/trips/:id/:location',
-        name: 'detail_trip_location',
         component: require('../components/views/Trip'),
         beforeEnter: auth,
         props: true,

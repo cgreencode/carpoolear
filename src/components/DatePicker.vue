@@ -97,8 +97,7 @@ export default {
                 date: date,
                 mode: 'date',
                 minDate: Date.parse(moment(this.min).toDate()),
-                maxDate: Date.parse(moment(this.max).toDate()),
-                androidTheme: 3
+                maxDate: Date.parse(moment(this.max).toDate())
             };
 
             function onSuccess (date) {
@@ -106,7 +105,8 @@ export default {
                 context.niceDate = moment(date).format('DD/MM/YYYY');
             }
 
-            function onError (/* error */) { // Android only
+            function onError (error) { // Android only
+                console.log(error);
                 // window.alert('Error: ' + error);
             }
 
@@ -116,20 +116,21 @@ export default {
     },
     watch: {
         dateBrowser: function (value) {
-            value = value && value !== '' ? moment(value).format('YYYY-MM-DD') : '';
-
-            bus.emit('date-change', value);
-
-            this.$emit('date_changed', value);
+            if (value && value !== '') {
+                bus.emit('date-change', moment(value).format('YYYY-MM-DD'));
+            } else {
+                bus.emit('date-change', '');
+            }
         },
         dateMobile: function (value) {
-            value = value && value !== '' ? value : '';
-
-            bus.emit('date-change', value);
-
-            this.$emit('date_changed', value);
+            if (value && value !== '') {
+                bus.emit('date-change', value);
+            } else {
+                bus.emit('date-change', '');
+            }
         },
         value: function (value) {
+            console.log('date value change');
             this.dateBrowser = moment(this.value).toDate();
             this.dateMobile = this.value;
             this.niceDate = moment(this.value).format('DD/MM/YYYY');

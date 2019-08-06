@@ -1,7 +1,7 @@
-import {DeviceApi} from '../../services/api';
+import { DeviceApi } from '../../services/api';
 import * as types from '../mutation-types';
 import bus from '../../services/bus-event';
-import cache, {keys} from '../../services/cache';
+import cache, { keys } from '../../services/cache';
 
 /* eslint-disable no-undef */
 
@@ -145,4 +145,5 @@ export default {
 };
 
 window.addEventListener('resize', actions.resize, false);
+console.log('EVENT BINDING', actions.scrolling);
 document.addEventListener('scroll', actions.scrolling, false);

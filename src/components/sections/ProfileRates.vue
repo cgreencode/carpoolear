@@ -36,7 +36,7 @@
     </div>
 </template>
 <script>
-import {mapGetters} from 'vuex';
+import { mapGetters } from 'vuex';
 import Loading from '../Loading.vue';
 import RateItem from '../RateItem';
 
@@ -132,8 +132,3 @@ export default {
     ]
 };
 </script>
-<style scoped>
-    .profile-rates-component {
-        padding-bottom: 6em;
-    }
-</style>

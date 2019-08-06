@@ -5,7 +5,6 @@ import globalStore from '../index';
 const state = {
     title: 'Carpoolear',
     subTitle: '',
-    imgTitle: '',
     showMenu: false,
     header_buttons: [
         {
@@ -72,7 +71,6 @@ const state = {
 const getters = {
     title: state => state.title,
     subTitle: state => state.subTitle,
-    imgTitle: state => state.imgTitle,
     showMenu: state => state.showMenu,
     leftHeaderButton: state => state.header_buttons.filter(item => item.position === 'left'),
     rightHeaderButton: state => state.header_buttons.filter(item => item.position === 'right'),
@@ -92,10 +90,6 @@ const actions = {
 
     setSubTitle (store, newSubTitle = '') {
         store.commit(types.HEADER_SET_SUB_TITLE, newSubTitle);
-    },
-
-    setImgTitle (store, newImgTitle = '') {
-        store.commit(types.HEADER_SET_IMG_TITLE, newImgTitle);
     },
 
     setHeaderButtons (store, items) {
@@ -124,7 +118,7 @@ const actions = {
             globalStore.dispatch('trips/tripsSearch', { is_passenger: false });
             globalStore.dispatch('trips/refreshList', true);
         }
-        router.push({name: item.url, params});
+        router.push({ name: item.url, params });
     }
 
 };
@@ -136,9 +130,6 @@ const mutations = {
 
     [types.HEADER_SET_SUB_TITLE] (state, newSubTitle) {
         state.subTitle = newSubTitle;
-    },
-    [types.HEADER_SET_IMG_TITLE] (state, newImgTitle) {
-        state.imgTitle = newImgTitle;
     },
 
     [types.FOOTER_SET_VISIBILITY] (state, show) {
