@@ -23,7 +23,7 @@ class LocalStorage {
                 return Promise.resolve(temp);
             }
         } else {
-            return Promise.reject(new Error());
+            return Promise.reject();
         }
     }
 
@@ -33,4 +33,4 @@ class LocalStorage {
     }
 }
 
-export { LocalStorage as default };
+export {LocalStorage as default};

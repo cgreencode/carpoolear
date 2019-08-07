@@ -1,6 +1,7 @@
 import TaggedApi from '../../classes/TaggedApi';
 
 class TripApi extends TaggedApi {
+
     search (data) {
         return this.get('/api/trips', data);
     }
@@ -11,6 +12,11 @@ class TripApi extends TaggedApi {
 
     update (data) {
         return this.put('/api/trips/' + data.id, data);
+    }
+
+    changeSeats (data) {
+        // data.increment = +1 / -1
+        return this.post('/api/trips/' + data.id + '/changeSeats', data);
     }
 
     remove (id) {
@@ -25,9 +31,14 @@ class TripApi extends TaggedApi {
         return this.get('/api/users/my-trips', { 'as_driver': asDriver });
     }
 
+    myOldTrips (asDriver) {
+        return this.get('/api/users/my-old-trips', { 'as_driver': asDriver });
+    }
+
     userTrips (id, asDriver) {
         return this.get('/api/trips', { 'user_id': id, 'as_driver': asDriver });
     }
+
 }
 
 export { TripApi as default };

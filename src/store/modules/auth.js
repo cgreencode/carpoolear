@@ -1,7 +1,7 @@
 import * as types from '../mutation-types';
 import { AuthApi, UserApi } from '../../services/api';
 import router from '../../router';
-import cache, { keys } from '../../services/cache';
+import cache, {keys} from '../../services/cache';
 
 import globalStore from '../index';
 
@@ -12,7 +12,8 @@ const state = {
     auth: false,
     user: null,
     token: null,
-    firstTime: false
+    firstTime: false,
+    appConfig: null
 };
 
 // getters
@@ -20,7 +21,8 @@ const getters = {
     checkLogin: state => state.auth,
     authHeader: state => state.auth ? { 'Authorization': 'Bearer ' + state.token } : {},
     user: state => state.user,
-    firstTime: firstTime => state.firstTime
+    firstTime: state => state.firstTime,
+    appConfig: state => state.appConfig
 };
 
 // actions
@@ -54,7 +56,7 @@ function login (store, { email, password }) {
     return authApi.login(creds).then((response) => {
         onLoggin(store, response.token);
         return Promise.resolve();
-    }, ({ data, status }) => {
+    }, ({data, status}) => {
         return Promise.reject(data);
     });
 }
@@ -77,22 +79,22 @@ function activate (store, activationToken) {
 }
 
 function resetPassword (store, email) {
-    return authApi.resetPassword({ email }).then(() => {
+    return authApi.resetPassword({email}).then(() => {
         return Promise.resolve();
     }).catch((err) => {
         if (err) {
-            return Promise.reject(new Error());
+            return Promise.reject();
         }
     });
 }
 
-function changePassword (store, { token, data }) {
+function changePassword (store, {token, data}) {
     return authApi.changePassword(token, data).then(() => {
         router.push({ name: 'login' });
         return Promise.resolve();
     }).catch((err) => {
         if (err) {
-            return Promise.reject(new Error());
+            return Promise.reject();
         }
     });
 }
@@ -111,23 +113,20 @@ function register (store, { email, password, passwordConfirmation, name, birthda
         return Promise.resolve();
     }).catch((err) => {
         if (err.response) {
-            console.log(err.response.data);
-            console.log(err.response.status);
-            console.log(err.response.headers);
         } else {
-            console.log(err.message);
             if (err.message === 'Could not create new user.') {
 
             }
         }
-        return Promise.reject(new Error());
+        return Promise.reject(err);
     });
 }
 
 function fetchUser (store) {
     return userApi.show().then((response) => {
+        console.log('fetch user', response.data);
         store.commit(types.AUTH_SET_USER, response.data);
-    }).catch(({ data, status }) => {
+    }).catch(({data, status}) => {
         console.log(data, status);
     });
 }
@@ -138,9 +137,11 @@ function retoken (store) {
 
     return new Promise((resolve, reject) => {
         authApi.retoken(data).then((response) => {
+            console.log('retoken response', response);
             store.commit(types.AUTH_SET_TOKEN, response.token);
+            store.commit('AUTH_APP_CONFIG', response.config);
             resolve();
-        }).catch(({ data, status }) => {
+        }).catch(({data, status}) => {
             // check for internet problems -> not resolve until retoken finish
             console.log(data, status);
             store.commit(types.AUTH_LOGOUT);
@@ -166,7 +167,7 @@ function update (store, data) {
         firstTime(store, false);
         store.commit(types.AUTH_SET_USER, response.data);
         return Promise.resolve(response.data);
-    }).catch(({ data, status }) => {
+    }).catch(({data, status}) => {
         console.log(data, status);
         return Promise.reject(data);
     });
@@ -174,10 +175,9 @@ function update (store, data) {
 
 function updatePhoto (store, data) {
     return userApi.updatePhoto(data).then((response) => {
-        console.log(response);
         store.commit(types.AUTH_SET_USER, response.data);
         return Promise.resolve(response.data);
-    }).catch(({ data, status }) => {
+    }).catch(({data, status}) => {
         console.log(data, status);
         return Promise.reject(data);
     });
@@ -216,6 +216,19 @@ const mutations = {
     },
     [types.AUTH_FIRST_TIME] (state, firstTime) {
         state.firstTime = firstTime;
+    },
+
+    AUTH_APP_CONFIG (state, appConfig) {
+        state.appConfig = appConfig;
+    },
+
+    [types.DONATION_INTENT_PUSH] (state, donation) {
+        if (state.user) {
+            if (!state.user.donations) {
+                state.user.donations = [];
+            }
+            state.user.donations.push(donation);
+        }
     }
 };
 

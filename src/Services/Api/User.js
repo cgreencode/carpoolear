@@ -1,9 +1,10 @@
 import TaggedApi from '../../classes/TaggedApi';
 
 class UserApi extends TaggedApi {
-    /** USERS API  */
 
-    /**
+  /** USERS API  */
+
+  /**
    * Register an user.
    * @param {Object} data {
    *    @param {String} name
@@ -23,7 +24,7 @@ class UserApi extends TaggedApi {
         return this.post('/api/users', data);
     }
 
-    /**
+  /**
    * Update an user.
    * @param {Object} data {
    *    @param {String} name
@@ -42,7 +43,7 @@ class UserApi extends TaggedApi {
         return this.put('/api/users', data);
     }
 
-    /**
+  /**
    * Update user photo.
    * @param {Object} data {
    *    @param {File} profile (Image)
@@ -67,6 +68,14 @@ class UserApi extends TaggedApi {
 
     list (data) {
         return this.get('/api/users/list', data);
+    }
+
+    registerDonation (data) {
+        return this.post('/api/users/donation', data);
+    }
+
+    changeProperty (data) {
+        return this.post('/api/users/change/' + data.property + '/' + data.value, null);
     }
 }
 

@@ -171,13 +171,24 @@ export default {
             let termsAndConditions = this.termsAndConditions;
             let birthday = this.birthdayAnswer;
             this.progress = true;
-            this.doRegister({ email, password, passwordConfirmation, name, birthday, termsAndConditions }).then(() => {
+            this.doRegister({email, password, passwordConfirmation, name, birthday, termsAndConditions}).then(() => {
                 this.progress = false;
                 this.success = true;
-            }).catch(() => {
-                dialogs.message('La cuenta de email ingresada se encuentra en uso.', { estado: 'error' });
-                this.emailError.state = true;
-                this.emailError.message = 'La cuenta de email ingresada se encuentra en uso.';
+            }).catch((err) => {
+                console.log(err);
+                if (err) {
+                    if (err.status === 422) {
+                        if (err.data && err.data.errors && err.data.errors.email) {
+                            dialogs.message('La cuenta de email ingresada se encuentra en uso.', {estado: 'error'});
+                            this.emailError.state = true;
+                            this.emailError.message = 'La cuenta de email ingresada se encuentra en uso.';
+                        } else {
+                            dialogs.message('Algunos de los campos ingresados no es válido.', {estado: 'error'});
+                        }
+                    } else {
+                        dialogs.message('Ocurrió un error al procesar el registro, por favor vuelva a intentar.', {estado: 'error'});
+                    }
+                }
                 this.progress = false;
             });
         },
