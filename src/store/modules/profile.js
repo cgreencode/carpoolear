@@ -34,6 +34,7 @@ const actions = {
             return Promise.reject(error);
         });
     },
+
     registerDonation (store, data) {
         return userApi.registerDonation(data).then((response) => {
             console.log('registerDonation', response);

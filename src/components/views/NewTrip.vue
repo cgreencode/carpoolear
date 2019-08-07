@@ -350,7 +350,7 @@ export default {
             no_lucrar: false,
             sameCity: false,
             zoom: 4,
-            center: [ -29.0, -60.0 ],
+            center: [-29.0, -60.0],
             points: [
                 {
                     name: '',
@@ -694,7 +694,7 @@ export default {
                     validOtherTripDate = true;
                 }
                 if (globalError) {
-                    dialogs.message('Algunos datos ingresados no son válidos.', {estado: 'error'});
+                    dialogs.message('Algunos datos ingresados no son válidos.', { estado: 'error' });
                 }
 
                 if (validOtherTripTime && validOtherTripDate) {
