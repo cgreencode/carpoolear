@@ -106,7 +106,7 @@ export default {
                 this.loading = true;
                 let email = this.email;
                 let password = this.password;
-                this.doLogin({email, password}).then(data => {
+                this.doLogin({ email, password }).then(data => {
                     this.loading = false;
                     // router.push({ name: 'trips' });
                     // router.rememberBack();
@@ -208,7 +208,7 @@ label {
 .login-forget {
   font-weight: bold;
   padding-left: 12px;
-  color: var(--secondary-background);
+  color: #016587;
 }
 
 .user-form .btn-primary.btn-facebook {

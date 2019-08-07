@@ -147,8 +147,7 @@ export default {
             refreshTrips: 'trips/refreshList',
             subscribeToSearch: 'subscriptions/create',
             findSubscriptions: 'subscriptions/index',
-            registerDonation: 'profile/registerDonation',
-            setScrollOffset: 'trips/setScrollOffset'
+            registerDonation: 'profile/registerDonation'
             // morePagesActions: 'trips/tripMorePage',
             // setActionButton: 'actionbars/setHeaderButtons'
         }),
@@ -170,11 +169,7 @@ export default {
             // this.setActionButton(['clear']);
         },
         nextPage () {
-            this.search({next: true});
-        },
-        onTripClick () {
-            let scrolloffset = window.scrollY;
-            this.setScrollOffset(scrolloffset);
+            this.search({ next: true });
         },
         isComplementary (trip, searchParams, index) {
             let isComplementary = false;
@@ -220,7 +215,7 @@ export default {
                     let done = () => {
                         this.runningSearch = false;
                     };
-                    this.search({next: true}).then(done, done);
+                    this.search({ next: true }).then(done, done);
                 }
             }
         },
@@ -341,14 +336,6 @@ export default {
             this.$refs.searchBox.clear();
         }
 
-        if (this.scrollPosition) {
-            this.$nextTick(() => {
-                setTimeout(() => {
-                    window.scrollTo(0, this.scrollPosition);
-                }, 2);
-            });
-        }
-
         // bus.event
         bus.off('search-click', this.onSearchButton);
         bus.on('search-click', this.onSearchButton);
@@ -356,8 +343,6 @@ export default {
         bus.on('clear-click', this.onClearButton);
         bus.off('scroll-bottom', this.onScrollBottom);
         bus.on('scroll-bottom', this.onScrollBottom);
-        bus.off('trip-click', this.onTripClick);
-        bus.on('trip-click', this.onTripClick);
 
         router.stack = [];
     },
@@ -391,8 +376,7 @@ export default {
             isBrowser: 'device/isBrowser',
             refreshList: 'trips/refreshList',
             subscriptions: 'subscriptions/subscriptions',
-            appConfig: 'auth/appConfig',
-            scrollPosition: 'trips/scrollOffset'
+            appConfig: 'auth/appConfig'
         }),
 
         showingTrips () {
