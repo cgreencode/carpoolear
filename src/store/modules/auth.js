@@ -118,7 +118,7 @@ function register (store, { email, password, passwordConfirmation, name, birthda
 
             }
         }
-        return Promise.reject(err);
+        return Promise.reject(new Error());
     });
 }
 

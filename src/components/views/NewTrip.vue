@@ -350,7 +350,7 @@ export default {
             no_lucrar: false,
             sameCity: false,
             zoom: 4,
-            center: [-29.0, -60.0],
+            center: [ -29.0, -60.0 ],
             points: [
                 {
                     name: '',
@@ -788,7 +788,15 @@ export default {
                         this.saving = false;
                         this.$router.replace({ name: 'detail_trip', params: { id: t.id } });
                     });
-                }).catch(() => { this.saving = false; });
+                }).catch((err) => {
+                    console.log('error_creating', err);
+                    if (err && err.data && err.data.errors && err.data.errors.driver_is_verified) {
+                        dialogs.message('Tienes que ser verificado como conductor para poder cargar viajes.', { estado: 'error' });
+                    } else {
+                        dialogs.message('Ocurrió un problema al cargar el viaje. Por favor vuelva a intentarlo.', { estado: 'error' });
+                    }
+                    this.saving = false;
+                });
             } else {
                 console.log(this.trip);
                 this.trip.id = this.updatingTrip.id;
