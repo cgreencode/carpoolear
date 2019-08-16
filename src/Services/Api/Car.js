@@ -1,6 +1,7 @@
 import TaggedApi from '../../classes/TaggedApi';
 
 class CarApi extends TaggedApi {
+
     show (id) {
         return this.get('/api/cars/' + id);
     }
@@ -20,6 +21,7 @@ class CarApi extends TaggedApi {
     delete (data = {}) {
         return this.delete('/api/cars/' + data.id, data);
     }
+
 }
 
 export { CarApi as default };

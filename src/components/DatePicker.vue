@@ -106,8 +106,7 @@ export default {
                 context.niceDate = moment(date).format('DD/MM/YYYY');
             }
 
-            function onError (error) { // Android only
-                console.log(error);
+            function onError (/* error */) { // Android only
                 // window.alert('Error: ' + error);
             }
 

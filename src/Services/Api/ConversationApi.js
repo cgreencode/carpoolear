@@ -1,6 +1,7 @@
 import TaggedApi from '../../classes/TaggedApi';
 
 class ConversationApi extends TaggedApi {
+
     list (data = {}) {
         return this.get('/api/conversations', data);
     }
@@ -14,7 +15,7 @@ class ConversationApi extends TaggedApi {
     }
 
     create (userId) {
-        return this.post('/api/conversations', { to: userId });
+        return this.post('/api/conversations', {to: userId});
     }
 
     getMessages (id, data) {
@@ -26,7 +27,7 @@ class ConversationApi extends TaggedApi {
     }
 
     send (id, text) {
-        return this.post('/api/conversations/' + id + '/send', { message: text });
+        return this.post('/api/conversations/' + id + '/send', {message: text});
     }
 
     sendToAll (data) {
@@ -36,6 +37,7 @@ class ConversationApi extends TaggedApi {
     unread (data = {}) {
         return this.get('/api/conversations/unread', data);
     }
+
 }
 
 export { ConversationApi as default };

@@ -330,7 +330,7 @@ export default {
             carpoolear_logo: process.env.ROUTE_BASE + 'static/img/carpoolear_logo.png',
             sending: false,
             zoom: 4,
-            center: { lat: -29.0, lng: -60.0 },
+            center: {lat: -29.0, lng: -60.0},
             points: [
                 {
                     name: '',
@@ -398,7 +398,7 @@ export default {
             if (window.confirm('¿Estás seguro que deseas cancelar el viaje?')) {
                 this.sending = true;
                 this.remove(this.trip.id).then(() => {
-                    this.$router.replace({ name: 'trips' });
+                    this.$router.replace({name: 'trips'});
                 }).catch(() => {
                     this.sending = false;
                 });
@@ -422,7 +422,7 @@ export default {
                 }
             }).catch(error => {
                 if (error) {
-                    router.replace({ name: 'trips' });
+                    router.replace({name: 'trips'});
                     // Ver que hacer
                     // this.trip = null;
                 }
@@ -578,7 +578,7 @@ export default {
                     origin: this.trip.points[0],
                     destiny: this.trip.points[this.trip.points.length - 1]
                 };
-                /* eslint-disable no-undef */
+                 /* eslint-disable no-undef */
                 let control = L.Routing.control({
                     waypoints: [
                         L.latLng(data.origin.lat, data.origin.lng),
@@ -840,7 +840,7 @@ export default {
         position: absolute;
         pointer-events: none;
         border-color: rgba(136, 183, 213, 0);
-        border-bottom-color: #016587;
+        border-bottom-color: var(--secondary-background);
         border-width: 12px;
         margin-left: -12px;
         z-index: 1;
@@ -921,7 +921,7 @@ export default {
             right: -23px;
             left: unset;
             border-color: rgba(136, 183, 213, 0);
-            border-left-color: #016587;
+            border-left-color: var(--secondary-background);
             border-width: 12px;
             margin-left: -12px;
             z-index: 1;
