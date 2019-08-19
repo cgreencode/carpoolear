@@ -93,9 +93,6 @@
                         <li>
                             <router-link :to="{name: 'profile', params: {id: 'me'}}">Perfil</router-link>
                         </li>
-                        <li v-if="user.is_admin">
-                            <router-link :to="{name: 'admin-page'}">Administracion</router-link>
-                        </li>
                         <li role="separator" class="divider"></li>
                         <!--<li>
                             <router-link :to="{name: 'acerca_de'}">Acerca</router-link>
@@ -118,8 +115,8 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
-import {dropdown} from 'vue-strap';
+import { mapGetters } from 'vuex';
+import { dropdown } from 'vue-strap';
 import router from '../../router';
 import bus from '../../services/bus-event.js';
 import modal from '../Modal';
@@ -184,7 +181,7 @@ export default {
         },
 
         toNotifications () {
-            router.push({name: 'notifications'});
+            router.push({ name: 'notifications' });
         },
 
         onClick (item) {

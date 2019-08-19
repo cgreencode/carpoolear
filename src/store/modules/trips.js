@@ -1,4 +1,4 @@
-import {TripApi} from '../../services/api';
+import { TripApi } from '../../services/api';
 import * as types from '../mutation-types';
 import globalStore from '../index';
 import moment from 'moment';
@@ -11,21 +11,19 @@ let tripsApi = new TripApi();
 const state = {
     ...pagination.makeState('trips'),
     current_trip: null,
-    refresh_list: false,
-    scroll_offset: 0
+    refresh_list: false
 };
 
 // getters
 const getters = {
     ...pagination.makeGetters('trips'),
     currentTrip: state => state.current_trip,
-    refreshList: state => state.refresh_list,
-    scrollOffset: state => state.scroll_offset
+    refreshList: state => state.refresh_list
 };
 
 // actions
 const actions = {
-    ...pagination.makeActions('trips', ({store, data}) => {
+    ...pagination.makeActions('trips', ({ store, data }) => {
         return tripsApi.tag(['trips']).search(data);
     }),
 
@@ -57,17 +55,13 @@ const actions = {
         return tripsApi.remove(id).then(response => {
             globalStore.commit('myTrips/' + types.MYTRIPS_DELETE_TRIPS, id);
             store.dispatch('tripsSearch', store.state.tripsSearchParam.data);
-            return Promise.resolve({status: 'ok'});
+            return Promise.resolve({ status: 'ok' });
+            // globalStore.commit(types.TRIPS_UPDATE_TRIPS, response.data);
         });
     },
 
     refreshList (store, status) {
         store.commit(types.TRIPS_REFRESH, status);
-    },
-
-    setScrollOffset (store, pos) {
-        console.log(pos);
-        store.commit(types.TRIPS_SET_SCROLL, pos);
     },
 
     searchMatchers (store, { trip }) {
@@ -127,7 +121,7 @@ const mutations = {
         }
     },
 
-    [types.TRIPS_SET_REQUEST] (state, {id, value}) {
+    [types.TRIPS_SET_REQUEST] (state, { id, value }) {
         for (let i = 0; i < state.trips.length; i++) {
             if (state.trips[i].id === id) {
                 state.trips[i].request = value;
@@ -136,7 +130,7 @@ const mutations = {
         }
     },
 
-    [types.TRIPS_ADD_PASSENGER] (state, {id, user}) {
+    [types.TRIPS_ADD_PASSENGER] (state, { id, user }) {
         for (let i = 0; i < state.trips.length; i++) {
             if (state.trips[i].id === id) {
                 if (!state.trips[i].passenger) {
@@ -148,7 +142,7 @@ const mutations = {
         }
     },
 
-    [types.TRIPS_REMOVE_PASSENGER] (state, {id, user}) {
+    [types.TRIPS_REMOVE_PASSENGER] (state, { id, user }) {
         for (let i = 0; i < state.trips.length; i++) {
             if (state.trips[i].id === id) {
                 if (!state.trips[i].passenger) {
@@ -161,10 +155,6 @@ const mutations = {
                 return;
             }
         }
-    },
-
-    [types.TRIPS_SET_SCROLL] (state, scrollOffset) {
-        state.scroll_offset = scrollOffset;
     }
 };
 

@@ -59,6 +59,11 @@
                     <input maxlength="20" @keydown="isNumber" v-on:paste='isNumber' v-model="user.mobile_phone" type="tel" class="form-control" id="input-phone" placeholder="Número de teléfono (al menos 7 números)" :class="{'has-error': phoneError.state }">
                     <span class="error" v-if="phoneError.state"> {{phoneError.message}} </span>
                 </div>
+                <div class="form-group">
+                    <label for="input-patente">Patente <span class="description">(Sin espacios. Ej: ABC123 o AA123AA). Dale un extra de confianza a los carpooleros que viajen con vos identificando tu auto.</span></label>
+                    <input :style="patente.length > 0 ? 'text-transform: uppercase' : ''" v-mask="'AAN##NA'" v-model="patente" type="text" class="form-control" id="input-patente" placeholder="Patentes válidas (AAA111 o AA111BB)" :class="{'has-error': patentError.state }">
+                    <span class="error" v-if="patentError.state"> {{patentError.message}} </span>
+                </div>
 
                 <div class="checkbox">
                     <label>
@@ -66,7 +71,7 @@
                     </label>
                 </div>
                 <hr />
-                <div class="checkbox" >
+                <div class="checkbox">
                     <label >
                         <input type="checkbox"  @change="changeShowPassword"> Cambiar contraseña
                     </label>
@@ -75,6 +80,24 @@
                     <label for="input-pass">Ingrese su nueva contraseña</label>
                     <input maxlength="40" v-model="pass.password" type="password" class="form-control" id="input-pass" placeholder="Contraseña">
                     <input maxlength="40" v-model="pass.password_confirmation" type="password" class="form-control" id="input-pass-confirm" placeholder="Repetir contraseña">
+                </div>
+                <hr />
+                <div class="checkbox" v-if="settings.module_validated_drivers && !user.driver_is_verified">
+                    <label >
+                        <input type="checkbox" @change="changeBeDriver" v-model="this.showBeDriver"> Solicitar ser chofer
+                    </label>
+                </div>
+                <div class="form-group" v-if="settings.module_validated_drivers && showBeDriver&& !user.driver_is_verified">
+                    <label for="driver_documentation">Ingrese la documentación</label>
+                    <input type="file" id="driver_documentation" multiple @change="onDriverDocumentChange" />
+                    <p class="help-block">Se requiere que cargue: licencia de conductor, seguro del vehículo ...</p>
+                </div>
+                <div v-if="user.driver_is_verified">
+                    <i class="fa fa-check-circle check-driver-verified" aria-hidden="true"></i>
+                    <strong>Ya eres un chofer verificado.</strong>
+                </div>
+                <div class="row" v-if="user.driver_data_docs && user.driver_data_docs.length">
+                    <div v-imgSrc:docs="img"  v-for="img in user.driver_data_docs" class="img-doc col-md-8 col-sm-12"></div>
                 </div>
 
                 <div class="btn-container">
@@ -135,7 +158,9 @@ export default {
             minDate: moment('1900-01-01').toDate(),
             birthday: '',
             birthdayAnswer: '',
-            showChangePassword: false
+            showChangePassword: false,
+            showBeDriver: false,
+            driverFiles: null
         };
     },
     computed: {
@@ -143,7 +168,8 @@ export default {
             userData: 'auth/user',
             firstTime: 'auth/firstTime',
             cars: 'cars/cars',
-            isMobile: 'device/isMobile'
+            isMobile: 'device/isMobile',
+            settings: 'auth/appConfig'
         }),
         iptUser () {
             if (this.user) {
@@ -186,6 +212,9 @@ export default {
         changeShowPassword () {
             this.showChangePassword = !this.showChangePassword;
         },
+        changeBeDriver () {
+            this.showBeDriver = !this.showBeDriver;
+        },
         isNumber (value) {
             inputIsNumber(value);
         },
@@ -197,6 +226,12 @@ export default {
             }).catch(() => {
                 this.loadingImg = false;
             });
+        },
+        onDriverDocumentChange (event) {
+            console.log('file input ', event);
+            if (event.target.files) {
+                this.driverFiles = event.target.files;
+            }
         },
         dateChange (value) {
             this.birthdayAnswer = value;
@@ -225,7 +260,25 @@ export default {
                 console.log(this.user.birthday);
             } */
             data.nro_doc = this.dniRawValue;
-            this.update(data).then(() => {
+
+            let bodyFormData = new FormData();
+            for (const key in data) {
+                if (data.hasOwnProperty(key)) {
+                    const element = data[key];
+                    bodyFormData.append(key, data[key]);
+
+                }
+            }
+            if (this.driverFiles) {
+                bodyFormData.append('user_be_driver', true);
+                console.log('file', this.driverFiles);
+                for (let index = 0; index < this.driverFiles.length; index++) {
+                    const file = this.driverFiles[index];
+                    console.log('file', file);
+                    bodyFormData.append('driver_data_docs[]', file);
+                }
+            }
+            this.update(bodyFormData).then(() => {
                 this.pass.password = '';
                 this.pass.password_confirmation = '';
                 this.loading = false;
@@ -364,6 +417,9 @@ export default {
     mounted () {
         bus.on('date-change', this.dateChange);
         this.user = this.userData;
+        if (this.user.driver_data_docs && this.user.driver_data_docs.length) {
+            this.showBeDriver = true;
+        }
         if (this.cars) {
             if (this.cars.length > 0) {
                 this.car = this.cars[0];
@@ -420,5 +476,15 @@ export default {
         span.error {
             font-weight: 300;
         }
+    }
+    .img-doc {
+        height: 320px;
+        background-size: cover;
+    }
+    .check-driver-verified {
+        font-size: 24px;
+        vertical-align: -2px;
+        margin-right: 5px;
+        color: var(--trip-mostly-free-color);
     }
 </style>
