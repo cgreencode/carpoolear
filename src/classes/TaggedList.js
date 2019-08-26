@@ -51,6 +51,7 @@ class TaggedList {
         }
         return temp;
     }
+
 }
 
 export { TaggedList as default };

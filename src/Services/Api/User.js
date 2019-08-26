@@ -1,9 +1,10 @@
 import TaggedApi from '../../classes/TaggedApi';
 
 class UserApi extends TaggedApi {
-    /** USERS API  */
 
-    /**
+  /** USERS API  */
+
+  /**
    * Register an user.
    * @param {Object} data {
    *    @param {String} name
@@ -23,7 +24,7 @@ class UserApi extends TaggedApi {
         return this.post('/api/users', data);
     }
 
-    /**
+  /**
    * Update an user.
    * @param {Object} data {
    *    @param {String} name
@@ -39,14 +40,10 @@ class UserApi extends TaggedApi {
    * @return {}
   */
     update (data) {
-        let customHeaders = {
-            'Content-Type': 'multipart/form-data'
-        };
-        data.append('_method', 'PUT');
-        return this.post('/api/users', data, customHeaders);
+        return this.put('/api/users', data);
     }
 
-    /**
+  /**
    * Update user photo.
    * @param {Object} data {
    *    @param {File} profile (Image)
@@ -80,6 +77,7 @@ class UserApi extends TaggedApi {
     changeProperty (data) {
         return this.post('/api/users/change/' + data.property + '/' + data.value, null);
     }
+
 }
 
 export { UserApi as default };
