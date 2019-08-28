@@ -1,6 +1,7 @@
 import TaggedApi from '../../classes/TaggedApi';
 
 class DeviceApi extends TaggedApi {
+
     index () {
         return this.get('/api/devices');
     }

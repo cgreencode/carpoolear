@@ -350,7 +350,7 @@ export default {
             no_lucrar: false,
             sameCity: false,
             zoom: 4,
-            center: [ -29.0, -60.0 ],
+            center: [-29.0, -60.0],
             points: [
                 {
                     name: '',
@@ -584,7 +584,7 @@ export default {
             let validOtherTripTime = false;
             let validOtherTripDate = false;
 
-            this.points.forEach(p => {
+            this.points.concat(this.showReturnTrip ? this.otherTrip.points : []).forEach(p => {
                 if (!p.json) {
                     p.error.state = true;
                     p.error.message = 'Seleccione una localidad válida.';
@@ -593,28 +593,11 @@ export default {
                     foreignPoints += (p.json.pais === 'Argentina' ? 0 : 1);
                 }
             });
+
             if (foreignPoints > 1) {
                 globalError = true;
                 this.points[0].error.state = true;
                 this.points[0].error.message = 'El origen o el destino de tu viaje tiene que estar en Argentina.';
-            }
-
-            if (this.showReturnTrip) {
-                foreignPoints = 0;
-                this.otherTrip.points.forEach(p => {
-                    if (!p.json) {
-                        p.error.state = true;
-                        p.error.message = 'Seleccione una localidad válida.';
-                        globalError = true;
-                    } else {
-                        foreignPoints += (p.json.pais === 'Argentina' ? 0 : 1);
-                    }
-                });
-                if (foreignPoints > 1) {
-                    globalError = true;
-                    this.otherTrip.points[0].error.state = true;
-                    this.otherTrip.points[0].error.message = 'El origen o el destino de tu viaje tiene que estar en Argentina.';
-                }
             }
 
             if (!this.time || !moment(this.time, 'HH mm').isValid()) {
@@ -645,13 +628,13 @@ export default {
                 globalError = true;
                 this.seatsError.state = true;
                 this.seatsError.message = 'Ya tienes ' + this.trip.passengers + ' subidos en este viaje. No puedes cambiar el número de asientos por uno menor al de pasajeros ya subidos.';
-                dialogs.message('Ya tienes ' + this.trip.passengers + ' subidos en este viaje. No puedes cambiar el número de asientos por uno menor al de pasajeros ya subidos.', { estado: 'error' });
+                dialogs.message('Ya tienes ' + this.trip.passengers + ' subidos en este viaje. No puedes cambiar el número de asientos por uno menor al de pasajeros ya subidos.', {estado: 'error'});
             } else if (globalError) {
-                dialogs.message('Algunos datos ingresados no son válidos.', { estado: 'error' });
+                dialogs.message('Algunos datos ingresados no son válidos.', {estado: 'error'});
             } else if (!this.no_lucrar) {
                 this.lucrarError.state = true;
                 this.lucrarError.message = 'Debes indicar que te comprometes a no lucrar con el viaje.';
-                dialogs.message('Debes indicar que te comprometes a no lucrar con el viaje.', { estado: 'error' });
+                dialogs.message('Debes indicar que te comprometes a no lucrar con el viaje.', {estado: 'error'});
                 globalError = true;
             }
             if (validDate && validTime) {
@@ -694,7 +677,7 @@ export default {
                     validOtherTripDate = true;
                 }
                 if (globalError) {
-                    dialogs.message('Algunos datos ingresados no son válidos.', { estado: 'error' });
+                    dialogs.message('Algunos datos ingresados no son válidos.', {estado: 'error'});
                 }
 
                 if (validOtherTripTime && validOtherTripDate) {
@@ -788,15 +771,7 @@ export default {
                         this.saving = false;
                         this.$router.replace({ name: 'detail_trip', params: { id: t.id } });
                     });
-                }).catch((err) => {
-                    console.log('error_creating', err);
-                    if (err && err.data && err.data.errors && err.data.errors.driver_is_verified) {
-                        dialogs.message('Tienes que ser verificado como conductor para poder cargar viajes.', { estado: 'error' });
-                    } else {
-                        dialogs.message('Ocurrió un problema al cargar el viaje. Por favor vuelva a intentarlo.', { estado: 'error' });
-                    }
-                    this.saving = false;
-                });
+                }).catch(() => { this.saving = false; });
             } else {
                 console.log(this.trip);
                 this.trip.id = this.updatingTrip.id;

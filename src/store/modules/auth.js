@@ -1,7 +1,7 @@
 import * as types from '../mutation-types';
 import { AuthApi, UserApi } from '../../services/api';
 import router from '../../router';
-import cache, { keys } from '../../services/cache';
+import cache, {keys} from '../../services/cache';
 
 import globalStore from '../index';
 
@@ -56,7 +56,7 @@ function login (store, { email, password }) {
     return authApi.login(creds).then((response) => {
         onLoggin(store, response.token);
         return Promise.resolve();
-    }, ({ data, status }) => {
+    }, ({data, status}) => {
         return Promise.reject(data);
     });
 }
@@ -78,34 +78,37 @@ function activate (store, activationToken) {
     });
 }
 
-function searchUsers (store, name) {
-    if (store.state.user.is_admin) {
-        return userApi.searchUsers({ name: name });
-    }
-}
-
 function resetPassword (store, email) {
-    return authApi.resetPassword({ email }).then(() => {
+    return authApi.resetPassword({email}).then(() => {
         return Promise.resolve();
     }).catch((err) => {
         if (err) {
-            return Promise.reject(new Error());
+            return Promise.reject();
         }
     });
 }
 
-function changePassword (store, { token, data }) {
+function changePassword (store, {token, data}) {
     return authApi.changePassword(token, data).then(() => {
         router.push({ name: 'login' });
         return Promise.resolve();
     }).catch((err) => {
         if (err) {
-            return Promise.reject(new Error());
+            return Promise.reject();
         }
     });
 }
 
-function register (store, data) {
+function register (store, { email, password, passwordConfirmation, name, birthday, termsAndConditions }) {
+    let data = {};
+    data.email = email;
+    data.password = password;
+    data.password_confirmation = passwordConfirmation;
+    data.name = name;
+    data.password = password;
+    data.terms_and_conditions = termsAndConditions;
+    data.birthday = birthday;
+
     return userApi.register(data).then((data) => {
         return Promise.resolve();
     }).catch((err) => {
@@ -115,7 +118,7 @@ function register (store, data) {
 
             }
         }
-        return Promise.reject(new Error());
+        return Promise.reject(err);
     });
 }
 
@@ -123,16 +126,8 @@ function fetchUser (store) {
     return userApi.show().then((response) => {
         console.log('fetch user', response.data);
         store.commit(types.AUTH_SET_USER, response.data);
-    }).catch(({ data, status }) => {
+    }).catch(({data, status}) => {
         console.log(data, status);
-    });
-}
-
-function getConfig (store) {
-    return authApi.config().then((response) => {
-        console.log('config response', response);
-        store.commit('AUTH_APP_CONFIG', response);
-        return response;
     });
 }
 
@@ -146,7 +141,7 @@ function retoken (store) {
             store.commit(types.AUTH_SET_TOKEN, response.token);
             store.commit('AUTH_APP_CONFIG', response.config);
             resolve();
-        }).catch(({ data, status }) => {
+        }).catch(({data, status}) => {
             // check for internet problems -> not resolve until retoken finish
             console.log(data, status);
             store.commit(types.AUTH_LOGOUT);
@@ -172,15 +167,7 @@ function update (store, data) {
         firstTime(store, false);
         store.commit(types.AUTH_SET_USER, response.data);
         return Promise.resolve(response.data);
-    }).catch(({ data, status }) => {
-        console.log(data, status);
-        return Promise.reject(data);
-    });
-}
-function adminUpdate (store, data) {
-    return userApi.adminUpdate(data).then((response) => {
-        return Promise.resolve(response.data);
-    }).catch(({ data, status }) => {
+    }).catch(({data, status}) => {
         console.log(data, status);
         return Promise.reject(data);
     });
@@ -188,10 +175,9 @@ function adminUpdate (store, data) {
 
 function updatePhoto (store, data) {
     return userApi.updatePhoto(data).then((response) => {
-        console.log(response);
         store.commit(types.AUTH_SET_USER, response.data);
         return Promise.resolve(response.data);
-    }).catch(({ data, status }) => {
+    }).catch(({data, status}) => {
         console.log(data, status);
         return Promise.reject(data);
     });
@@ -208,10 +194,7 @@ const actions = {
     changePassword,
     update,
     updatePhoto,
-    onLoggin,
-    searchUsers,
-    adminUpdate,
-    getConfig
+    onLoggin
 };
 
 // mutations

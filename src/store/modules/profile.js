@@ -1,5 +1,5 @@
 import * as types from '../mutation-types';
-import { UserApi, RateApi } from '../../services/api';
+import {UserApi, RateApi} from '../../services/api';
 import * as pagination from '../pagination';
 import globalStore from '../index';
 
@@ -34,6 +34,7 @@ const actions = {
             return Promise.reject(error);
         });
     },
+
     registerDonation (store, data) {
         return userApi.registerDonation(data).then((response) => {
             console.log('registerDonation', response);
@@ -55,7 +56,7 @@ const actions = {
         });
     },
 
-    ...pagination.makeActions('rates', ({ store, data }) => {
+    ...pagination.makeActions('rates', ({store, data}) => {
         // TODO: Pagination not working
         data.page_size = 200;
         return rateApi.index(store.state.user.id, data);

@@ -264,6 +264,7 @@ export default {
                         default:
                             errorMessage = 'Se produjo un error al cambiar la cantidad de asientos. Por favor vuelva a intentarlo.';
                             break;
+
                         }
                     } else {
                         errorMessage = 'Se produjo un error al cambiar la cantidad de asientos. Por favor vuelva a intentarlo.';

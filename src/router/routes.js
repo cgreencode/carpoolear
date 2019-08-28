@@ -1,12 +1,12 @@
 /* jshint esversion: 6 */
-import { auth, guest, profileComplete, authAdmin } from './middleware.js';
+import {auth, guest, profileComplete, authAdmin} from './middleware.js';
 
 export default [
     {
         path: '/login',
         name: 'login',
         beforeEnter: guest,
-        component: require('../components/views/Login').default,
+        component: require('../components/views/Login'),
         meta: {
             actionbar: {
                 header: {
@@ -25,7 +25,7 @@ export default [
         path: '/register',
         name: 'register',
         beforeEnter: guest,
-        component: require('../components/views/Register').default,
+        component: require('../components/views/Register'),
         meta: {
             actionbar: {
                 header: {
@@ -44,14 +44,14 @@ export default [
         path: '/activate/:token',
         name: 'activate',
         beforeEnter: guest,
-        component: require('../components/views/Activate').default,
+        component: require('../components/views/Activate'),
         props: true
     },
     {
         path: '/reset-password',
         name: 'reset-password',
         beforeEnter: guest,
-        component: require('../components/views/ResetPassword').default,
+        component: require('../components/views/ResetPassword'),
         props: true,
         meta: {
             actionbar: {
@@ -71,7 +71,7 @@ export default [
         path: '/reset-password/:token',
         name: 'reset-password-confirm',
         beforeEnter: guest,
-        component: require('../components/views/ResetPassword').default,
+        component: require('../components/views/ResetPassword'),
         props: true,
         meta: {
             actionbar: {
@@ -90,7 +90,7 @@ export default [
     {
         path: '/profile/:id',
         name: 'profile',
-        component: require('../components/views/Profile.vue').default,
+        component: require('../components/views/Profile.vue'),
         props: true,
         beforeEnter: auth,
         meta: {
@@ -109,7 +109,7 @@ export default [
     {
         path: '/my-trips',
         name: 'my-trips',
-        component: require('../components/views/MyTrips').default,
+        component: require('../components/views/MyTrips'),
         beforeEnter: auth,
         meta: {
             actionbar: {
@@ -127,7 +127,7 @@ export default [
     {
         path: '/trips',
         name: 'trips',
-        component: require('../components/views/Trips').default,
+        component: require('../components/views/Trips'),
         props: true,
         meta: {
             actionbar: {
@@ -144,7 +144,7 @@ export default [
     {
         path: '/trips/create',
         name: 'new-trip',
-        component: require('../components/views/NewTrip').default,
+        component: require('../components/views/NewTrip'),
         beforeEnter: (to, from, next) => {
             auth(to, from, next);
             profileComplete(to, from, next);
@@ -161,7 +161,7 @@ export default [
     {
         path: '/trips/update/:id',
         name: 'update-trip',
-        component: require('../components/views/NewTrip').default,
+        component: require('../components/views/NewTrip'),
         beforeEnter: auth,
         props: true,
         meta: {
@@ -176,7 +176,7 @@ export default [
     {
         path: '/trips/:id',
         name: 'detail_trip',
-        component: require('../components/views/Trip').default,
+        component: require('../components/views/Trip'),
         beforeEnter: auth,
         props: true,
         meta: {
@@ -214,7 +214,7 @@ export default [
     {
         path: '/notifications',
         name: 'notifications',
-        component: require('../components/views/Notifications.vue').default,
+        component: require('../components/views/Notifications.vue'),
         beforeEnter: auth,
         props: true,
         meta: {
@@ -231,13 +231,13 @@ export default [
     },
     {
         path: '/setting',
-        component: require('../components/views/Settings.vue').default,
+        component: require('../components/views/Settings.vue'),
         beforeEnter: auth,
         children: [
             {
                 path: 'profile',
                 name: 'profile_update',
-                component: require('../components/sections/UpdateProfile.vue').default,
+                component: require('../components/sections/UpdateProfile.vue'),
                 meta: {
                     tab: 'profile',
                     actionbar: {
@@ -255,7 +255,7 @@ export default [
             {
                 path: 'friends',
                 name: 'friends_setting',
-                component: require('../components/sections/FriendsSetting.vue').default,
+                component: require('../components/sections/FriendsSetting.vue'),
                 meta: {
                     tab: 'friends',
                     actionbar: {
@@ -273,7 +273,7 @@ export default [
             {
                 path: 'friends/search',
                 name: 'friends_search',
-                component: require('../components/sections/FriendsRequest.vue').default,
+                component: require('../components/sections/FriendsRequest.vue'),
                 meta: {
                     tab: 'friends',
                     actionbar: {
@@ -289,7 +289,7 @@ export default [
     {
         path: '/conversations',
         name: 'conversations-list',
-        component: require('../components/views/ConversationList').default,
+        component: require('../components/views/ConversationList'),
         beforeEnter: auth,
         meta: {
             actionbar: {
@@ -309,7 +309,7 @@ export default [
             {
                 path: ':id',
                 name: 'conversation-chat',
-                component: require('../components/views/ConversationChat').default,
+                component: require('../components/views/ConversationChat'),
                 props: true,
                 meta: {
                     hide: true,
@@ -332,7 +332,7 @@ export default [
     {
         path: '/about',
         name: 'acerca_de',
-        component: require('../components/views/About').default,
+        component: require('../components/views/About'),
         meta: {
             actionbar: {
                 header: {
@@ -345,7 +345,7 @@ export default [
     {
         path: '/terminos',
         name: 'terms',
-        component: require('../components/views/TermsAndConditions').default,
+        component: require('../components/views/TermsAndConditions'),
         meta: {
             actionbar: {
                 header: {
@@ -358,7 +358,7 @@ export default [
     {
         path: '/admin',
         name: 'admin-page',
-        component: require('../components/views/AdminPage').default,
+        component: require('../components/views/AdminPage'),
         beforeEnter: authAdmin,
         meta: {
             actionbar: {
@@ -376,7 +376,7 @@ export default [
     {
         path: '/admin/users',
         name: 'admin-users',
-        component: require('../components/views/UsersCrud').default,
+        component: require('../components/views/UsersCrud'),
         beforeEnter: authAdmin,
         meta: {
             actionbar: {
@@ -386,6 +386,24 @@ export default [
                 },
                 header: {
                     title: 'Admin users',
+                    buttons: []
+                }
+            }
+        }
+    },
+    {
+        path: '/admin/trips',
+        name: 'admin-trips',
+        component: require('../components/views/AdminTrips.vue'),
+        beforeEnter: authAdmin,
+        meta: {
+            actionbar: {
+                footer: {
+                    show: true,
+                    active_id: 'admin'
+                },
+                header: {
+                    title: 'Admin trips',
                     buttons: []
                 }
             }

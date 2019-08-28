@@ -28,15 +28,13 @@ var gulpif = require('gulp-if');
 var path = require('path');
 var exec = require('child_process').exec;
 
-gulp.task('build-cordova', function (cb) { // DEPRECATED
- /*   
+gulp.task('build-cordova', function (cb) {
     var command = argv.production ? '--release' : '';
 
     exec('cd cordova && cordova build browser ' + command + ' && cd ..', function (err, stdout, stderr) {
         console.log(stdout);
         cb(err);
     });
-*/
 });
 
 gulp.task('deploy', ['build-cordova'], function () {

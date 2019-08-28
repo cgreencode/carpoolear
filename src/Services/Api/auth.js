@@ -1,6 +1,7 @@
 import TaggedApi from '../../classes/TaggedApi';
 
 class AuthApi extends TaggedApi {
+
     /** AUTH API **/
 
     // data = {access_token}
@@ -16,7 +17,7 @@ class AuthApi extends TaggedApi {
         return this.post('/api/social/friends/' + provider, data);
     }
 
-    /**
+  /**
    * User login
    * @param {Object} creds {
    *    @param {String} email
@@ -40,13 +41,6 @@ class AuthApi extends TaggedApi {
         return this.post('/api//logout');
     }
 
-    /**
-     * Get Config
-     * @return {} config object
-    */
-    config () {
-        return this.get('/api/config');
-    }
     /**
      * Retoken.
      * @param {Object} data {

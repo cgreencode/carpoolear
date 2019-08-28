@@ -1,6 +1,7 @@
 import TaggedApi from '../../classes/TaggedApi';
 
 class RateApi extends TaggedApi {
+
     index (id, data = {}) {
         if (id) {
             return this.get('/api/users/' + id + '/ratings', data);
@@ -21,6 +22,7 @@ class RateApi extends TaggedApi {
     reply (tripId, userId, data) {
         return this.post('/api/trips/' + tripId + '/reply/' + userId, data);
     }
+
 }
 
 export { RateApi as default };
