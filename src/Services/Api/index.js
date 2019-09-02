@@ -13,17 +13,17 @@ import SubscriptionApi from './SubscriptionsApi';
 import AdminApi from './Admin';
 
 export {
-  AuthApi,
-  DebugApi,
-  TripApi,
-  UserApi,
-  DeviceApi,
-  RateApi,
-  PassengerApi,
-  ConversationApi,
-  CarApi,
-  FriendsApi,
-  NotificationApi,
-  SubscriptionApi,
-  AdminApi
+    AuthApi,
+    DebugApi,
+    TripApi,
+    UserApi,
+    DeviceApi,
+    RateApi,
+    PassengerApi,
+    ConversationApi,
+    CarApi,
+    FriendsApi,
+    NotificationApi,
+    SubscriptionApi,
+    AdminApi
 };

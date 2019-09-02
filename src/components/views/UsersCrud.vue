@@ -79,8 +79,18 @@
                                 <input maxlength="40" v-model="newInfo.pass.password_confirmation" type="password" class="form-control" id="input-pass-confirm" placeholder="Repetir contraseña">
                                 <span class="error" v-if="passError.state"> {{phoneError.message}} </span>
                             </div>
-
-                            <div class="checkbox" >
+                            <hr />
+                            <div class="row" v-if="newInfo.driver_data_docs && newInfo.driver_data_docs.length">
+                                <h4 class="col-xs-24">Documentación del chofer</h4>
+                                <div v-imgSrc:docs="img"  v-for="img in newInfo.driver_data_docs" class="img-doc col-md-8 col-sm-12"></div>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" v-model="newInfo.driver_is_verified"> Es chofer
+                                </label>
+                            </div>
+                            <hr />
+                            <div class="checkbox">
                                 <label >
                                     <input type="checkbox"  v-model="newInfo.active"> Usuario activo
                                 </label>
@@ -107,8 +117,8 @@
 </div>
 </template>
 <script>
-import {mapGetters, mapActions} from 'vuex';
-import {Thread} from '../../classes/Threads.js';
+import { mapGetters, mapActions } from 'vuex';
+import { Thread } from '../../classes/Threads.js';
 import Loading from '../Loading.vue';
 import { inputIsNumber } from '../../services/utility';
 import dialogs from '../../services/dialogs.js';
@@ -132,7 +142,9 @@ export default {
                 mobile_phone: '',
                 pass: {},
                 active: '',
-                banned: ''
+                banned: '',
+                driver_is_verified: 0,
+                driver_data_docs: []
             },
             error: null,
             globalError: false,
@@ -141,13 +153,15 @@ export default {
             passError: new Error(),
             dniError: new Error(),
             phoneError: new Error(),
-            emailError: new Error()
+            emailError: new Error(),
+            keyUpTimerId: 0
         };
     },
 
     computed: {
         ...mapGetters({
-            isMobile: 'device/isMobile'
+            isMobile: 'device/isMobile',
+            settings: 'auth/appConfig'
         })
     },
 
@@ -159,12 +173,16 @@ export default {
         }),
 
         onSearchUsers () {
-            this.search(this.textSearch)
-            .then((data) => {
-                this.userList = data.data;
-                // console.log('pas');
-                // FIXME seleccionar usuario a veces congela la lista
-            });
+            if (this.keyUpTimerId) {
+                clearTimeout(this.keyUpTimerId);
+            }
+            this.keyUpTimerId = setTimeout(() => {
+                this.search(this.textSearch).then((data) => {
+                    this.userList = data.data;
+                    // console.log('pas');
+                    // FIXME seleccionar usuario a veces congela la lista
+                });
+            }, 750);
         },
         selectUser (user) {
             this.currentUser = user;
@@ -176,7 +194,9 @@ export default {
                 mobile_phone: this.currentUser.mobile_phone,
                 pass: {},
                 active: this.currentUser.active,
-                user: {}
+                user: {},
+                driver_is_verified: this.currentUser.driver_is_verified,
+                driver_data_docs: this.currentUser.driver_data_docs
             };
         },
         toUserMessages (user) {
@@ -242,6 +262,10 @@ export default {
         save () {
             if (!this.validate()) {
                 this.newInfo.user = this.currentUser;
+                if (this.newInfo.pass && this.newInfo.pass.password) {
+                    this.newInfo.password = this.newInfo.pass.password;
+                    this.newInfo.password_confirmation = this.newInfo.pass.password_confirmation;
+                }
                 this.update(this.newInfo);
                 this.onSearchUsers();
                 dialogs.message('Perfil actualizado correctamente.');
@@ -375,7 +399,10 @@ export default {
         height: auto;
         overflow-y: auto;
     }
-
+    .img-doc {
+        height: 320px;
+        background-size: cover;
+    }
 
     @media only screen and (min-width: 768px) {
         .conversation-title {
