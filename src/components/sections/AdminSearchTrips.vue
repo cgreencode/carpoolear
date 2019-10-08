@@ -192,7 +192,7 @@ export default {
                         lat: parseFloat(data.lat),
                         lng: parseFloat(data.lon)
                     },
-                    country: data.country_code
+                    country: data.country
                 };
             }
             if (i === 0) {
