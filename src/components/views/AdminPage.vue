@@ -84,6 +84,7 @@ export default {
         adminNav
     },
     mounted () {
+        this.loadData();
     }
 };
 </script>

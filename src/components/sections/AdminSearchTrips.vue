@@ -4,7 +4,7 @@
             <div class="foreignCountry-select_wrapper">
                 <input type="checkbox" v-model="allowForeignPoints" id="cbxAllowForeignPoints" class="cbx" />
                 <label for="cbxAllowForeignPoints" class="cbx_label">
-                    Origen o destino fuera de {{ config ? config.country_name : '' }}
+                    Origen o destino fuera de {{ config.country_name }}
                 </label>
                 <span class="tooltip-bottom" data-tooltip="Marcando esta opción vas a poder seleccionar origen o destino fuera de Argentina. Recordá averiguar con la aseguradora del auto, si tenés cobertura contra terceros fuera de la Argentina. Si no es así, averiguá con ella para obtener la extensión fuera de Argentina, de forma de tener cobertura durante el viaje"></span>
                 <i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -28,7 +28,7 @@
                 <div class="foreignCountry-select_wrapper">
                     <input type="checkbox" v-model="allowForeignPoints" id="cbxAllowForeignPoints" class="cbx" />
                     <label for="cbxAllowForeignPoints" class="cbx_label">
-                        Origen o destino fuera de {{ config ? config.country_name : '' }}
+                        Origen o destino fuera de {{ config.country_name }}
                     </label>
                     <span class="tooltip-bottom" data-tooltip="Marcando esta opción vas a poder seleccionar origen o destino fuera de Argentina. Recordá averiguar con la aseguradora del auto, si tenés cobertura contra terceros fuera de la Argentina. Si no es así, averiguá con ella para obtener la extensión fuera de Argentina, de forma de tener cobertura durante el viaje"></span>
                     <i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -69,7 +69,7 @@
 
 
             <div class="col-xs-24 col-md-8 gmap-autocomplete origin">
-                <div class="search-users"> 
+                <div class="search-users">
                     <input v-model="userSearch" v-on:keyup="onSearchUsers" type="text" class="form-control form-control-with-icon search-users-input" placeholder="Escribe un nombre" />
                     <div v-if="userSearch.length != 0 && showAutocomplete">
                         <loading class="autocomplete-users" :data="userList">
@@ -107,7 +107,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-// import { pointDistance } from '../../services/maps.js';
 import DatePicker from '../DatePicker';
 import moment from 'moment';
 import dialogs from '../../services/dialogs.js';
@@ -209,6 +208,7 @@ export default {
                 params.origin_lng = this.from_town.location.lng;
                 params.origin_radio = this.from_town.radio;
                 params.origin_name = this.from_town.name;
+                params.origin_id = this.from_town.id;
             } else {
                 params.origin_name = this.$refs['from_town'].input;
             }
@@ -220,6 +220,7 @@ export default {
                 params.destination_lng = this.to_town.location.lng;
                 params.destination_radio = this.to_town.radio;
                 params.destination_name = this.to_town.name;
+                params.destination_id = this.to_town.id;
             } else {
                 params.destination_name = this.$refs['to_town'].input;
             }

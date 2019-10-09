@@ -8,7 +8,6 @@
             </button>
             <small class="copy" v-if="results.length || this.waiting">
                 <img src="https://carpoolear.com.ar/static/img/loader.gif" alt="" class="ajax-loader" v-if="this.waiting" />
-                <span>© OpenStreetMap</span>
             </small>
         </div>
     </div>
@@ -20,6 +19,7 @@ import { mapGetters } from 'vuex';
 export default {
     name: 'autocomplete',
     watch: {
+        // FIXME borra la primera vez que haces click en algo
         value (n, o) {
             if (!n) {
                 this.input = '';
@@ -133,7 +133,6 @@ export default {
             let multi = this.country ? false : true;
             tripsApi.autocomplete(this.input, this.config.osm_country, multi).then(data => {
                 this.waiting = false;
-                console.log('data', data);
                 data = data.nodes_geos;
                 if (data) {
                     data.sort((a, b) => {
