@@ -260,7 +260,7 @@ export default {
                 };
                 this.registerDonation(data);
             } else {
-                dialogs.message('Tienes que seleccionar un valor de donación.', { duration: 10, estado: 'error' });
+                dialogs.message($t('valorDonacion'), { duration: 10, estado: 'error' });
             }
         },
         onDonateMonthly () {
@@ -288,7 +288,7 @@ export default {
                 };
                 this.registerDonation(data);
             } else {
-                dialogs.message('Tienes que seleccionar un valor de donación.', { duration: 10, estado: 'error' });
+                dialogs.message($t('valorDonacion'), { duration: 10, estado: 'error' });
             }
         },
         subscribeSearch () {
@@ -302,7 +302,6 @@ export default {
                 data.from_lat = params.origin_lat;
                 data.from_lng = params.origin_lng;
                 data.from_radio = params.origin_radio;
-                data.from_id = params.origin_id;
                 data.from_json_address = [];
             }
             if (params.destination_name) {
@@ -310,7 +309,6 @@ export default {
                 data.to_lat = params.destination_lat;
                 data.to_lng = params.destination_lng;
                 data.to_radio = params.destination_radio;
-                data.to_id = params.destination_id;
                 data.to_json_address = [];
             }
 
@@ -318,12 +316,12 @@ export default {
 
             this.subscribeToSearch(data).then(() => {
                 this.alreadySubscribe = true;
-                dialogs.message('Te subscribiste correctamente. Te avisaremos cuando hayan viajes similares', { duration: 10, estado: 'success' });
+                dialogs.message($t('correctamenteSubscripto'), { duration: 10, estado: 'success' });
             }).catch((response) => {
                 console.log(response);
                 if (response.data.errors && response.data.errors.error) {
                     if (response.data.errors.error[0] === 'subscription_exist') {
-                        dialogs.message('Ya tienes una suscripción para esta búsqueda.', { duration: 10, estado: 'error' });
+                        dialogs.message($t('yaTienesSubscripcion'), { duration: 10, estado: 'error' });
                     }
                 }
             });
