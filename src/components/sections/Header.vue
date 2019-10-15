@@ -4,7 +4,7 @@
             <div class="actionbar_section actionbar_icon">
                 <span v-if="showLogo">
                     <router-link :to="{ name: 'trips', params: { clearSearch: true } }"  v-on:click.native="tripsClick">
-                        <img :src="carpoolear_logo" />
+                        <img :src="app_logo" />
                     </router-link>
                 </span>
                 <template v-else v-for="item in leftHeaderButton" v-if="item.show">
@@ -29,9 +29,9 @@
                         <template slot="button">
                             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                         </template>
-                        <li><router-link tag="a" :to="{name: 'acerca_de'}"  >{{ $t('acercaDe') }}</router-link></li>
-                        <li><router-link :to="{name: 'terms'}" tag="a">{{ $t('tyc') }}</router-link></li>
-                        <li><a @click="logout" v-if="!isFacebokApp">{{ $t('cerrarSesion') }}</a></li>
+                        <li><router-link tag="a" :to="{name: 'acerca_de'}"  >Acerca de</router-link></li>
+                        <li><router-link :to="{name: 'terms'}" tag="a">Términos y Condiciones</router-link></li>
+                        <li><a @click="logout" v-if="!isFacebokApp">Cerrar sesión</a></li>
                     </dropdown>
                 </div>
             </div>
@@ -41,13 +41,12 @@
                 <div class="header_panel-left" v-if="logoHeaderVisibility" >
                     <img :src="background_desktop_mini" v-if="isNotLargeDesktop" />
                     <img :src="background_desktop" v-if="!isNotLargeDesktop" />
-                    <img :src="carpoolear_logo"/>
-                    <!--<router-link tag="h1" :to="{name: 'trips'}" class="header_title"> Carpoolear </router-link>-->
+                    <img :src="app_logo"/>
                 </div>
             </router-link>
             <div class="header_panel-right">
                 <modal :name="'modal'" v-if="showModal" @close="showModal = false" :title="'Test'" :body="'Body'">
-                    <h3 slot="header">{{ $t('invitarAmigos') }}</h3>
+                    <h3 slot="header">Invitar a amigos</h3>
                     <div slot="body" class="social-share">
                         <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fcarpoolear.com%2F" target="_blank" aria-label="Compartir en Facebook" class="lnk lnk-social-network lnk-facebook">
                             <i class="fa fa-facebook" aria-hidden="true"></i>
@@ -63,11 +62,11 @@
                         </a>
                     </div>
                 </modal>
-                <button @click="share" type="button" class="btn btn-link">{{ $t('invitarAmigos') }}</button>
-                <router-link class="btn btn-link trips-link" :to="{name: 'trips', params: { clearSearch: true }}">{{ $t('viajes') }}</router-link>
+                <button @click="share" type="button" class="btn btn-link">Invitar amigos</button>
+                <router-link class="btn btn-link trips-link" :to="{name: 'trips', params: { clearSearch: true }}">Viajes</router-link>
                 <!--<router-link class="btn btn-link" v-if="!logged" :to="{name: 'trips'}">Información</router-link>-->
                 <!--<router-link class="btn btn-link" v-if="!logged" :to="{name: 'register'}">Registrarme</router-link>-->
-                <router-link class="btn btn-primary" btn-lg v-if="!logged" :to="{name: 'login'}">{{ $t('inicio') }}</router-link>
+                <router-link class="btn btn-primary" btn-lg v-if="!logged" :to="{name: 'login'}">Inicio</router-link>
 
 
                 <span class="header_notifications" @click="toNotifications" v-if="logged">
@@ -85,16 +84,16 @@
                             <div class="circle-box header_profile_image" v-imgSrc:profile="user.image"></div>
                         </template>
                         <li>
-                            <router-link :to="{name: 'my-trips'}">{{ $t('misViajes') }}</router-link>
+                            <router-link :to="{name: 'my-trips'}">Mis Viajes</router-link>
                         </li>
                         <li>
-                            <router-link :to="{name: 'conversations-list'}">{{ $t('mensajes') }}</router-link>
+                            <router-link :to="{name: 'conversations-list'}">Mensajes</router-link>
                         </li>
                         <li>
-                            <router-link :to="{name: 'profile', params: {id: 'me'}}">{{ $t('perfil') }}</router-link>
+                            <router-link :to="{name: 'profile', params: {id: 'me'}}">Perfil</router-link>
                         </li>
                         <li v-if="user.is_admin">
-                            <router-link :to="{name: 'admin-page'}">{{ $t('administracion') }}</router-link>
+                            <router-link :to="{name: 'admin-page'}">Administracion</router-link>
                         </li>
                         <li role="separator" class="divider"></li>
                         <!--<li>
@@ -104,12 +103,12 @@
                         <li>
                             <router-link :to="{name: 'profile_update'}">Configuración</router-link>
                         </li>-->
-                        <li><a @click="logout" v-if="!isFacebokApp">{{ $t('cerrarSesion') }}</a></li>
+                        <li><a @click="logout" v-if="!isFacebokApp">Cerrar sesión</a></li>
                     </dropdown>
                 </div>
 
 
-                <router-link v-if="logged" :to="{name: 'new-trip'}" class="btn btn-primary btn-lg">{{ $t('crearViaje') }}</router-link>
+                <router-link v-if="logged" :to="{name: 'new-trip'}" class="btn btn-primary btn-lg">Crear Viaje</router-link>
 
             </div>
             <div class="cf"></div>
@@ -131,7 +130,7 @@ export default {
         return {
             background_desktop_mini: process.env.ROUTE_BASE + 'static/img/background_desktop_mini.png',
             background_desktop: process.env.ROUTE_BASE + 'static/img/background_desktop.png',
-            carpoolear_logo: process.env.ROUTE_BASE + 'static/img/carpoolear_logo.png',
+            app_logo: process.env.ROUTE_BASE + 'static/img/' + process.env.TARGET_APP + '_logo.png',
             showModal: false
         };
     },
@@ -154,7 +153,8 @@ export default {
             logoHeaderVisibility: 'actionbars/headerLogoVisibility',
             isNotLargeDesktop: 'device/isNotLargeDesktop',
             isFacebokApp: 'device/isFacebokApp',
-            isMobile: 'device/isMobile'
+            isMobile: 'device/isMobile',
+            config: 'auth/appConfig'
         }),
 
         showLogo () {
