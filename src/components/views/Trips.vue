@@ -23,11 +23,6 @@
                         <img width="90" alt="STS Rosario" src="https://carpoolear.com.ar/img/logo_sts_nuevo_color.png">
                     </h3>
                     <div slot="body" class="donation">
-                        <div class="text-center">
-                            <!-- <a href="/donar" target="_blank" v-on:click.prevent="onOpenLink('https://carpoolear.com.ar/donar')">
-                                Conocé más acerca de por qué donar a Carpoolear
-                            </a> -->
-                        </div>
                         <div class="radio">
                             <label class="radio-inline">
                                 <input type="radio" name="donationValor" id="donation50" value="50" v-model="donateValue"><span>$ 50</span>
@@ -71,18 +66,12 @@
             </div>
             <div class="row">
                 <p class="alert alert-warning"  role="alert"  :class="isMobile ? 'mobile-alert' : ''" v-if="resultaOfSearch && !alreadySubscribe">
-                    <!-- <span class="sentence">¡Ups! No hay viajes con los criterios indicados en la búsqueda.</span> -->
                     <span class="sentence">
                         <strong :class="isMobile ? 'sentence' : ''"> {{ $t('podesSubscribirte') }}</strong>
                         <button class="btn btn-primary" v-if="user && !searchParams.data.is_passenger" @click="subscribeSearch" > {{ $t('crearAlerta') }}</button>
                     </span>
                 </p>
             </div>
-            <!--
-            <div v-if="morePages">
-                <button class="btn btn-primary" @click="nextPage">Más resultados</button>
-            </div>
-            -->
             <div v-if="runningSearch" class="more-trips-loading">
                 <img src="https://carpoolear.com.ar/static/img/loader.gif" alt="" class="ajax-loader" />
                 {{ $t('cargandoMasResultados') }}
@@ -260,7 +249,7 @@ export default {
                 };
                 this.registerDonation(data);
             } else {
-                dialogs.message('Tienes que seleccionar un valor de donación.', { duration: 10, estado: 'error' });
+                dialogs.message(this.$t('valorDonacion'), { duration: 10, estado: 'error' });
             }
         },
         onDonateMonthly () {
@@ -288,7 +277,7 @@ export default {
                 };
                 this.registerDonation(data);
             } else {
-                dialogs.message('Tienes que seleccionar un valor de donación.', { duration: 10, estado: 'error' });
+                dialogs.message(this.$t('valorDonacion'), { duration: 10, estado: 'error' });
             }
         },
         subscribeSearch () {
@@ -318,12 +307,12 @@ export default {
 
             this.subscribeToSearch(data).then(() => {
                 this.alreadySubscribe = true;
-                dialogs.message('Te subscribiste correctamente. Te avisaremos cuando hayan viajes similares', { duration: 10, estado: 'success' });
+                dialogs.message(this.$t('correctamenteSubscripto'), { duration: 10, estado: 'success' });
             }).catch((response) => {
                 console.log(response);
                 if (response.data.errors && response.data.errors.error) {
                     if (response.data.errors.error[0] === 'subscription_exist') {
-                        dialogs.message('Ya tienes una suscripción para esta búsqueda.', { duration: 10, estado: 'error' });
+                        dialogs.message(this.$t('yaTienesSubscripcion'), { duration: 10, estado: 'error' });
                     }
                 }
             });
