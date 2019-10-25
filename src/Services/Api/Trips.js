@@ -49,10 +49,6 @@ class TripApi extends TaggedApi {
     autocomplete (name, country, multicountry) {
         return this.get('/api/trips/autocomplete', { 'name': name, 'country': country, 'multicountry': multicountry });
     }
-
-    price (data) {
-        return this.post('/api/trips/price', data);
-    }
 }
 
 export { TripApi as default };

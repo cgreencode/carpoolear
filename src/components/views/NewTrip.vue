@@ -94,12 +94,6 @@
                                     <!--<input type="text" v-model="time" />-->
                                 </div>
                             </div>
-                            <div class="trip_price">
-                                <legend class="label-for-group">{{ $t('precioAsiento') }}</legend>
-
-                                <input type="number" v-model="price" class="form-control form-control-with-icon form-control-price" id="price" :class="{'has-error': priceError.state}" :placeholder="price" >
-                                <span class="error" v-if="priceError.state"> {{priceError.message}} </span>
-                            </div>
                             <div class="trip_seats-available">
                                 <fieldset>
                                     <legend class="label-for-group">{{ $t('lugaresDisponibles') }}</legend>
@@ -262,11 +256,6 @@
                                     <span class="error" v-if="otherTrip.timeError.state"> {{otherTrip.timeError.message}} </span>
                                     <!--<input type="text" v-model="time" />-->
                                 </div>
-                                <div class="trip_price">
-                                    <legend class="label-for-group">{{ $t('precioAsiento') }}</legend>
-                                    <input type="number" v-model="returnPrice" class="form-control form-control-with-icon form-control-price" id="return-price" :class="{'has-error': returnPriceError.state}" :placeholder="returnPrice" >
-                                    <span class="error" v-if="returnPriceError.state"> {{returnPriceError.message}} </span>
-                                </div>
                             </div>
                             <div class="trip_seats-available">
                                 <fieldset>
@@ -390,17 +379,12 @@
   </div>
 </template>
 <script>
-import {
-    mapActions,
-    mapGetters
-} from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 // import { parseOsmStreet } from '../../services/maps.js';
 import DatePicker from '../DatePicker';
 import dialogs from '../../services/dialogs.js';
 import moment from 'moment';
-import {
-    last
-} from 'lodash';
+import { last } from 'lodash';
 import OsmApi from '../../services/api/Osm';
 import autocomplete from '../Autocomplete';
 import SvgItem from '../SvgItem';
@@ -428,10 +412,9 @@ export default {
     components: {
         DatePicker,
         SvgItem,
-        autocomplete
-        /* ,
-               LMap,
-               LTileLayer */
+        autocomplete /* ,
+        LMap,
+        LTileLayer */
     },
     data () {
         return {
@@ -439,34 +422,31 @@ export default {
             lucrarError: new Error(),
             dateError: new Error(),
             timeError: new Error(),
-            priceError: new Error(),
-            returnPriceError: new Error(),
             commentError: new Error(),
             seatsError: new Error(),
             no_lucrar: false,
             sameCity: false,
             zoom: 4,
-            center: [-29.0, -60.0],
-            points: [{
-                name: '',
-                place: null,
-                json: null,
-                location: null,
-                error: new Error()
-            },
-            {
-                name: '',
-                place: null,
-                json: null,
-                location: null,
-                error: new Error()
-            }
+            center: [ -29.0, -60.0 ],
+            points: [
+                {
+                    name: '',
+                    place: null,
+                    json: null,
+                    location: null,
+                    error: new Error()
+                },
+                {
+                    name: '',
+                    place: null,
+                    json: null,
+                    location: null,
+                    error: new Error()
+                }
             ],
             date: '',
             dateAnswer: this.date,
             time: '12:00',
-            price: 0,
-            returnPrice: 0,
             duration: 0,
             passengers: 0,
             trip: {
@@ -503,20 +483,21 @@ export default {
                 sameCity: false,
                 zoom: 4,
                 center: [-29.0, -60.0],
-                points: [{
-                    name: '',
-                    place: null,
-                    json: null,
-                    location: null,
-                    error: new Error()
-                },
-                {
-                    name: '',
-                    place: null,
-                    json: null,
-                    location: null,
-                    error: new Error()
-                }
+                points: [
+                    {
+                        name: '',
+                        place: null,
+                        json: null,
+                        location: null,
+                        error: new Error()
+                    },
+                    {
+                        name: '',
+                        place: null,
+                        json: null,
+                        location: null,
+                        error: new Error()
+                    }
                 ],
                 date: '',
                 dateAnswer: this.date,
@@ -539,7 +520,6 @@ export default {
                     'allow_kids': true,
                     'allow_smoking': true,
                     'allow_animals': true,
-                    'seat_price': 0,
                     'points': [] /* address json_address lat lng */
                 }
             }
@@ -563,7 +543,9 @@ export default {
             self.loadTrip();
         }
     },
-    beforeDestroy () {},
+
+    beforeDestroy () {
+    },
 
     computed: {
         ...mapGetters({
@@ -626,36 +608,13 @@ export default {
         'trip.friendship_type_id': function () {
             console.log('change');
             this.otherTrip.trip.friendship_type_id = this.trip.friendship_type_id;
-        },
-        'trip.distance': function () {
-            let data = {
-                from: this.points[0].place,
-                to: last(this.points).place,
-                distance: this.trip.distance
-            };
-            this.getPrice(data).then(price => {
-                this.price = price;
-                console.log(this.price);
-            });
-        },
-        'otherTrip.distance': function () {
-            let data = {
-                from: this.otherTrip.points[0].place,
-                to: last(this.otherTrip.points).place,
-                distance: this.otherTrip.distance
-            };
-            this.getPrice(data).then(price => {
-                this.returnPrice = price;
-                console.log(this.returnPrice);
-            });
         }
     },
     methods: {
         ...mapActions({
             'createTrip': 'trips/create',
             'updateTrip': 'trips/update',
-            'getTrip': 'getTrip',
-            'getPrice': 'trips/price'
+            'getTrip': 'getTrip'
         }),
         restoreData (trip) {
             this.no_lucrar = true;
@@ -692,16 +651,12 @@ export default {
                     this.updatingTrip = trip;
                     this.restoreData(trip);
                 } else {
-                    this.$router.replace({
-                        name: 'trips'
-                    });
+                    this.$router.replace({ name: 'trips' });
                 }
             }).catch(error => {
                 console.log(error);
                 if (error) {
-                    this.$router.replace({
-                        name: 'trips'
-                    });
+                    this.$router.replace({ name: 'trips' });
                 }
             });
         },
@@ -777,19 +732,13 @@ export default {
                 globalError = true;
                 this.seatsError.state = true;
                 this.seatsError.message = this.$t('yaTienes') + this.trip.passengers + this.$t('pasajerosSubidos');
-                dialogs.message(this.$t('yaTienes') + this.trip.passengers + this.$t('pasajerosSubidos'), {
-                    estado: 'error'
-                });
+                dialogs.message(this.$t('yaTienes') + this.trip.passengers + this.$t('pasajerosSubidos'), { estado: 'error' });
             } else if (globalError) {
-                dialogs.message(this.$t('algunosDatosNoValidos'), {
-                    estado: 'error'
-                });
+                dialogs.message(this.$t('algunosDatosNoValidos'), { estado: 'error' });
             } else if (!this.no_lucrar) {
                 this.lucrarError.state = true;
                 this.lucrarError.message = this.$t('teComprometesANoLucrar');
-                dialogs.message(this.$t('teComprometesANoLucrar'), {
-                    estado: 'error'
-                });
+                dialogs.message(this.$t('teComprometesANoLucrar'), { estado: 'error' });
                 globalError = true;
             }
             if (validDate && validTime) {
@@ -832,9 +781,7 @@ export default {
                     validOtherTripDate = true;
                 }
                 if (globalError) {
-                    dialogs.message(this.$t('algunosDatosNoValidos'), {
-                        estado: 'error'
-                    });
+                    dialogs.message(this.$t('algunosDatosNoValidos'), { estado: 'error' });
                 }
 
                 if (validOtherTripTime && validOtherTripDate) {
@@ -916,8 +863,7 @@ export default {
                 trip.allow_kids = !trip.allow_kids;
                 trip.allow_animals = !trip.allow_animals;
                 trip.allow_smoking = !trip.allow_smoking;
-                trip.seat_price = this.price;
-                console.log('tt', trip);
+                console.log(trip);
                 this.createTrip(trip).then((t) => {
                     return new Promise((resolve, reject) => {
                         if (!this.showReturnTrip) {
@@ -929,7 +875,6 @@ export default {
                             otherTrip.allow_kids = !otherTrip.allow_kids;
                             otherTrip.allow_animals = !otherTrip.allow_animals;
                             otherTrip.allow_smoking = !otherTrip.allow_smoking;
-                            otherTrip.seat_price = this.returnPrice;
                             console.log(otherTrip);
                             this.createTrip(otherTrip).then((ot) => {
                                 return resolve(ot);
@@ -937,23 +882,14 @@ export default {
                         }
                     }).then((ot) => {
                         this.saving = false;
-                        // this.$router.replace({
-                        //     name: 'detail_trip',
-                        //     params: {
-                        //         id: t.id
-                        //     }
-                        // });
+                        this.$router.replace({ name: 'detail_trip', params: { id: t.id } });
                     });
                 }).catch((err) => {
                     console.log('error_creating', err);
                     if (err && err.data && err.data.errors && err.data.errors.driver_is_verified) {
-                        dialogs.message(this.$t('tienesQueSerConductor'), {
-                            estado: 'error'
-                        });
+                        dialogs.message(this.$t('tienesQueSerConductor'), { estado: 'error' });
                     } else {
-                        dialogs.message(this.$t('problemaAlCargarElViaje'), {
-                            estado: 'error'
-                        });
+                        dialogs.message(this.$t('problemaAlCargarElViaje'), { estado: 'error' });
                     }
                     this.saving = false;
                 });
@@ -963,9 +899,7 @@ export default {
                 this.updateTrip(this.trip).then(() => {
                     this.saving = false;
                     // this.$router.replace({ name: 'detail_trip', params: { id: this.trip.id } });
-                }).catch(() => {
-                    this.saving = false;
-                });
+                }).catch(() => { this.saving = false; });
             }
         },
 

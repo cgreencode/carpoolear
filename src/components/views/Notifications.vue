@@ -15,9 +15,6 @@
                     </div>
                 </div>
             </div>
-            <div class="text-right">
-                <button class="btn btn-primary" v-on:click="nextPage()">Siguiente</button>
-            </div>
             <p slot="no-data" class="alert alert-warning"  role="alert">No hay notificaciones</p>
             <p slot="loading" class="alert alert-info" role="alert">
                 <img src="https://carpoolear.com.ar/static/img/loader.gif" alt="" class="ajax-loader" />
@@ -37,11 +34,7 @@ export default {
 
     data () {
         return {
-            query: {
-                page: 1,
-                page_size: 25,
-                mark: true
-            }
+
         };
     },
 
@@ -71,10 +64,6 @@ export default {
                     break;
                 }
             }
-        },
-        nextPage () {
-            this.query.page += 1;
-            this.search(this.query);
         }
     },
 
@@ -85,7 +74,7 @@ export default {
     },
 
     mounted () {
-        this.search(this.query);
+        this.search(true);
     },
 
     components: {
