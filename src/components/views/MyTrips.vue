@@ -1,16 +1,6 @@
 <template>
   <div class="trips container">
         <div class="col-xs-24">
-            <Loading :data="pendingPaymentRequests" :hideOnEmpty="true">
-                <h2 slot="title"> <strong>Pago pendiente</strong> para confirmar </h2>
-                <div class="request-list">
-                    <PendingPaymentRequest v-for="r in pendingPaymentRequests" v-bind:key="r.id" :request="r"></PendingPaymentRequest>
-                </div>
-                <p slot="loading" class="alert alert-info" role="alert">
-                    <img src="https://carpoolear.com.ar/static/img/loader.gif" alt="" class="ajax-loader" />
-                    Cargando...
-                </p>
-            </Loading>
             <Loading :data="pendingRequest" :hideOnEmpty="true">
                 <h2 slot="title"> Pendientes <strong>de contestar</strong> </h2>
                 <div class="request-list">
@@ -188,7 +178,6 @@ import subscriptionItem from '../sections/SubscriptionItem.vue';
 import Trip from '../sections/Trip.vue';
 import Loading from '../Loading.vue';
 import PendingRequest from '../PendingRequest';
-import PendingPaymentRequest from '../PendingPaymentRequest';
 import RatePending from '../RatePending';
 import { mapGetters, mapActions } from 'vuex';
 
@@ -217,7 +206,6 @@ export default {
             this.oldTripsAsDriver();
             this.oldTripsAsPassenger();
         });
-        this.getPendingPaymentRequests();
         this.findSubscriptions();
     },
     computed: {
@@ -226,7 +214,6 @@ export default {
             passengerTrips: 'myTrips/passengerTrips',
             pendingRates: 'rates/pendingRates',
             pendingRequest: 'passenger/pendingRequest',
-            pendingPaymentRequests: 'passenger/pendingPaymentRequests',
             user: 'auth/user',
             oldTrips: 'myTrips/myOldTrips',
             oldPassengerTrips: 'myTrips/passengerOldTrips',
@@ -241,7 +228,6 @@ export default {
             tripAsPassenger: 'myTrips/tripAsPassenger',
             pendingRate: 'rates/pendingRates',
             getPendingRequest: 'passenger/getPendingRequest',
-            getPendingPaymentRequests: 'passenger/getPendingPaymentRequests',
             oldTripsAsDriver: 'myTrips/oldTripsAsDriver',
             oldTripsAsPassenger: 'myTrips/oldTripsAsPassenger',
             findSubscriptions: 'subscriptions/index',
@@ -422,7 +408,6 @@ export default {
         Trip,
         Loading,
         PendingRequest,
-        PendingPaymentRequest,
         RatePending,
         Tab,
         Tabset,

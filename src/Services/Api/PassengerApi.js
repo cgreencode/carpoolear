@@ -1,10 +1,6 @@
 import TaggedApi from '../../classes/TaggedApi';
 
 class PassengerApi extends TaggedApi {
-    pendingPaymentRequests () {
-        return this.get('/api/users/payment-pending', {});
-    }
-
     allRequest () {
         return this.get('/api/users/requests', {});
     }
