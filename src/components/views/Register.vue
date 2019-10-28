@@ -112,6 +112,7 @@ export default {
     methods: {
         ...mapActions({
             doRegister: 'auth/register',
+            getConfig: 'auth/getConfig'
         }),
         validate () {
             let globalError = false;
@@ -240,7 +241,9 @@ export default {
     mounted () {
         bus.on('back-click', this.onBackClick);
         bus.on('date-change', this.dateChange);
-
+        this.getConfig().then((data) => {
+            console.log('getConfig', data);
+        });
     },
 
     beforeDestroy () {

@@ -28,23 +28,20 @@ export default {
             this.actualRouteName = 'route--' + route.name;
         },
         ...mapActions({
-            fbLogin: 'cordova/facebookLogin',
-            getConfig: 'auth/getConfig'
+            fbLogin: 'cordova/facebookLogin'
         })
     },
     beforeMount () {
-        this.getConfig().then(data => {
-            if (this.appConfig && this.appConfig.country_name) {
-                switch (this.appConfig.country_name) {
-                case 'Argentina':
-                    this.$root.$i18n.locale = 'arg';
-                    break;
-                case 'Chile':
-                    this.$root.$i18n.locale = 'ch';
-                    break;
-                }
+        if (this.appConfig && this.appConfig.country_name) {
+            switch (this.appConfig.country_name) {
+            case 'Argentina':
+                this.$root.$i18n.locale = 'arg';
+                break;
+            case 'Chile':
+                this.$root.$i18n.locale = 'ch';
+                break;
             }
-        });
+        }
     },
     mounted () {
         if (this.isFacebookApp) {
