@@ -33,9 +33,7 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 
 let debugApi = new DebugApi();
 let cordovaTag = document.createElement('script');
-let cordovaPath = 'cordova.js';
-console.log('ROUTE_BASE', process.env.ROUTE_BASE);
-cordovaTag.setAttribute('src', process.env.ROUTE_BASE + cordovaPath);
+cordovaTag.setAttribute('src', process.env.ROUTE_BASE + 'cordova.js');
 document.head.appendChild(cordovaTag);
 
 var moment = require('moment-timezone');
@@ -87,7 +85,7 @@ if (process.env.SERVE) {
             }
         }, 2000);
     } else {
-        console.log('no process at all', process.env.NODE_ENV);
+        console.log('no process at all');
         setTimeout(function () {
             if (!window.cordova) {
                 console.log('Not running in cordova');

@@ -141,6 +141,7 @@ export default {
                 dialogs.message(this.$t('solicitudEnviada'), { duration: 10, estado: 'error' });
             }
         },
+
         onClearClick () {
             router.back();
         }
