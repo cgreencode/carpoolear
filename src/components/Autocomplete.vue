@@ -41,7 +41,6 @@ export default {
         };
     },
     mounted () {
-        console.log('mounted', this.value);
         this.input = this.value ? this.value : '';
     },
     computed: {
