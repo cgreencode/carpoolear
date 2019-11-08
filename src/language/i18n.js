@@ -1,7 +1,5 @@
 const messages = {
     'arg': {
-        loginUsuarioPlaceholder: 'El email con el que te registraste',
-        loginPasswordPlaceholder: 'Contraseña',
         documento: 'Número de documento',
         doc: 'DNI',
         requisitosRegister: 'Se requiere que cargue: licencia de conductor, seguro del vehículo ...',
@@ -45,7 +43,7 @@ const messages = {
         choferVerificado: 'Ya eres un chofer verificado.',
         guardarCambio: 'Guardar cambios',
         guardando: 'Guardando ...',
-        calificaciones: 'calificaciones',
+        calificaciones: 'Calificaciones',
         Lugares: 'Lugares',
         libres: 'libres',
         Lugar: 'Lugar',
@@ -157,7 +155,7 @@ const messages = {
         verAmigos: 'Ver amigos',
         noCalificaciones: 'No hay calificaciones',
         cargandoNotificaciones: 'Cargando calificaciones ...',
-        Calificaciones: 'Calificaciones',
+        calificaciones: 'Calificaciones',
         misViajes: 'Mis viajes',
         viajes: 'Viajes',
         acercaDe: 'Acerca de',
@@ -209,8 +207,7 @@ const messages = {
         bancoDeCuenta: 'Banco',
         campoObligatorio: 'Dato requerido'
     },
-    'chl': {
-        loginUsuarioPlaceholder: 'Usuario',
+    'ch': {
         documento: 'Número de RUT',
         doc: 'RUT',
         requisitosRegister: 'Se requiere que cargue: licencia de conductor, seguro del vehículo ...',
@@ -254,7 +251,7 @@ const messages = {
         choferVerificado: 'Ya eres un chofer verificado.',
         guardarCambio: 'Guardar cambios',
         guardando: 'Guardando ...',
-        calificaciones: 'calificaciones',
+        calificaciones: 'Calificaciones',
         Lugares: 'Lugares',
         libres: 'libres',
         Lugar: 'Lugar',
@@ -320,8 +317,7 @@ const messages = {
         errorRegistro: 'Ocurrió un error al procesar el registro, por favor vuelva a intentar.',
         ingresaORegistrate: '',
         buscoConductor: 'Conductor',
-        buscoPasajero: 'Pasajero',
-        ingresaCuenta: 'Comparte auto para llegar al lugar donde quierés ir'
+        buscoPasajero: 'Pasajero'
     }
 };
 export default messages;

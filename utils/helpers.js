@@ -1,4 +1,3 @@
-export function cssvar (name) {
-    /* eslint-disable no-undef */
+export function cssvar(name) {
     return getComputedStyle(document.documentElement).getPropertyValue(name);
 }

@@ -79,7 +79,7 @@ import { mapActions, mapGetters } from 'vuex';
 import svgItem from '../SvgItem';
 
 export default {
-    name: 'footerApp',
+    name: 'footer',
     data () {
         return {
         };

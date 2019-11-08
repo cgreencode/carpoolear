@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container" :class="[backgroundStyle, viewName]">
+  <div class="app-container" :class="[backgroundStyle]">
     <headerApp></headerApp>
     <main id="main">
       <div class="view-container clearfix">
@@ -18,8 +18,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import footerApp from './components/sections/FooterApp.vue';
-import headerApp from './components/sections/HeaderApp.vue';
+import footerApp from './components/sections/Footer.vue';
+import headerApp from './components/sections/Header.vue';
 
 export default {
     name: 'app',
@@ -33,7 +33,18 @@ export default {
         })
     },
     beforeMount () {
-        this.getConfig();
+        this.getConfig().then(data => {
+            if (this.appConfig && this.appConfig.country_name) {
+                switch (this.appConfig.country_name) {
+                case 'Argentina':
+                    this.$root.$i18n.locale = 'arg';
+                    break;
+                case 'Chile':
+                    this.$root.$i18n.locale = 'ch';
+                    break;
+                }
+            }
+        });
     },
     mounted () {
         if (this.isFacebookApp) {
@@ -42,27 +53,17 @@ export default {
             }
         }
     },
-    computed: {
-        ...mapGetters({
-            deviceReady: 'cordova/deviceReady',
-            backgroundStyle: 'background/backgroundStyle',
-            resolution: 'device/resolution',
-            logged: 'auth/checkLogin',
-            isFacebokApp: 'device/isFacebokApp',
-            appConfig: 'auth/appConfig'
-        }),
-        viewName () {
-            return this.$route.name;
-        }
-    },
+    computed: mapGetters({
+        deviceReady: 'cordova/deviceReady',
+        backgroundStyle: 'background/backgroundStyle',
+        resolution: 'device/resolution',
+        logged: 'auth/checkLogin',
+        isFacebokApp: 'device/isFacebokApp',
+        appConfig: 'auth/appConfig'
+    }),
     watch: {
         deviceReady: () => {
             console.log('Device ready from components');
-        },
-        appConfig (value) {
-            if (value && value.locale) {
-                this.$root.$i18n.locale = value.locale;
-            }
         }
     },
     data () {

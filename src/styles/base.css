@@ -19,8 +19,6 @@
 
 
     --actionbar-bakground: #F0F0F0;
-
-    --calification-star-size: 14;
   }
   html {
       font-size: 100%;
@@ -2838,4 +2836,7 @@
       max-width: 45%;
       min-width: auto;
       padding: .8em .6em;
+  }
+  .conversation_header .media-body {
+      min-width: 250px;
   }
