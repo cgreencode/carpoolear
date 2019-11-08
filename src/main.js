@@ -34,7 +34,6 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 let debugApi = new DebugApi();
 let cordovaTag = document.createElement('script');
 let cordovaPath = 'cordova.js';
-console.log('ROUTE_BASE', process.env.ROUTE_BASE);
 cordovaTag.setAttribute('src', process.env.ROUTE_BASE + cordovaPath);
 document.head.appendChild(cordovaTag);
 
@@ -46,7 +45,24 @@ require('font-awesome-webpack-4');
 Vue.use(VueResource);
 
 Vue.use(VueI18n);
-const i18n = new VueI18n({ locale: 'arg', fallbackLocale: 'arg', messages });
+const i18n = new VueI18n({
+    locale: 'arg',
+    fallbackLocale: 'arg',
+    messages,
+    silentFallbackWarn: true,
+    numberFormats: {
+        'arg': {
+            currency: {
+                style: 'currency', currency: 'ARS', currencyDisplay: 'symbol'
+            }
+        },
+        'ch': {
+            currency: {
+                style: 'currency', currency: 'ARS', currencyDisplay: 'symbol'
+            }
+        }
+    }
+});
 
 Vue.use(VueAnalytics, {
     id: 'UA-40995702-4'
@@ -76,14 +92,13 @@ Vue.config.errorHandler = function (err, vm, info) {
 };
 window.store = store;
 if (process.env.SERVE) {
-    console.log('Not running in cordova');
+    console.log('Not running in cordova.');
     store.dispatch('init');
 } else {
     if (process.env.NODE_ENV === 'development') {
-        console.log('In development wait for cordova');
         setTimeout(function () {
             if (!window.cordova) {
-                console.log('Not running in cordova');
+                console.log('Not running in cordova.');
                 store.dispatch('init');
             }
         }, 2000);
@@ -91,13 +106,13 @@ if (process.env.SERVE) {
         console.log('no process at all', process.env.NODE_ENV);
         setTimeout(function () {
             if (!window.cordova) {
-                console.log('Not running in cordova');
+                console.log('Not running in cordova.');
                 store.dispatch('init');
             }
         }, 2000);
     }
 }
-console.log('TARGET_APP', process.env.TARGET_APP);
+console.log('APP NAME: ' + process.env.TARGET_APP);
 
 bus.on('system-ready', () => {
     let app = new Vue({
