@@ -1,12 +1,9 @@
 import * as types from '../mutation-types';
 import router from '../../router';
 import globalStore from '../index';
-let appName = process.env.TARGET_APP;
-if (appName && appName.length) {
-    appName = appName.charAt(0).toUpperCase() + appName.slice(1);
-}
+
 const state = {
-    title: appName,
+    title: 'Carpoolear',
     subTitle: '',
     imgTitle: '',
     showMenu: false,
@@ -86,16 +83,10 @@ const getters = {
 };
 
 const actions = {
-    setTitle (store, title = '') {
-        let getters = globalStore.getters;
-        let config = getters['auth/appConfig'];
-        let appName = config ? config.app_name : process.env.TARGET_APP;
-        if (appName && appName.length) {
-            appName = appName.charAt(0).toUpperCase() + appName.slice(1);
-        }
+    setTitle (store, title = 'Carpoolear') {
         store.commit(types.HEADER_SET_TITLE, title);
         if (document) {
-            document.title = title + (title !== appName ? (' - ' + appName) : '');
+            document.title = title + (title !== 'Carpoolear' ? ' - Carpoolear' : '');
         }
     },
 
