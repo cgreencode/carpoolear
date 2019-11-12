@@ -23,7 +23,7 @@ class LocalStorage {
                 return Promise.resolve(temp);
             }
         } else {
-            return Promise.resolve(null);
+            return Promise.reject(new Error());
         }
     }
 

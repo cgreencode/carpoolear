@@ -39,7 +39,7 @@ npm run prod
 TARGET_APP=myProject
 
 # window poweshell
-$env:TARGET_APP = "myProject"
+$TARGET_APP = "myProject"
 
 ```
 

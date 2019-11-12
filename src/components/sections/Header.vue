@@ -124,7 +124,7 @@ import bus from '../../services/bus-event.js';
 import modal from '../Modal';
 
 export default {
-    name: 'headerApp',
+    name: 'header',
 
     data () {
         return {
