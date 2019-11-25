@@ -11,8 +11,6 @@
                     Cargando...
                 </p>
             </Loading>
-        </div>
-        <div class="col-xs-24">
             <Loading :data="pendingRequest" :hideOnEmpty="true">
                 <h2 slot="title"> Pendientes <strong>de contestar</strong> </h2>
                 <div class="request-list">
@@ -383,9 +381,7 @@ export default {
             console.log('onUserRated', data);
             if (data.rating) {
                 // vote positivo
-                if (this.config && this.config.donation && this.config.donation.month_days > 0) {
-                    this.hasToShowModal(data.trip_id);
-                }
+                this.hasToShowModal(data.trip_id);
             }
         }
     },
