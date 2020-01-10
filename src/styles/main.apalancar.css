@@ -160,7 +160,9 @@
     padding-bottom: 1.2em;
     width: 49%;
 }
-.trip_information--light .list_item {
+.trip_information--light .list_item,
+.trip-detail-component .trip-stats>div {
+    margin-bottom: .6rem;
     width: 32%;
     text-align: center;
 }
@@ -524,7 +526,7 @@
     right: -24px!important;
 }
 .list-group-item {
-    border: 1px dotted #CCC;
+    border: 1px dotted #F6F6F6;
 }
 .conversation_header {
     font-size: 13px;
@@ -633,9 +635,18 @@
     vertical-align: -13px;
 }
 @media only screen and (min-width: 768px) {
+    .message > span {
+        display: block;
+        color: red !important;
+        margin-left: 0;
+    }
     .trip-stats {
         left: 0;
         width: calc(100% + 20px);
+        margin-bottom: .8em;
+    }
+    .new-trip .no-bullet.preferences li {
+        padding-bottom: 1em;
     }
     .new-trip .no-bullet.preferences.row input {
         top: -22px;
@@ -988,7 +999,7 @@ textarea.has-error {
 }
 @media only screen and (max-width: 769px) {
     body {
-        overflow-x: hidden;
+        overflow-x: hidden;   
     }
     .new-trip-component .form-trip {
         padding-bottom: 0;
@@ -996,6 +1007,9 @@ textarea.has-error {
 }
 @media only screen and (min-width: 768px) {
     .panel-title {
+        margin-top: 0;
+    }
+    .not-logged .trip_date_right {
         margin-top: 0;
     }
     .trip-detail-component .quote {
@@ -1008,7 +1022,7 @@ textarea.has-error {
         margin-top: 0;
         margin-bottom: 2em;
     }
-    .trip_seats-available {
+    .trip_seats-available { 
         margin-top: 1em;
     }
     .trip-data em {
@@ -1172,7 +1186,6 @@ textarea.has-error {
         margin-bottom: 0;
         font-weight: 400;
         padding: 0;
-        padding-left: 10px;
     }
     .login .facebook-box {
         padding: 1.6em 0;
@@ -1280,7 +1293,7 @@ textarea.has-error {
         box-shadow: 0 0 1px 1px #CCCCCC;
     }
     .login #checkbox_remember {
-        margin-top: 0px !important;
+        margin-top: 4px !important;
     }
     .trip-type-selection--light {
         padding: .8em;
@@ -1315,21 +1328,15 @@ textarea.has-error {
 }
 
 /* Custom radio and checkbox */
-.fancy-cbx {
-    position: relative;
-    width: 1.5em;
-    height: 1.5em;
-}
-.fancy-cbx input[type="checkbox"] {
+input[type="checkbox"] {
     position: relative;
     top: -1em;
     margin: 0 1rem 0 0;
     cursor: pointer;
     height: 0;
     width: 0;
-    opacity: 0;
 }
-.fancy-cbx .cbx-before {
+input[type="checkbox"]:before {
     -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
     -moz-transition: -moz-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
     transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
@@ -1338,8 +1345,7 @@ textarea.has-error {
     -ms-transform: rotate(-45deg) scale(0, 0);
     -o-transform: rotate(-45deg) scale(0, 0);
     transform: rotate(-45deg) scale(0, 0);
-    content: " ";
-    display: block;
+    content: "";
     position: absolute;
     left: 0.1875rem;
     top: 0.125rem;
@@ -1350,14 +1356,14 @@ textarea.has-error {
     border-top-style: none;
     border-right-style: none;
   }
-  .fancy-cbx input[type="checkbox"]:checked + .cbx-before {
+input[type="checkbox"]:checked:before {
     -webkit-transform: rotate(-45deg) scale(1, 1);
     -moz-transform: rotate(-45deg) scale(1, 1);
     -ms-transform: rotate(-45deg) scale(1, 1);
     -o-transform: rotate(-45deg) scale(1, 1);
     transform: rotate(-45deg) scale(1, 1);
   }
-  .fancy-cbx .cbx-after {
+input[type="checkbox"]:after {
     content: "";
     position: absolute;
     top: -0.125rem;
@@ -1365,10 +1371,10 @@ textarea.has-error {
     width: 1rem;
     height: 1rem;
     background: #fff;
-    border: 1px solid #CCC;
+    border: 1px solid #ddd;
     cursor: pointer;
   }
-
+  
   input[type="radio"] {
     position: relative;
     margin: 0 1rem 0 0;
@@ -1454,11 +1460,8 @@ input[type=checkbox] + label, input[type=radio] + label {
     display: inline-block;
     line-height: 1em;
 }
-.preferences >.col-md-8 >div.col-md-24 label{
+.preferences >.col-md-8 >div.col-md-24 label{ 
     font-size: 1em;
-}
-.preferences .svgItem {
-    vertical-align: middle;
 }
 
 @media only screen and (max-width: 500px) {
@@ -1479,23 +1482,3 @@ input[type=checkbox] + label, input[type=radio] + label {
 .new-trip #cbxAllowForeignPoints + label + span {
     vertical-align: -5px;
 }
-.trip-fill .card-trip {
-    background: #EEE;
-}
-.trip-fill .trip_location_from,
-.trip-fill .trip_location_from_state-country,
-.trip-fill .trip_location_to_state-country,
-.trip-fill .trip_location_to,
-.trip-fill .trip_datetime,
-.trip-fill .trip_datetime_time {
-    color: #666;
-}
-.trip-fill .card-trip .trip_from_time,
-.trip-fill .card-trip .trip_to_time,
-.trip-fill .card-trip .trip_date_date {
-    color: #666;
-}
-.list-group-item.active {
-    background: #56788e;
-}
-

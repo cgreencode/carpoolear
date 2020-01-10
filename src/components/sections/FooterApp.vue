@@ -10,7 +10,7 @@
         </div>
 
     </div>
-    <div class="container hidden-xs" v-if="config.enable_footer">
+    <div class="container hidden-xs">
         <div class="row">
             <div class="col-xs-6 col-md-6">
                 <h3>Acerca de ...</h3>
@@ -88,8 +88,7 @@ export default {
         ...mapGetters({
             footerButtons: 'actionbars/footerButtons',
             footerShow: 'actionbars/footerShow',
-            notificationsCount: 'notifications/count',
-            config: 'auth/appConfig'
+            notificationsCount: 'notifications/count'
         })
     },
     methods: {

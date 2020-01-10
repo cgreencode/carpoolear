@@ -20,11 +20,12 @@ if (isWin && config.NODE_ENV === "production") {
   if (process.env.PLATFORM && (process.env.PLATFORM == 'DESKTOP' || process.env.PLATFORM == 'browser')) {
     config.ROUTE_BASE = '"/app/"';
   } else {
-    if (typeof process.env.SERVE === 'string' ? process.env.SERVE === 'true' : process.env.SERVE) {
+    if (process.env.SERVE) {
       config.ROUTE_BASE = '"/"';
     } else {
       config.ROUTE_BASE = '""';
     }
   }
 }
+
 module.exports = config;

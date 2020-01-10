@@ -137,8 +137,6 @@ export default {
 
     mounted () {
         bus.on('header-title-change', this.onHeaderChange);
-        console.log('app_logo', this.app_logo);
-        console.log('ROUTE_BASE', process.env.ROUTE_BASE);
     },
 
     computed: {

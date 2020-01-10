@@ -326,8 +326,7 @@ const messages = {
         carpoolear: 'Apalan-car',
         recuperarContraseña: 'Recuperar contraseña',
         registrateAca: 'Registrate aquí.',
-        noCalificado: 'No fue calificado aún',
-        noTenesFace: '¿No tenés cuenta?'
+        noCalificado: 'No fue calificado aún'
     }
 };
 export default messages;
