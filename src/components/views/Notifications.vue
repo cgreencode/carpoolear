@@ -51,7 +51,6 @@ export default {
         }),
 
         onNotificationClick (n) {
-            console.log('onNotificationClick', n);
             if (n.extras) {
                 console.log(n.extras);
                 switch (n.extras.type) {

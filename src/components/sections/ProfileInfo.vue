@@ -54,8 +54,9 @@
                     </div>
 
                 </div>
-                <div class="edit-action" v-if="user.is_admin && profile.id !== user.id">
+                <div class="edit-action" v-if="user.is_admin">
                     <button class="btn btn-primary btn-circle" v-on:click="messageUser()">
+                        <!-- <i class="fa fa-comments medium-icon" aria-hidden="true"></i> -->
                         {{ $t('enviarMensaje') }}
                     </button>
                 </div>

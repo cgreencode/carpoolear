@@ -7,7 +7,6 @@ import dateFormatter from './dateFormatter';
 import debounceInput from './debounceInput';
 import { VueMaskDirective } from 'v-mask';
 import clickOutside from './clickOutside';
-import fancyCheckbox from './fancyCheckbox';
 
 Vue.directive('focus', autofocus);
 Vue.directive('jump', Jump);
@@ -17,4 +16,3 @@ Vue.directive('numberMask', numberFormatter);
 Vue.directive('dateFormatter', dateFormatter);
 Vue.directive('debounceInput', debounceInput);
 Vue.directive('clickoutside', clickOutside);
-Vue.directive('fancycheckbox', fancyCheckbox);

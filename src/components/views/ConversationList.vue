@@ -1,5 +1,5 @@
 <template>
-<div class="conversation-component container" :class="config.enable_footer ? 'with-footer' : 'without-footer'">
+<div class="conversation-component container">
     <div class="row">
         <div class="col-sm-8 col-md-8" :class="{'hidden-xs': hide}">
             <div class="conversation_list">
@@ -84,8 +84,7 @@ export default {
             moreConversations: 'conversations/listMorePage',
             users: 'conversations/users',
             selected: 'conversations/selectedConversation',
-            isMobile: 'device/isMobile',
-            config: 'auth/appConfig'
+            isMobile: 'device/isMobile'
         }),
 
         hide () {
@@ -257,9 +256,6 @@ export default {
             padding-right: 10px;
             overflow-y: hidden;
             height: calc(100vh - 150px);
-        }
-        .without-footer.conversation-component.container {
-            height: calc(100vh - 15px);
         }
         .conversation-component > .row {
             padding-left: 20px;
