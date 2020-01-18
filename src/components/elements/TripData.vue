@@ -3,7 +3,7 @@
         <div class="row trip-data" v-if="trip.is_passenger">
             <strong class="warning-is-passenger">Pasajero que busca viaje</strong>
         </div>
-        <div class="row trip-data">
+        <div class="row trip-data"  v-if="!isPassengersView">
             <span class="trip-data--subtitle" v-if="tripCardTheme === 'light'">Privacidad del viaje</span>
             <em v-if="trip.friendship_type_id == 2">
                 <i class="fa fa-globe" aria-hidden="true"></i>
@@ -18,34 +18,32 @@
                 Sólo amigos
             </em>
             <span class="trip-data--subtitle" v-if="tripCardTheme === 'light'">Preferencias del viaje</span>
-            <template v-if="!isPassengersView">
-                <em v-if="trip.allow_smoking > 0">
-                    <svgItem icon="smoking" size="18"></svgItem>
-                    Se puede fumar
-                </em>
-                <em v-else>
-                    <svgItem icon="no-smoking" size="18"></svgItem>
-                    No fumar
-                </em>
+            <em v-if="trip.allow_smoking > 0">
+                <svgItem icon="smoking" size="18"></svgItem>
+                Se puede fumar
+            </em>
+            <em v-else>
+                <svgItem icon="no-smoking" size="18"></svgItem>
+                No fumar
+            </em>
 
-                <em v-if="trip.allow_pets > 0">
-                    <svgItem icon="pets" size="18"></svgItem>
-                    Mascotas
-                </em>
-                <em v-else>
-                    <svgItem icon="no-animals" size="18"></svgItem>
-                    No mascotas
-                </em>
+            <em v-if="trip.allow_pets > 0">
+                <svgItem icon="pets" size="18"></svgItem>
+                Mascotas
+            </em>
+            <em v-else>
+                <svgItem icon="no-animals" size="18"></svgItem>
+                No mascotas
+            </em>
 
-                <em v-if="trip.allow_kids > 0">
-                    <svgItem icon="kids" size="18"></svgItem>
-                    Niños
-                </em>
-                <em v-else>
-                    <svgItem icon="no-kids" size="18"></svgItem>
-                    No niños
-                </em>
-            </template>
+            <em v-if="trip.allow_kids > 0">
+                <svgItem icon="kids" size="18"></svgItem>
+                Niños
+            </em>
+            <em v-else>
+                <svgItem icon="no-kids" size="18"></svgItem>
+                No niños
+            </em>
         </div>
     </div>
 </template>
@@ -70,10 +68,9 @@ export default {
 </script>
 <style scoped>
     .trip-data em {
-        display: block;
-        width: 50%;
+        display: inline-block;
+        width: 49%;
         padding-top: 6px;
-        float: left;
     }
     .trip-data em > * {
         vertical-align: middle;

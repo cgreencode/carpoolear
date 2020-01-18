@@ -266,6 +266,7 @@ label {
 .register {
   font-weight: 300;
   font-size: 16px;
+  display: block;
   padding: 1.4em 0;
   position: relative;
   display: inline-block;
@@ -322,9 +323,6 @@ label {
   }
   .register {
     color: #555;
-    margin-bottom: 0;
-    padding: 0;
-    font-weight: 400;
   }
   .description {
     display: inline;
@@ -342,6 +340,11 @@ label {
     width: 100%;
     max-width: 280px;
     margin: 1.6em 0 0.6em 0;
+  }
+  .register {
+    display: inline;
+    margin-bottom: 2em;
+    font-weight: 400;
   }
   .register::before {
     display: none;

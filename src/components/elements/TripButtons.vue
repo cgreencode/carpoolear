@@ -1,48 +1,40 @@
 <template>
-    <div class="buttons-container"  v-if="!isPassengersView || (isPassengersView && owner)">
+    <div class="buttons-container"  v-if="!isPassengersView">
         <router-link class="btn btn-primary" v-if="owner && !expired" :to="{name: 'update-trip', params: { id: trip.id}}">
             Editar
         </router-link>
-        <a class="btn btn-primary" v-if="owner && !expired" @click="$emit('deleteTrip')" :disabled="sendingStatus">
-            <spinner class="blue" v-if="sending && sending.deleteAction"></spinner>
-            <span v-else>Cancelar Viaje</span>
+        <a class="btn btn-primary" v-if="owner && !expired" @click="$emit('deleteTrip')" :disabled="sending">
+            Cancelar viaje
         </a>
         <template v-if="!owner && !expired">
-            <button class="btn btn-primary" @click="$emit('toMessages')" v-if="!owner" :disabled="sendingStatus">
-                <spinner class="blue" v-if="sending && sending.sendMessageAction"></spinner>
-                <span v-else>Enviar mensaje</span>
+            <button class="btn btn-primary" @click="$emit('toMessages')" v-if="!owner" :disabled="sending">
+                Enviar mensaje
             </button>
         </template>
         <template v-if="!owner && !trip.is_passenger && !expired">
             <template v-if="!isPassenger">
-                <button class="btn btn-primary" @click="$emit('onMakeRequest')" v-if="canRequest && trip.seats_available > 0" :disabled="sendingStatus">
-                    <template v-if="sending && sending.requestAction">
-                        <spinner class="blue"></spinner>
-                    </template>
-                    <template v-else>
-                        <template v-if="trip.user.autoaccept_requests">
-                            <template v-if="config && config.module_trip_seats_payment">
-                                Reservar $ {{ trip.seat_price }}
-                            </template>
-                            <template v-else>
-                                Reservar
-                            </template>
+                <button class="btn btn-primary" @click="$emit('onMakeRequest')" v-if="canRequest && trip.seats_available > 0" :disabled="sending">
+                    <template v-if="trip.user.autoaccept_requests">
+                        <template v-if="config && config.module_trip_seats_payment">
+                            Reservar $ {{ trip.seat_price }}
                         </template>
                         <template v-else>
-                            Solicitar asiento
+                            Reservar
                         </template>
                     </template>
+                    <template v-else>
+                        Solicitar asiento
+                    </template>
+
                 </button>
-                <button class="btn" v-if="!canRequest" @click="$emit('cancelRequest')" :disabled="sendingStatus">
-                    <spinner class="blue" v-if="sending && sending.requestAction"></spinner>
-                    <span v-else>Solicitado (RETIRAR)</span>
+                <button class="btn" v-if="!canRequest" @click="$emit('cancelRequest')" :disabled="sending">
+                    Solicitado (RETIRAR)
                 </button>
             </template>
 
             <template v-if="isPassenger">
-                <button class="btn btn-primary" @click="$emit('cancelRequest')" v-if="canRequest" :disabled="sendingStatus">
-                    <spinner class="blue" v-if="sending && sending.requestAction"></spinner>
-                    <span v-else>Bajarme del viaje</span>
+                <button class="btn btn-primary" @click="$emit('cancelRequest')" v-if="canRequest" :disabled="sending">
+                    Bajarme del viaje
                 </button>
             </template>
         </template>
@@ -57,7 +49,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import moment from 'moment';
-import spinner from '../Spinner.vue';
+
 export default {
     name: 'TripButtons',
     data () {
@@ -72,11 +64,8 @@ export default {
             user: 'auth/user',
             isMobile: 'device/isMobile'
         }),
-        sendingStatus () {
-            Object.keys(this.sending).some(k => this.sending[k] === true);
-        },
         isPassenger () {
-            return this.trip.passenger.findIndex(item => item.user_id === this.user.id && (item.request_state === 1 || item.request_state === 4)) >= 0;
+            return this.trip.passenger.findIndex(item => item.user_id === this.user.id) >= 0;
         },
         expired () {
             return moment(this.trip.trip_date).format() < moment().format();
@@ -92,7 +81,6 @@ export default {
         }
     },
     components: {
-        spinner
     },
     methods: {
         onShareLinkClick (event) {

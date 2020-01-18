@@ -1,5 +1,5 @@
 <template>
-    <div class="trip_share row">
+    <div class="trip_share row"  v-if="!isPassengersView">
         <a  :href="'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl" target="_blank" aria-label="Compartir en Facebook" class="lnk lnk-social-network lnk-facebook" @click="onShareLinkClick">
             <i class="fa fa-facebook" aria-hidden="true"></i>
         </a>
