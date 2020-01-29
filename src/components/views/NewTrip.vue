@@ -17,10 +17,10 @@
                     <fieldset class="trip-type-selection--light" v-if="tripCardTheme === 'light'">
                         <div class="row">
                             <div class="col-xs-12 col-md-12 col-lg-12">
-                                <button class="btn btn-option" @click="setIsPassenger(0)" :disabled="updatingTrip" :class="trip.is_passenger === 0 ? 'active' : ''">{{ $t('buscoConductor') }}</button>
+                                <button class="btn btn-option" @click="$set(trip, is_passenger, 0)" :disabled="updatingTrip" :class="trip.is_passenger === 0 ? 'active' : ''">{{ $t('buscoConductor') }}</button>
                             </div>
                             <div class="col-xs-12 col-md-12 col-lg-12">
-                                <button class="btn btn-option" @click="setIsPassenger(1)" :disabled="updatingTrip" :class="trip.is_passenger === 1 ? 'active' : ''">{{ $t('buscoPasajero') }}</button>
+                                <button class="btn btn-option" @click="$set(trip, is_passenger, 1)" :disabled="updatingTrip" :class="trip.is_passenger === 1 ? 'active' : ''">{{ $t('buscoPasajero') }}</button>
                             </div>
                         </div>
                     </fieldset>
@@ -139,10 +139,7 @@
                             </div>
                             <div class="trip_seats-available">
                                 <fieldset>
-                                    <span class="label-for-group">
-                                        <svg-item v-if="tripCardTheme === 'light'" :size="28" :icon="'icono-sentado'"></svg-item>
-                                        {{ trip.is_passenger ? $t('cuposNecesarios') : $t('lugaresDisponibles') }}
-                                    </span>
+                                    <span class="label-for-group"><svg-item v-if="tripCardTheme === 'light'" :size="28" :icon="'icono-sentado'"></svg-item>{{ $t('lugaresDisponibles') }}</span>
                                     <span v-if="tripCardTheme !== 'light'">
                                         <span class="radio-inline">
                                             <input type="radio" id="seats-one" value="1" v-model="trip.total_seats">
@@ -171,7 +168,7 @@
                             </div>
                             <div class="trip-comment">
                                 <label for="trip_comment"  class="label-for-group"> {{ $t('comentarioPasajeros') }} </label>
-                                <textarea maxlength="1000" v-model="trip.description" id="trp_comment" class="form-control"></textarea>
+                                <textarea maxlength="2000" v-model="trip.description" id="trp_comment" class="form-control"></textarea>
                                 <span class="error" v-if="commentError.state"> {{commentError.message}} </span>
                             </div>
                         </div>
@@ -394,10 +391,7 @@
                             </div>
                             <div class="trip_seats-available">
                                 <fieldset>
-                                    <span class="label-for-group">
-                                        <svg-item v-if="tripCardTheme === 'light'" :size="28" :icon="'icono-sentado'"></svg-item>
-                                        {{ trip.is_passenger ? $t('cuposNecesarios') : $t('lugaresDisponibles') }}
-                                    </span>
+                                    <span class="label-for-group"><svg-item v-if="tripCardTheme === 'light'" :size="28" :icon="'icono-sentado'"></svg-item>{{ $t('lugaresDisponibles') }}</span>
                                     <span v-if="tripCardTheme !== 'light'">
                                         <span class="radio-inline">
                                             <input type="radio" id="otherTrip-seats-one" value="1" v-model="otherTrip.trip.total_seats">
@@ -426,7 +420,7 @@
                             </div>
                             <div class="trip-comment">
                                 <label for="otherTrip-trip_comment"  class="label-for-group"> {{ $t('comentarioPasajeros') }} </label>
-                                <textarea maxlength="1000" v-model="trip.description" id="trp_comment" class="form-control"></textarea>
+                                <textarea maxlength="2000" v-model="trip.description" id="trp_comment" class="form-control"></textarea>
                                 <span class="error" v-if="commentError.state"> {{commentError.message}} </span>
                             </div>
                         </div>
@@ -811,9 +805,6 @@ export default {
             'getTrip': 'getTrip',
             'getPrice': 'trips/price'
         }),
-        setIsPassenger (value) {
-            this.$set(this.trip, 'is_passenger', value);
-        },
         changeOtherTripDate (date) {
             this.$set(this.otherTrip.dateError, 'state', false);
             this.otherTrip.dateAnswer = date;
@@ -1344,5 +1335,9 @@ export default {
     }
     .tooltip-bottom {
         color: var(--trip-almost-fill-color);
+    }
+    textarea.form-control {
+        min-height: 14em;
+        height: auto;
     }
 </style>
