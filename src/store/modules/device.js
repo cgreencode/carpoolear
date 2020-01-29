@@ -14,8 +14,7 @@ const state = {
     resolution: {
         width: screen.width,
         height: screen.height
-    },
-    firsTimeMobileAppOpen: false
+    }
 };
 
 // getters
@@ -34,8 +33,7 @@ const getters = {
             }
         }
         return isBrowser;
-    },
-    firsTimeMobileAppOpen: state => state.firsTimeMobileAppOpen
+    }
 };
 
 // actions
@@ -104,21 +102,8 @@ const actions = {
         if (scrollPosition + 400 > realScroll) {
             bus.emit('scroll-bottom', state.resolution);
         }
-    },
-    setFirstTimeAppOpenInDevice ({ commit, getters, rootGetters, dispatch }) {
-        if (!getters['isBrowser']) {
-            commit(types['DEVICE_SET_FIRST_TIME_APP_OPEN'], true);
-            cache.setItem(keys['FIRST_TIME_APP_KEY'], true);
-        }
-        let user = rootGetters['auth/user'];
-        if (user && !user.on_boarding_view) {
-            let data = {
-                property: 'on_boarding_view',
-                value: 1
-            };
-            dispatch('profile/changeProperty', data, { root: true });
-        }
     }
+
 };
 
 // mutations
@@ -148,10 +133,6 @@ const mutations = {
             state.devices = [];
             state.current = null;
         }
-    },
-
-    [types.DEVICE_SET_FIRST_TIME_APP_OPEN] (state, value) {
-        state.firsTimeMobileAppOpen = value;
     }
 };
 

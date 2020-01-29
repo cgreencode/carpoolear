@@ -1,7 +1,7 @@
 <template>
     <div class="conversation_chat" v-if="conversation">
         <div class="list-group">
-            <div class="list-group-item conversation_user_header hidden-xs">
+            <div class="list-group-item conversation_user_header">
                 <router-link v-if="conversation.users.length === 2" :to="{ name: 'profile', params: userProfile() }" v-show="isMobile">
                     <div class="conversation_image conversation_image_chat circle-box" v-imgSrc="conversation.image" ></div>
                 </router-link>
@@ -9,7 +9,6 @@
                     <h2> {{conversation.title}} </h2>
                 </router-link>
                 <h2 v-else> {{conversation.title}} </h2>
-                <CoordinateTrip></CoordinateTrip>
                 <p class="chat_last_connection">
                     <strong>Última conexión: </strong>
                     <span class="">{{lastConnection | moment("calendar")}}</span>
@@ -23,9 +22,9 @@
             </div>
             <div class="list-group-item">
                 <div class="input-group">
-                    <input ref="ipt-text" id="ipt-text" v-model="message" type="text" class="form-control" placeholder="Escribir mensaje..." v-jump:click="'btn-send'" maxlength="800">
+                    <input ref="ipt-text" id="ipt-text" v-model="message" type="text" class="form-control" placeholder="Escribir mensaje..." v-jump:click="'btn-send'" maxlength="255">
                     <span class="input-group-btn">
-                        <button ref="btn-send" id="btn-send" class="btn btn-default" :class="message.length > 0 ? 'active' : ''" type="button" @click="sendMessage" v-jump:focus="'ipt-text'" :disabled="sending.message">
+                        <button ref="btn-send" id="btn-send" class="btn btn-default" :class="message.length > 0 ? 'active' : ''" type="button" @click="sendMessage" v-jump:focus="'ipt-text'" :disabled="sending">
                             <i class="fa fa-play" aria-hidden="true"></i>
                         </button>
                     </span>
@@ -45,7 +44,6 @@ import MessageView from '../MessageView';
 import router from '../../router';
 import moment from 'moment';
 import bus from '../../services/bus-event.js';
-import CoordinateTrip from '../elements/CoordinateTrip';
 
 export default {
     name: 'conversation-chat',
@@ -53,9 +51,7 @@ export default {
         return {
             message: '',
             mustJump: false,
-            sending: {
-                message: false
-            }
+            sending: false
         };
     },
     computed: {
@@ -64,9 +60,9 @@ export default {
             'user': 'auth/user',
             'messages': 'conversations/messagesList',
             'lastPageConversation': 'conversations/lastPageConversation',
+            'timestampConversation': 'conversations/timestampConversation',
             'title': 'actionbars/title',
-            'isMobile': 'device/isMobile',
-            'config': 'auth/appConfig'
+            'isMobile': 'device/isMobile'
         }),
         lastConnection () {
             let users = this.conversation.users.filter(item => item.id !== this.user.id);
@@ -102,9 +98,11 @@ export default {
 
         sendMessage () {
             if (this.message.length) {
-                this.$set(this.sending, 'message', true);
-                this.send(this.message).finally(() => {
-                    this.$set(this.sending, 'message', false);
+                this.sending = true;
+                this.send(this.message).then(data => {
+                    this.sending = false;
+                }).catch(() => {
+                    this.sending = false;
                 });
                 this.message = '';
             }
@@ -177,8 +175,7 @@ export default {
         'id'
     ],
     components: {
-        MessageView,
-        CoordinateTrip
+        MessageView
     }
 };
 </script>

@@ -22,10 +22,6 @@ export const init = (store) => {
         {
             key: keys.DEVICE_KEY,
             mutation: 'device/' + types.DEVICE_SET_CURRENT_DEVICE
-        },
-        {
-            key: keys.FIRST_TIME_APP_KEY,
-            mutation: 'device/' + types.DEVICE_SET_FIRST_TIME_APP_OPEN
         }
     ];
 

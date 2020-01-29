@@ -13,8 +13,8 @@ class ConversationApi extends TaggedApi {
         return this.get('/api/conversations/user-list', data);
     }
 
-    create (userId, tripId) {
-        return this.post('/api/conversations', { to: userId, tripId: tripId });
+    create (userId) {
+        return this.post('/api/conversations', { to: userId });
     }
 
     getMessages (id, data) {

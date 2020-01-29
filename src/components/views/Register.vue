@@ -140,8 +140,7 @@ export default {
         ...mapGetters({
             checkLogin: 'auth/checkLogin',
             isMobile: 'device/isMobile',
-            settings: 'auth/appConfig',
-            registerData: 'profile/registerData'
+            settings: 'auth/appConfig'
         }),
         tripCardTheme () {
             return this.settings ? this.settings.trip_card_design : '';
@@ -161,9 +160,7 @@ export default {
     methods: {
         ...mapActions({
             doRegister: 'auth/register',
-            getBankData: 'profile/getBankData',
-            saveRegisterData: 'profile/saveRegisterData',
-            cleanRegisterData: 'profile/cleanRegisterData'
+            getBankData: 'profile/getBankData'
         }),
         validate () {
             let globalError = false;
@@ -326,9 +323,6 @@ export default {
     mounted () {
         bus.on('back-click', this.onBackClick);
         bus.on('date-change', this.dateChange);
-        if (this.registerData) {
-            Object.assign(this, this.registerData);
-        }
         this.getBankData().then((data) => {
             console.log('get bank data', data);
             this.banks = data.banks;
@@ -337,12 +331,6 @@ export default {
     },
 
     beforeDestroy () {
-        console.log(this.$route.name);
-        if (this.$route.name === 'terms') {
-            this.saveRegisterData(this.$data);
-        } else {
-            this.cleanRegisterData();
-        }
         bus.off('back-click', this.onBackClick);
         bus.off('date-change', this.dateChange);
     }

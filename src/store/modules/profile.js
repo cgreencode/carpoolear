@@ -8,13 +8,11 @@ let rateApi = new RateApi();
 
 const state = {
     user: null,
-    registerData: null,
     ...pagination.makeState('rates')
 };
 
 const getters = {
     user: state => state.user,
-    registerData: state => state.registerData,
     ...pagination.makeGetters('rates')
 };
 
@@ -75,14 +73,6 @@ const actions = {
         });
     },
 
-    saveRegisterData ({ commit }, data) {
-        commit(types.PROFILE_SAVE_REGISTER_DATA, data);
-    },
-
-    cleanRegisterData ({ commit }) {
-        commit(types.PROFILE_CLEAN_REGISTER_DATA);
-    },
-
     ...pagination.makeActions('rates', ({ store, data }) => {
         // TODO: Pagination not working
         data.page_size = 200;
@@ -105,14 +95,6 @@ const mutations = {
                 rate.reply_comment_created_at = item.reply_comment_created_at;
             }
         });
-    },
-
-    [types.PROFILE_SAVE_REGISTER_DATA] (state, data) {
-        state.registerData = data;
-    },
-
-    [types.PROFILE_CLEAN_REGISTER_DATA] (state, data) {
-        state.registerData = null;
     }
 };
 
