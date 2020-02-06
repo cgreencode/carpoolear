@@ -11,7 +11,6 @@ import NotificationApi from './Notifications.js';
 import DebugApi from './Debug';
 import SubscriptionApi from './SubscriptionsApi';
 import AdminApi from './Admin';
-import ReferencesApi from './References';
 
 export {
     AuthApi,
@@ -26,6 +25,5 @@ export {
     FriendsApi,
     NotificationApi,
     SubscriptionApi,
-    AdminApi,
-    ReferencesApi
+    AdminApi
 };
